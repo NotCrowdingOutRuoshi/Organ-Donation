@@ -1,7 +1,10 @@
 Organ-Donation
 ======
+## Description
+玩家可以藉由方向鍵操作人物往東西南北移動
+玩家可以看見其他玩家在畫面上移動的位置
 
-Module 名字簡寫
+## Module 名字簡寫
 
 * TCP Client Module (TCPCM)
 * TCP Server Module (TCPSM)
@@ -14,7 +17,7 @@ Module 名字簡寫
 * UDP update server (UDPUS)
 * Centeralized Data Center (CDC)
 
-# 另外有兩張清楚的架構圖，請上網抓取
+## 另外有兩張清楚的架構圖，請上網抓取
 
 ### 模組分配
 以下幾頁是每個模組 **包裝** 後與其他模組互動的模組界面 (module interface)。請將你的prototype 進一步包裝成具有模組界面的模組（如何在Java 包裝模組，請參考上課內容），請然後自行設計所謂的模組測試（testing bench）環境來測試你的模組功能正確性與完整性。
@@ -167,118 +170,76 @@ loopforever {
 }
 ```
 
-Centeralized Data Center (CDC)
-
+### Centeralized Data Center (CDC)
+----------
 The CDC keeps the centralized and unique data of dynamic objects. In this module programming project we only concern two kinds of dynamic objects. They includes virtual character (每一台client computer 控制的角色) and shared items (client computer 共享的物品)。In the future, for your own project and goal, you need to add more types of object into data center.
 
-void addVirtualCharacter(int clientno) ;
-
+**void addPlayer(int clientId,String name,int x,int y)**
+```
 // A map is stored in the server, this map specifies the initial location of each virtual
-
 // character. We assume there are maximum four virtual characters in the maps
-
 // So when the map is read, these initial locations are stored somewhere.
-
 // When a client connects to TCPSM, TCPSM should call this method to create a
-
 // virtual character in the CDC. The initial location of this virtual character should use
-
 // the initial locations stored in the map.
-
 // In the module programming exercise, a virtual character has the following basic
-
 // attributes (you can extend in the future
-
 //  x.y – current pposition
-
 //  dir – direction the virtual character is heading
-
 //  velocity – the moving speed
-
 //  Initially, the dir and velocity should be zero.
-
-
-
-**void addItem(String name, int index, bool shared****, ****int x, int y**** ) ;**
-
+```
+**void addItem(int index,int ownerId,int x,int y)**
+```
 // There is a map stored in the server. When the map is loaded, the map
-
 // contains the information of all the items on the map. When these information is read
-
 // this method is called to create an shared item at position x,y
-
 // An item can be indexed by a name or an index.
-
 // If _shared_ is true, the item can only be owned by a client at any time
-
 // If _shared_ is false, the item can be obtained by any client as if it can reappear
-
 // after it is obtained by a virtual character (例如急救包)
-
-**void updateDirection(int clientno, int MoveCode) ;**
-
+```
+**void updateDirection(int clientId, int actionCode) ;**
+```
 // called by TCPSM
-
 // when TCPSM receives a MoveCode which is "TURN" from TCPCM,
-
 // it call this function to change the moving direction of virtual character of **clientno**
-
-**void getItem(int clientno)**
-
+```
+**void getItem(int clientId)**
+```
 // called by TCPSM
-
 // when TCPSM receives a MoveCode which is a "GET", TCPSM calls this method.
-
 // This method should check if there is an item ahead of the virtual character
-
 // clientno's direction and if the item is within reaching range.
-
 // If the item is within reaching range, check if the item is a shared object.
-
 // If it is a shared object, check if it is already owned by any virtual character.
-
 // Finally, change the states of the item accordingly.
-
-**vector getUpdateInfo() ;**
-
+```
+**Vector<Sprite> getUpdateInfo()**
+```
 // called by UDPBC
-
 // The method will return a vector, which contains all the references
-
 // to the dynamic objects (virtual character and item) which has just been updated
-
 // recently
-
-// these object should contain a **toString()** method
-
+// these object should contain a "toString()" method
 // when it is called, its attributes will be formatted into a string.
-
-
-
-void startUpdatingThread();
-
+```
+**void startUpdatingThread**();
+```
 // called by TCPSM, after all the connections are established and the game is started
-
 // this method start the following thread to update each virtual character's x,y
-
 // every 0.5 second
-
 abstract behaviors of the thread
-
 loop {
-
   sleep for 0.5 second
-
   for each virtual character in CDC {
-
      compute new x,y according to dir and speed
-
   }
-
 }
+```
 
 **UDP BroadCast Client Module**
-
+--------
 UDP BroadCast client is a thread which loops forever to get information from CDC and broadcast to all the client computer.
 
 **void startUDPBroadCast(****) ;**
@@ -542,18 +503,23 @@ void renderScene();
 ## Entity
 * Sprite
 	- id : (int)
-	- type : player or item (Enum)
+	- name : (String)
 	- x,y : location (int)
+	--------
+	- abstract String getType();
 
 * Player extends Sprite
+	- id is clientId (int,unique)
 	- direction : EAST,WEST,SOUTH,NORTH (int)
 	- velocity : (int)
 	- Vector<Item> items
+	--------
 
 * Item extends Sprite
-	- name : (String)
 	- isShared : (boolean)
-
+	- owner : (Player)
+	--------
+	
 ## Enum
  * SpriteType : { PLAYER,ITEM }
 
@@ -564,4 +530,6 @@ void renderScene();
  - SOUTH : 40
  - GET : (Space key code)
 
+## Item txt
+``` id:name:description:imgPath```
 
