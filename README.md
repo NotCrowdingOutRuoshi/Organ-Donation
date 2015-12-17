@@ -266,7 +266,9 @@ The abstract behaviors of the thread
         client computer
       }
   } forever
-UDP Update Server Module
+```
+### UDP Update Server Module
+---------
 UDP Update Server is a thread which loops forever to get message from UDPBC and update the data in DOM.
 ```
 **void initUDPServer()**
@@ -282,7 +284,7 @@ loop forever {
    if (msg's command is UPDATE)
       call updateVirtualCharacter or updateItem to DOM
 }
-
+```
 ###Dynamic Object Module (DOM)
 ---------
 This module keeps a copy of data from CDC. Its main function is to be read by rendering engine to draw pictures/frames. Please also read CDC.  However, the data structure in DOM is different from CDC. CDC only care (X,Y), DIR, SPEED. However, in this module, these attributes are only part of the attributes of sprite class. A sprite class (as in your prototype) contains other attributes like sprite images and etc.
@@ -410,7 +412,10 @@ In this module programming exercise. You should prepare at least 4 kinds of imag
 	- name : (String)
 	- x,y : location (int)
 	--------
-	- abstract String getType();
+	- abstract SpriteType getType();
+  - public String getName();
+  - public int getLocationX();
+  - public int getLocationY();
 
 * Player extends Sprite
 	- id is clientId (int,unique)
@@ -418,21 +423,27 @@ In this module programming exercise. You should prepare at least 4 kinds of imag
 	- velocity : (int)
 	- Vector<Item> items
 	--------
+  - public int getDirection();
+  - public int getVelocity();
+  - public Vector<Item> getOwnItems();
 
 * Item extends Sprite
-	- isShared : (boolean)
 	- owner : (Player)
 	--------
+  - public boolean getIsShared();
+
 
 ## Enum
  * SpriteType : { PLAYER,ITEM }
+ * ServerCommandType:{ADD,UPDATE,DELETE}
+
 
 ## Constants
  - EAST : 39
  - WEST : 37
  - NORTH : 38
  - SOUTH : 40
- - GET : (Space key code)
+ - GET : 32 (Space key code)
 
 ## Item txt
 ``` id:name:description:imgPath```
