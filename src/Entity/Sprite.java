@@ -4,16 +4,11 @@ import Enum.SpriteType;
 
 public abstract class Sprite {
 	protected int id;
-	protected String name;
 	protected int x;
 	protected int y;
 
 	public int getId() {
 		return id;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public int getLocationX() {
@@ -24,6 +19,10 @@ public abstract class Sprite {
 		return y;
 	}
 
-	abstract SpriteType getType();
+	public abstract SpriteType getType();
+
+	@Override
+	public abstract String toString();
+	
 
 }

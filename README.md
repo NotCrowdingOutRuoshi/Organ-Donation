@@ -409,29 +409,28 @@ In this module programming exercise. You should prepare at least 4 kinds of imag
 ## Entity
 * Sprite
 	- id : (int)
-	- name : (String)
 	- x,y : location (int)
-	--------
 	- abstract SpriteType getType();
-  - public String getName();
   - public int getLocationX();
   - public int getLocationY();
 
 * Player extends Sprite
 	- id is clientId (int,unique)
+  - name : (String)
 	- direction : EAST,WEST,SOUTH,NORTH (int)
 	- velocity : (int)
 	- Vector<Item> items
-	--------
   - public int getDirection();
   - public int getVelocity();
+  - public String getName();
   - public Vector<Item> getOwnItems();
 
 * Item extends Sprite
+  - id is itemId (int,unique)
+  - itemIndex : (int, belong to which category of item)
 	- owner : (Player)
-	--------
   - public boolean getIsShared();
-
+  - public int getOwnerId();
 
 ## Enum
  * SpriteType : { PLAYER,ITEM }
