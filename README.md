@@ -4,6 +4,8 @@ Organ-Donation
 玩家可以藉由方向鍵操作人物往東西南北移動
 玩家可以看見其他玩家在畫面上移動的位置
 
+![ComponentDiagram](./Document/ComponentDiagram.png)
+
 ## Module 名字簡寫
 
 * TCP Client Module (TCPCM)
@@ -66,7 +68,6 @@ Last updated: 2007/6/20
 在client 端，則有一個繪圖引擎，以約1/20 秒的速率，按照最新接收到的所有玩家的狀態，更新畫面。從概念上來說，其實client 的程式只是單純的做為使用者輸入以及顯示畫面的工作。
 
 
-
 1. **Section 2.** 玩家角色的上下左右移動
 
 在這一節，我們利用一個scenario 以及sequence diagram 來描述一個玩家狀態更新的流程以及在這個流程進行當中，模組之間是如何互動。
@@ -77,9 +78,9 @@ Scenario
 
   TCPSM 端的一個獨立執行緒接收到訊息_p_ 之後，進行解譯。解譯之後知道訊息_p_ 帶著從玩家A送來的"往東"的動作。TCPSM 藉著呼叫  CDC 模組的_updateDirection(A, TURNEAST)_。也就是說CDC 更新了玩家A 在server 端當中的集中資料區玩家A的方向。
 
-
 圖1 ─ 玩家移動角色往東
 
+![PlayerMoveToEastSequencDiagram](./Document/PlayerMoveToEastSequencDiagram.png)
 圖1是這個 scenario 的UML sequence diagram，用來描述系統的模組之間如何完成上述的 scenario。
 
 
@@ -96,6 +97,7 @@ Scenario
 
 圖2 ─ 玩家狀態定期更新
 
+![PlayerMoveToEastSequencDiagram](./Document/UpdatePlayerInfoSequenceDiagram.png)
 圖2是這個scenario 的UML sequence diagram。可以用來幫助理解這個scenario 如何靠模組之間的互動來完成。
 
 1. **Section 4.** 模組介面暨模組行為
