@@ -121,14 +121,14 @@ Scenario
 // it return false if the connection is failed
 ```
 
-**void inputAction(int actionCode)** 
+**void inputAction(int actionCode)**
 ```
 // called by UIM or dynamic object module
 // recall that in this design, the client machine is treated as a input
 // processing machine. UIM processes input from keyboard and mouse
 // and then translate the event into a MoveCode and pass to TCP client
 // Currently, you only need to implement the following MoveCode
-// actionCode : 
+// actionCode :
 // 	 EAST,SOUTH,NORTH,WEST : (passed by UIM) , ex **Constans.EAST** the main character turn east
 //   GET - (passed by dynamic object module)
 //         the virtual character is near an item and decide to grab it
@@ -141,14 +141,14 @@ Scenario
 ----------
 TCP Server module (once started) contains several threads (one thread for each client computer and a main listening thread). Each thread loops forever to receive message from TCP client module. On receiving a message, it decodes the message and interact with CDC accordingly.
 
-**void initTCPServer();**
+**void initTCPServer()**
 ```
 // called by main program of server computer to start TCP server
 // and begin to listen connections from client computers.
 // The server should maintain a table to keep the ip addresss
 // of client computers which connects to this server.
 ```
-**vector getClientIPTable() ;**
+**Vector<InetAddress> getClientIPTable()**
 ```
 // called by UDPBC
 // After all the connections are established
@@ -199,11 +199,11 @@ The CDC keeps the centralized and unique data of dynamic objects. In this module
 // If _shared_ is false, the item can be obtained by any client as if it can reappear
 // after it is obtained by a virtual character (例如急救包)
 ```
-**void updateDirection(int clientId, int actionCode) ;**
+**void updateDirection(int clientId, int actionCode)**
 ```
 // called by TCPSM
 // when TCPSM receives a MoveCode which is "TURN" from TCPCM,
-// it call this function to change the moving direction of virtual character of **clientno**
+// it call this function to change the moving direction of virtual character of clientId
 ```
 **void getItem(int clientId)**
 ```
@@ -215,7 +215,7 @@ The CDC keeps the centralized and unique data of dynamic objects. In this module
 // If it is a shared object, check if it is already owned by any virtual character.
 // Finally, change the states of the item accordingly.
 ```
-**Vector<Sprite> getUpdateInfo()**
+**Vector(Sprite) getUpdateInfo()**
 ```
 // called by UDPBC
 // The method will return a vector, which contains all the references
@@ -224,7 +224,7 @@ The CDC keeps the centralized and unique data of dynamic objects. In this module
 // these object should contain a "toString()" method
 // when it is called, its attributes will be formatted into a string.
 ```
-**void startUpdatingThread**();
+**void startUpdatingThread()**
 ```
 // called by TCPSM, after all the connections are established and the game is started
 // this method start the following thread to update each virtual character's x,y
@@ -239,266 +239,168 @@ loop {
 ```
 
 **UDP BroadCast Client Module**
---------
+----------
 UDP BroadCast client is a thread which loops forever to get information from CDC and broadcast to all the client computer.
 
-**void startUDPBroadCast(****) ;**
-
+**void startUDPBroadCast()**
+```
 // called by main program of server computer when
-
 // the all the connection is established and **the networked game is started**
-
 // The method starts the UDP Broadcast thread.
 
-
-
 The abstract behaviors of the thread
+  getClientIPTables();
+  processing the table ;
 
-         getClientIPTables();
-
-         processing the table ;
-
-         vector v = getUpdateInfo();
-
-         for each o in v
-
-       call o.toString() to encode v with ADD command ;
-
-         broadcast v to all the client computer
-
-         to add characters and item to DOM of client computer.
-
-         loop 5 times/per sec{
-
-            vector v = getUpdateInfo();
-
-            encode v with UPDATE command;
-
-            broadcast encoded v to all the
-
-            client computer
-
-         } forever
-
-
+  vector v = getUpdateInfo();
+    for each o in v {
+      call o.toString() to encode v with ADD command ;
+      broadcast v to all the client computer
+      to add characters and item to DOM of client computer.
+      loop 5 times/per sec {
+        vector v = getUpdateInfo();
+        encode v with UPDATE command;
+        broadcast encoded v to all the
+        client computer
+      }
+  } forever
 UDP Update Server Module
-
 UDP Update Server is a thread which loops forever to get message from UDPBC and update the data in DOM.
-
-**void initUDPServer(****) ;**
-
+```
+**void initUDPServer()**
 // called by main program of client computer.
-
 // This method starts the main thread to receive message from
-
 // UDPBC
-
-
-
 **abstracted thread loop behavior**
-
 loop forever {
-
    receive message from UDPBC
-
    decode the message
-
    if (msg command is ADD)
-
       call addVirutalCharacter or addItem to DOM
-
    if (msg's command is UPDATE)
-
       call updateVirtualCharacter or updateItem to DOM
-
 }
 
-
-
-
-
-
-
-Dynamic Object Module (DOM)
-
+###Dynamic Object Module (DOM)
+---------
 This module keeps a copy of data from CDC. Its main function is to be read by rendering engine to draw pictures/frames. Please also read CDC.  However, the data structure in DOM is different from CDC. CDC only care (X,Y), DIR, SPEED. However, in this module, these attributes are only part of the attributes of sprite class. A sprite class (as in your prototype) contains other attributes like sprite images and etc.
 
-void addVirtualCharacter(int clientno) ;
-
+**void addPlayer(int clientId,String name,int x,int y)**
+```
 // called by UDPUC to add a main virtual character for the client computer **clientno**
-
 // in the module programming exercise, a virtual character has the following basic
-
 // attributes (you can extend in the future)
-
 //  x.y – current pposition
-
 //  dir – direction the virtual character is heading
-
 //  speed – the moving speed
-
 // You should create a sprite class and initialize its attributes like (x,y), dir, speed
-
-**void addItem(String name, int index, bool shared) ;**
-
+```
+**void addItem(int index,int ownerId,int x,int y)**
+```
 // called by UDPUS to create an shared item
-
 // An item is can be indexed by a name and an index.
-
 // if _shared_ is true, the item can only be own by a client at any time
-
 // if _shared_ is false, the item can be obtained by any client as if it can reappear
-
 // when it is obtained by a virtual character (例如急救包)
-
 // In this function, you should create a sprite class which contain
-
 // attributes like _name, index, and shared_
-
-void updateVirtualCharacter(int clientno, int dir, int speed, int x, int y) ;
-
+```
+**void updatePlayer(int clientId, int x, int y,int direction, int speed)**
+```
 // called by UDPUS
-
 // update the data of a virtual character
-
-void updateItem(int index, bool shared, int owner);
-
+```
+**void updateItem(int index, int ownerId,int x,int y)**
+```
 // called by UDPUS
-
 // update the data of an item
-
-vector getAllDynamicObjects() ;
-
+```
+**Vector(Sprite) getAllDynamicObjects()**
+```
 // called by sprite render engine
-
 // this method return a vector which contains the references of
-
 // all the dynamic objects which should drawn.
-
-point getVirtualCharacterXY();
-
+```
+**Point(int,int) getPlayerXY()**
+```
 // called by Scene Render Engine
-
 //  This function returns the coordinates of the virtual character
-
 // controlled by this client computer
-
 //  The position (x,y) is the location on the map.
-
 //  It is used to compute the view port and decide which part
-
 // of the map should be displayed in the view port
-
-void keyGETPressed() ;
-
+```
+**void keyGETPressed()**
+```
 // called by UIM
-
 // When UIM accepts an keyboard input and it is a GET key
-
 // it calls this method.
-
 // This method should determine if the GET action is possible
-
 // by comparing the virtual character's position and any
-
 // item nearby. If the GET action is possible, it should call
-
 // inputMoves(GET) of TCPCM
-
-Scene Data Module (SDM)
-
+```
+###Scene Data Module (SDM)
+------
 This module is responsible for keep data of the background (scene) and map.
-
-
-
-void loadMap(String mapfile);
-
+```
+**void loadMap(String mapfile)**
 // called by main program of client computer.
-
 // this function load a map from a file name _mapfile_
-
 // please design your own map file format.
-
 // in this module programming project we do not enforce any standard
-
 // on the map file format.
-
 // When reading the map, all the necessary background image files
-
 // should be loaded as well.
-
 // When the map file is loaded, a map data structure is constructed.
-
-
-
-
-
-Render Thread
-
+```
+###Render Thread
+-----------
 Render thread is a thread (once started) which loops every 1/20 seconds (ps: 20 frames a second is just a guess). Its abstracted behaviors are
 
-loop {
-
-    renderScene(); // see Scene Render Engine
-
-    renderSprites(); // see Sprite Render Engine
-
-    sleep(some time);
-
-}
-
-**I** ts only module interface is to start the thread.
-
-void startRenderThread() ;
-
+**void startRenderThread()**
+```
 // called by main program of the client computer.
-
 // this method starts the render thread
-
 // typically it happens after all the connections are established and
-
 // game is started.
 
-Sprite Render Engine (SPRITERE)
-
+loop {
+    renderScene(); // see Scene Render Engine
+    renderSprites(); // see Sprite Render Engine
+    sleep(some time);
+}
+Its only module interface is to start the thread.
+```
+###Sprite Render Engine (SPRITERE)
+-----------
 As in the architecture figure, Render Thread is a thread which draw the dynamic objects and background every 1/20 seconds.
 
-**void renderSprites();**
-
+**void renderSprites()**
+```
 // called by the Render Thread
-
 // Draw all the dynamic objects on the viewport.
-
-// Once called, this method call **getAllDynamicObjects()** of DOM to get a vector of references to all the dynamic objects. Call each object's **draw()**  method to paint each object on the background.
-
-
-
-Scene Render Engine (SCENERE)
-
+// Once called, this method call "getAllDynamicObjects()" of DOM to get a vector of references to all the dynamic objects. Call each object's "draw()"  method to paint each object on the background.
+```
+###Scene Render Engine (SCENERE)
+-------------
 Scene Render Engine simply accesses the map data structure and paint the image blocks which can be seen by the view port. The virtual character (controlled by this client computer) should always appear in the center of the view port.
 
-  In this module programming exercise. You should prepare at least 4 kinds of image background blocks.
-
-        plain grass 綠草
-
+In this module programming exercise. You should prepare at least 4 kinds of image background blocks.
+```
+    plain grass 綠草
     tree  樹木
-
     water 湖泊
-
     rock 岩石
-
-void renderScene();
-
+```
+**void renderScene()**
+```
 // called by Render Thread
-
 // This method calls **getVirtualCharacterXY()** of DOM to get the current X,Y
-
 // of virtual character (controlled by this client computer). Use the X,Y to decide
-
 // which part of the map should be appeared in the viewport and
-
 // paint the image blocks accordingly
-
+```
 # General setting
 ## Entity
 * Sprite
@@ -519,12 +421,12 @@ void renderScene();
 	- isShared : (boolean)
 	- owner : (Player)
 	--------
-	
+
 ## Enum
  * SpriteType : { PLAYER,ITEM }
 
 ## Constants
- - EAST : 39 
+ - EAST : 39
  - WEST : 37
  - NORTH : 38
  - SOUTH : 40
