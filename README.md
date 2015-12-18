@@ -1,9 +1,17 @@
 Organ-Donation
 ======
 ## Description
-玩家可以藉由方向鍵操作人物往東西南北移動
-玩家可以看見其他玩家在畫面上移動的位置
-
+```遊戲設定
+遊玩人數：四人
+遊戲目標：生存
+遊戲結束方式：場上剩餘一人存活
+```
+```遊戲規則
+當開始遊戲後，玩家的人物會持續扣血，當血量歸0時，玩家淘汰。
+ - 玩家藉由鍵盤上下左右操控人物進行四個方位的移動，按下空白鍵發射子彈，當子彈射到玩家B的人物，玩家B的人物會變成暈眩的狀態，此時若有玩家C，碰到暈眩中的玩家B，便有機會搶奪玩家B身上的器官，而獲取器官的玩家C，可以幫玩家C的人物補血，玩家B因為被偷走器官，則會玩家B的人物損血。
+ - 暈眩中的玩家B，可以就由左右鍵盤，加速解除人物的暈眩狀態
+ - 當遊戲剩下一個玩家時，遊戲結束，由最後玩家獲勝
+```
 ![ComponentDiagram](./Document/ComponentDiagram.png)
 
 ## Module 名字簡寫
@@ -24,83 +32,88 @@ Organ-Donation
 ### 模組分配
 以下幾頁是每個模組 **包裝** 後與其他模組互動的模組界面 (module interface)。請將你的prototype 進一步包裝成具有模組界面的模組（如何在Java 包裝模組，請參考上課內容），請然後自行設計所謂的模組測試（testing bench）環境來測試你的模組功能正確性與完整性。
 
-   本次module programming 工作分割與上次相關，關連如下圖
+本次module programming 工作分割與上次相關，關連如下圖
 * protype A  ->  UI Module + CDC
 * protype B  ->  TCPSM + TCPCM
 * protype C ->  UDPBC + UDPUS
 * protype D ->  SPRITERE + DOM
 * protype E ->  SCENERE + SDM
 
-為了完成這個程式作業，你必須先看懂下一頁開始的設計文件。以下還有幾個重點：
-
-**重點1：包裝完成後，請用Java 的 package 功能將你的模組包裝成別人可以容易引用的package。以及使用 singleton 的方式來包裝你的模組，關於 package 的功能，請詳讀Java 書籍**
-
-**重點2：DEMO 當天，為了展示你的模組可以工作，你必須自行撰寫模組測試環境（test bench）這部分的分數將佔你的DEMO成績的百分之40。請準備足夠的test case，並且一一DEMO給助教看以證明你的模組能夠正常的工作於每一種test case。何謂test driver environment老師會於課堂上做解說。**
-
-**重點3：你的程式必須做足夠的defensive programming（assertion）。請準備足夠的錯誤的test cases 來證明你的模組可以應付不良的呼叫,隔絕可能的錯誤於你的模組之外。**
-
-**重點4：當你在實做你的模組時，無法避免的，你也必須瞭解與你模組互動的模組的大概功能，以進行測試環境的實做。**
-
-        **請注意，本文件描述的模組界面，只具備最基本的功能，以方便各位同學統一實做作為第二階段的個人成績。為了能夠有統一標準，有些介面與功能應該不足於你們project 所需。不過在第二階段的DEMO，你只要實做這些最基本的模組功能即可。未來你們必須擴充，新增模組或者修改既有的模組界面(例如增加參數)，以符合你們project的需求。**
-
-1. 1.
-
 # Design Document
+```
+Verson 1.0
+Last updated: 2015/12/
+```
 
-Verson 3.0
+* Module 文內使用**租體**表示
+* Method 使用反灰 `code` 表示呼叫Module 的method
+* Variable 使用_斜體_表示
 
-Author:  Jeffery Cheng
-
-Last updated: 2007/6/20
+## **Section 1.** 系統架構與設計原理。
 
 
-
-1. **Section 1.** 系統架構與設計原理。
-
-本節描述的模組設計，能夠應付網路連線中，每個玩家控制的角色進行地圖中，上下左右的移動。以及在移動的地圖中，讓玩家去擷取某個寶物。
+本節描述的模組設計，能夠應付網路連線中，每個玩家控制的角色進行地圖中，上下左右的移動。以及在移動的地圖中，讓玩家可以發射子彈，還有偷取人物身上的寶物。
 
 一般網路遊戲設計的方式，都會有一台server 主機負責同步彼此玩家之間的資料。這部server 主機可以由開局的玩家扮演。也可以是一台獨立的server 主機。在遊戲開始的時候，連到該server 主機的電腦我們則稱為client 端。
 
-在這個設計中，所有玩家的資料，包括行進方向，速度等等都是保留在伺服器端的CDC (Centralized Data Center) 中。當任何一個玩家進行了狀態的改變，例如行進方向的改變，都會啟動一連串的動作，將該狀態的改變傳送到伺服器端（採用TCP，因為不能遺失），更改CDC當中的資料。
+在這個設計中，所有玩家的資料以及子彈的資料…等等都是保留在伺服器端的**CDC** (Centralized Data Center) 中。當任何一個玩家進行了狀態的改變(座標改變、行進方向的改變、發射子彈、玩家狀態)都會啟動一連串的動作，將該狀態的改變傳送到伺服器端（採用TCP，因為不能遺失），更改CDC當中的資料。
 
-每隔1/5 到1/10 秒，server 主機會定期的將CDC的所有玩家的狀態，採用UDP廣播到所有client 端。也就是說，每隔一段時間，每一個玩家都會收到其他玩家的位置，方向，移動速度，寶物的位置，被擁有的狀況等等。
+每隔1/5 到1/10 秒，server 主機會定期的將**CDC**的所有玩家的狀態，採用**UDPBC**廣播到所有client 端。也就是說，每隔一段時間，每一個玩家都會收到其他玩家的位置，方向，狀態，子彈的位置，等等。
 
 在client 端，則有一個繪圖引擎，以約1/20 秒的速率，按照最新接收到的所有玩家的狀態，更新畫面。從概念上來說，其實client 的程式只是單純的做為使用者輸入以及顯示畫面的工作。
 
 
-1. **Section 2.** 玩家角色的上下左右移動
+## **Section 2.** 人物的行為說明
 
 在這一節，我們利用一個scenario 以及sequence diagram 來描述一個玩家狀態更新的流程以及在這個流程進行當中，模組之間是如何互動。
 
-Scenario
+**Scenario 1.** 玩家操作人物的上下左右移動
 
-當玩家A於遊戲中按下"右鍵",  UI module 偵測到右鍵被按下之後，呼叫TCPCM 模組的程式界面_inputMoves(TURNEAST)。__inputMoves_ 負責將往東這個動作編碼成一個網路訊息_p_ 然後透過TCP傳輸協定，傳送到server 端的TCPSM 模組。
+當玩家A於遊戲中按下"右鍵",**UIM** 偵測到右鍵被按下之後，呼叫**TCPCM** 模組的程式界面`inputAction(actionCode)`。`inputAction` 負責將往東這個動作編碼成一個網路訊息_p_ 然後透過TCP傳輸協定，傳送到server 端的**TCPSM**。
 
-  TCPSM 端的一個獨立執行緒接收到訊息_p_ 之後，進行解譯。解譯之後知道訊息_p_ 帶著從玩家A送來的"往東"的動作。TCPSM 藉著呼叫  CDC 模組的_updateDirection(A, TURNEAST)_。也就是說CDC 更新了玩家A 在server 端當中的集中資料區玩家A的方向。
+**TCPSM** 端的一個獨立執行緒接收到訊息_p_ 之後，進行解譯。解譯之後知道訊息_p_ 帶著從玩家A送來的"往東"的動作。**TCPSM** 藉著呼叫  **CDC** 模組的`updateDirection(clientId, actionCode)`。也就是說**CDC** 更新了玩家A 在server 端當中的集中資料區玩家A的方向。
 
 圖1 ─ 玩家移動角色往東
 
 ![PlayerMoveToEastSequencDiagram](./Document/PlayerMoveToEastSequencDiagram.png)
 圖1是這個 scenario 的UML sequence diagram，用來描述系統的模組之間如何完成上述的 scenario。
 
+**Scenario 2.** 玩家操作人物發射子彈
 
+當玩家A於遊戲中按下"空白鍵",**UIM** 偵測到空白鍵被按下之後，呼叫**TCPCM**程式界面`inputAction(actionCode)`。`inputAction`被呼叫後負責將玩家A的方向以及射出子彈這個動作編碼成一個網路訊息_p_ 然後透過TCP傳輸協定，傳送到server 端的**TCPSM**。
 
-1. **Section 3.** Server 端定期廣播所有玩家的狀態到所有的玩家
+**TCPSM** 端的一個獨立執行緒接收到訊息_p_ 之後，進行解譯。解譯之後知道訊息_p_ 是玩家向東發射子彈。**TCPSM** 藉著呼叫**CDC** 的`AddBullet(actionCode)`。也就是說**CDC** 新增子彈在server 端當中的集中資料區。
 
+**Scenario 3.** 人物的狀態改變
 
+ * 玩家在正常狀態受到子彈擊中後，從"正常狀態"轉換到"暈眩狀態"
+ * 玩家在暈眩狀態經過3 秒後，從"暈眩狀態"轉換到"無敵狀態"
+ * 玩家在無敵狀態經過1 秒後，從"無敵狀態"轉換到"正常狀態"
+ * 玩家在正常狀態按下搶奪鍵後，從"正常轉換"到"搶奪狀態"(備註1)
+ * 玩家在搶奪狀態經過1 秒後，從"搶奪狀態"到"正常轉換"
 
-這一節我們描述server 端的UDPBC 模組如何定期的 （1/5秒到1/10）從CDC讀取所有玩家的的狀態，然後將這些狀態變成UDP封包之後，廣播給所有的玩家。client 端的 UDPUS 模組接到廣播之後，進行DOM模組的資料更新。由於玩家的狀態以1/5到1/10 的速率進行更新。萬一有封包遺失，並不會明顯的影響到遊戲的進行。
+**UIM** 偵測到玩家A的人物狀態改變，呼叫**TCPCM**程式界面`inputAction(actionCode)`。`inputAction`會將玩家的狀態動作編碼成一個網路訊息_p_ 然後透過TCP傳輸協定，傳送到server 端的**TCPSM**。
 
+**TCPSM** 端的一個獨立執行緒接收到訊息_p_ 之後，進行解譯。解譯之後知道訊息_p_ 是玩家A的人物狀態改變。**TCPSM** 藉著呼叫**CDC** 的`AddBullet(actionCode)`。也就是說**CDC** 更新在server 端資料區的人物狀態。
 
+``` 備註
+ 1. 只有周遭玩家的人物為暈眩狀態，玩家A的人物才可以從正常狀態轉換成搶奪狀態
+```
 
-**Scenario:** 每隔1/5秒─1/10秒。模組UDPBC 的執行緒（不斷的繞回圈）會呼叫CDC模組的_getUpdateInfo()_  去取得所有玩家的狀態。取得這些狀態之後. UDPBC 負責將這些狀態變成一個UDP 訊息_q 。_然後廣播到所有的玩家。client 端的UDPSM模組在收到_q_之後。就按照自行約定好的格式，讀取內容。以前一節為例，若封包中包含一個狀態是玩家A現在走向東邊，則UDPSM呼叫_updateVirtualCharacter(A,EAST)_ 去改寫玩家A的DOM模組中的方向。最後每格1/20 繪圖引擎呼叫DOM _getAllDynamicObjects()_ 從DOM讀取這些狀態，然後進行重繪。這時候某個玩家B會看到地圖中玩家A的面朝東邊，正準備往東前進。
+## **Section 3.** Server 端定期廣播所有玩家的狀態到所有的玩家
+
+這一節我們描述server 端的**UDPBC** 模組如何定期的 （1/5秒到1/10）從**CDC**讀取所有玩家的的狀態，然後將這些狀態變成UDP封包之後，廣播給所有的玩家。client 端的 UDPUS 模組接到廣播之後，進行**DOM**的資料更新。由於玩家的狀態以1/5到1/10 的速率進行更新。萬一有封包遺失，並不會明顯的影響到遊戲的進行。
+
+**Scenario 1.:**
+每隔1/5秒─1/10秒。**UDPBC** 的執行緒（不斷的繞回圈）會呼叫**CDC**的`getUpdateInfo()`  去取得所有玩家的狀態。取得這些狀態之後，**UDPBC** 負責將這些狀態變成一個訊息_q_。然後廣播到所有的玩家。client 端的**UDPSM**在收到_q_
+之後。就按照自行約定好的格式，讀取內容。以前一節為例，若封包中包含一個狀態是玩家A現在走向東邊，則UDPSM呼叫`updateVirtualCharacter(A,EAST)` 去改寫玩家A的**DOM**中的方向。最後每格1/20 繪圖引擎呼叫**DOM** `getAllDynamicObjects()` 從**DOM**讀取這些狀態，然後進行重繪。這時候某個玩家B會看到地圖中玩家A的面朝東邊，正準備往東前進。
 
 圖2 ─ 玩家狀態定期更新
 
 ![PlayerMoveToEastSequencDiagram](./Document/UpdatePlayerInfoSequenceDiagram.png)
 圖2是這個scenario 的UML sequence diagram。可以用來幫助理解這個scenario 如何靠模組之間的互動來完成。
 
-1. **Section 4.** 模組介面暨模組行為
+## **Section 4.** 模組介面暨模組行為
 
 在這一節，我們一一描述每個模組的界面，以及實做該界面的虛擬程式碼 (psedudo) 。
 
@@ -111,6 +124,10 @@ Scenario
 ## Implement Interface
 
 以下我們分別就圖中的每一個模組進行界面於實做行為的解說。
+
+### User Interface module
+----------------
+
 
 ### TCP client module
 ----------
@@ -150,7 +167,7 @@ TCP Server module (once started) contains several threads (one thread for each c
 // The server should maintain a table to keep the ip addresss
 // of client computers which connects to this server.
 ```
-**Vector<InetAddress> getClientIPTable()**
+**Vector(InetAddress) getClientIPTable()**
 ```
 // called by UDPBC
 // After all the connections are established
@@ -172,7 +189,7 @@ loopforever {
 }
 ```
 
-### Centeralized Data Center (CDC)
+### Centralized Data Center (CDC)
 ----------
 The CDC keeps the centralized and unique data of dynamic objects. In this module programming project we only concern two kinds of dynamic objects. They includes virtual character (每一台client computer 控制的角色) and shared items (client computer 共享的物品)。In the future, for your own project and goal, you need to add more types of object into data center.
 
@@ -286,7 +303,7 @@ loop forever {
 }
 ```
 ###Dynamic Object Module (DOM)
----------
+--------------
 This module keeps a copy of data from CDC. Its main function is to be read by rendering engine to draw pictures/frames. Please also read CDC.  However, the data structure in DOM is different from CDC. CDC only care (X,Y), DIR, SPEED. However, in this module, these attributes are only part of the attributes of sprite class. A sprite class (as in your prototype) contains other attributes like sprite images and etc.
 
 **void addPlayer(int clientId,String name,int x,int y)**
@@ -434,15 +451,16 @@ In this module programming exercise. You should prepare at least 4 kinds of imag
 
 ## Enum
  * SpriteType : { PLAYER,ITEM }
- * ServerCommandType:{ADD,UPDATE,DELETE}
-
+ * ServerCommandType:{ ADD,UPDATE,DELETE }
+ * PlayerStatus : { IDLE,WALK,SHOOT,ROB,HURT,SUPER,DEATH }
 
 ## Constants
  - EAST : 39
  - WEST : 37
  - NORTH : 38
  - SOUTH : 40
- - GET : 32 (Space key code)
+ - GET : R(Key Code)
+ - SHOOT 32 (Space key code)
 
 ## Item txt
 ``` id:name:description:imgPath```
