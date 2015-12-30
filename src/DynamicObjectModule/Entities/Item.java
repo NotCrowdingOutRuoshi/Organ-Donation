@@ -18,6 +18,12 @@ public class Item extends Sprite {
 		_owner = EMPTY_OWNER;
 		_shared = shared;
 	}
+	
+	@Override
+	protected void loadAnimations() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public void draw(Graphics g) {

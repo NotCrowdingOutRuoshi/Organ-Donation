@@ -27,6 +27,12 @@ public class Character extends Sprite {
 	public void draw(Graphics g) {
 
 	}
+	
+	@Override
+	protected void loadAnimations() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	public DIRECTIONS getDirection() {
 		return _direction;
