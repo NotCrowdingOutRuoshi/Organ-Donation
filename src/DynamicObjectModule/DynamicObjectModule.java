@@ -7,15 +7,14 @@ import DynamicObjectModule.Entities.Character;
 import DynamicObjectModule.Entities.Item;
 import DynamicObjectModule.Entities.Sprite;
 import DynamicObjectModule.Entities.Character.DIRECTIONS;
-import DynamicObjectModule.Mocks.MoveCodes;
-import DynamicObjectModule.Mocks.TCPClientModule;
+import net.tcp.client.TCPCM;
 
 public class DynamicObjectModule {
 	private ArrayList<Item> _items;
 	private ArrayList<Character> _characters;
-	private TCPClientModule _tcpClientModule;
+	private TCPCM _tcpClientModule;
 
-	public DynamicObjectModule(TCPClientModule tcpClientModule) {
+	public DynamicObjectModule(TCPCM tcpClientModule) {
 		assert (tcpClientModule != null);
 
 		_items = new ArrayList<Item>();
@@ -101,7 +100,8 @@ public class DynamicObjectModule {
 		
 		for (Item item : _items) {
 			if (item.getX() == character.getX() && item.getY() == character.getY()) {
-				_tcpClientModule.inputMoves(MoveCodes.GET);
+				// Temporary comment out.
+				//_tcpClientModule.inputMoves(MoveCodes.GET);
 				return true;
 			}
 		}
