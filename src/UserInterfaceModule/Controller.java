@@ -1,12 +1,12 @@
-package UIM;
+package UserInterfaceModule;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import CDC.Entities.Sprite;
-import CDC.Entities.StateType;
+import CentralizedDataCenter.Entities.Sprite;
+import CentralizedDataCenter.Entities.StateType;
 import Common.Direction;
 
 

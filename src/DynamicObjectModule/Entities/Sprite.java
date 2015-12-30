@@ -2,7 +2,7 @@ package DynamicObjectModule.Entities;
 
 import java.awt.Graphics;
 
-import Entity.StateType;
+import Entities.StateType;
 
 public abstract class Sprite {
 	public static final int DEFAULT_X = 0;

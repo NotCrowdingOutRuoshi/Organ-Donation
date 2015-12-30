@@ -1,4 +1,4 @@
-package net.tcp.client;
+package Net.TCP.Client;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;

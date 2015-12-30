@@ -1,4 +1,4 @@
-package UIM;
+package UserInterfaceModule;
 import javax.swing.JPanel;
 
 import DynamicObjectModule.DynamicObjectModule;

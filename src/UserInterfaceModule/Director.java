@@ -1,4 +1,4 @@
-package UIM;
+package UserInterfaceModule;
 
 
 import java.awt.Color;

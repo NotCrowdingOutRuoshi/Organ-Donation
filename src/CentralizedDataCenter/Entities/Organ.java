@@ -1,4 +1,4 @@
-package CDC.Entities;
+package CentralizedDataCenter.Entities;
 
 public class Organ extends Sprite{
 

@@ -1,4 +1,4 @@
-package CDC.Entities;
+package CentralizedDataCenter.Entities;
 
 import java.util.ArrayList;
 

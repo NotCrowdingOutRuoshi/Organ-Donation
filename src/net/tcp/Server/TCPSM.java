@@ -1,4 +1,4 @@
-package net.tcp.server;
+package Net.TCP.Server;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,7 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Vector;
 
-import CDC.CDC;
+import CentralizedDataCenter.CDC;
 
 public class TCPSM implements Runnable {
 

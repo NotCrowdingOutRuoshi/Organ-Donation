@@ -1,4 +1,4 @@
-package UIM;
+package UserInterfaceModule;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
-import CDC.Entities.Player;
+import CentralizedDataCenter.Entities.Player;
 import DynamicObjectModule.DynamicObjectModule;
 
 public class GameScene extends JPanel implements KeyListener {

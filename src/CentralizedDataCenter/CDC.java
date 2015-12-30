@@ -1,13 +1,13 @@
-package CDC;
+package CentralizedDataCenter;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
 
-import CDC.Entities.Organ;
-import CDC.Entities.Player;
-import CDC.Entities.StateType;
+import CentralizedDataCenter.Entities.Organ;
+import CentralizedDataCenter.Entities.Player;
+import CentralizedDataCenter.Entities.StateType;
 import Common.Direction;
 
 public class CDC {

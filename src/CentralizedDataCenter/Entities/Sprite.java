@@ -1,4 +1,4 @@
-package CDC.Entities;
+package CentralizedDataCenter.Entities;
 
 public abstract class Sprite {
 	protected int _id;

@@ -1,10 +1,10 @@
-package UIM;
+package UserInterfaceModule;
 
 import javax.swing.JPanel;
 
-import CDC.Entities.Player;
+import CentralizedDataCenter.Entities.Player;
 import DynamicObjectModule.DynamicObjectModule;
-import net.tcp.client.TCPCM;
+import Net.TCP.Client.TCPCM;
 
 public class GameManager {
 

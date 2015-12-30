@@ -1,4 +1,5 @@
-package UIM;
+package UserInterfaceModule;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,7 +15,6 @@ import DynamicObjectModule.DynamicObjectModule;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 
 public class UserInterFace extends JFrame {
 
