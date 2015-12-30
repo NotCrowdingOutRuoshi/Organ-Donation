@@ -1,4 +1,4 @@
-package Constants;
+package Common;
 
 public class Constants {
 	public static int ACTIONCODE_EAST = 39; 

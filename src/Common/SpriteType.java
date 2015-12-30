@@ -1,4 +1,4 @@
-package Enum;
+package Common;
 
 public enum SpriteType {
 	PLAYER, ITEM
