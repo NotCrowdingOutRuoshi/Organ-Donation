@@ -2,14 +2,14 @@ package DynamicObjectModule.Entities;
 
 import java.awt.Graphics;
 
-public class Item extends Sprite {
+public class VirtualItem extends Sprite {
 	public final static int EMPTY_OWNER = -1;
 
 	private int _owner;
 	private String _name;
 	private boolean _shared;
 
-	public Item(String name, int id, boolean shared, int x, int y) {
+	public VirtualItem(String name, int id, boolean shared, int x, int y) {
 		super(id, x, y);
 
 		assert (name != null && !name.isEmpty());
