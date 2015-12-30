@@ -58,11 +58,11 @@ public class CDC {
 			targetX -= 1;
 		}
 		
-		for(int i=0;i<PlayerList.size();i++){
+		for(int i=1;i<=PlayerList.size();i++){
 			if(i!=player.getId()){
-				Player player2 = PlayerList.get(i+1);
+				Player player2 = PlayerList.get(i);
 				if(targetX==player2.getX() && targetY==player2.getY()){
-					player2.setHealth(player2.getHealth()-50);				
+					player2.setHealth(player2.getHealth()-50);
 				}
 			}
 		}
@@ -161,8 +161,8 @@ public class CDC {
 	}
 	
 	public void logic(){
-		for(int i=0;i<PlayerList.size();i++){
-			Player player = PlayerList.get(i+1);
+		for(int i=1;i<=PlayerList.size();i++){
+			Player player = PlayerList.get(i);
 			if(player.getHealth()==0){
 				player.setState(StateType.EXHAUST);
 			}
@@ -174,8 +174,8 @@ public class CDC {
 	}
 	
 	public void enviromentLogic(){
-		for(int i=0;i<PlayerList.size();i++){
-			Player player = PlayerList.get(i+1);
+		for(int i=1;i<PlayerList.size();i++){
+			Player player = PlayerList.get(i);
 			player.decreaseOrganHp(2);
 		}
 	}
