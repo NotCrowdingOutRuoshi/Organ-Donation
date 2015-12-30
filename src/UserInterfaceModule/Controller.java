@@ -32,17 +32,17 @@ public class Controller implements KeyListener {
 		if (_keyCodeToDirection.containsKey(e.getKeyCode())) {
 			_isDirectionKeyPressed = true;
 
-			data = _entity.getID()+" "+_keyCodeToDirection.get(e.getKeyCode())+" "+StateType.WALK;
+			data = _entity.getId()+" "+_keyCodeToDirection.get(e.getKeyCode())+" "+StateType.WALK;
 			
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_Z) {
-			data = _entity.getID()+" "+StateType.ATTACK;
+			data = _entity.getId()+" "+StateType.ATTACK;
 			
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_X) {
-			data = _entity.getID()+" "+StateType.STEAL;
+			data = _entity.getId()+" "+StateType.STEAL;
 			
 		}
 		
@@ -54,7 +54,7 @@ public class Controller implements KeyListener {
 		if (_keyCodeToDirection.containsKey(e.getKeyCode())) {
 			_isDirectionKeyPressed = false;
 			
-			data = _entity.getID()+" "+StateType.IDLE;
+			data = _entity.getId()+" "+StateType.IDLE;
 		}
 		GameManager.getInstance().sendtoTcp(data);
 	}
