@@ -7,4 +7,5 @@ public class StateType {
 	public static final String ATTACK = "Attack state";
 	public static final String STEAL = "Steal state";
 	public static final String EXHAUST = "Exhaust state";
+	public static final String DEATH = "Death state";
 }
