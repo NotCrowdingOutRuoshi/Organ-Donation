@@ -1,6 +1,6 @@
 package Common.Interfaces;
 
-public interface IUDPUS {
+public interface IUDPUpdateServer {
 	public void initUDPserver();
 	public void stopUDPServer();
 
