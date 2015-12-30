@@ -19,10 +19,18 @@ public class Player extends Sprite{
 		_state = StateType.IDLE;
 		_energy = 0;
 		_organs = new ArrayList<Organ>();
+		Organ organ = new Organ("heart",100);
+		Organ organ1 = new Organ("lag",100);
+		_organs.add(organ);
+		_organs.add(organ1);
 	}
 	
 	public void addOrgan(Organ organ){
 		_organs.add(organ);
+	}
+	
+	public void remove(Organ organ){
+		_organs.remove(organ);
 	}
 	
 	public void setDir(int dir){
@@ -49,11 +57,6 @@ public class Player extends Sprite{
 		return _speed;
 	}
 	
-	public void setEnergy(int energy){
-		
-		
-	}
-	
 	public int getEnergy(){
 		_energy = 0;
 		for(int i=0;i<_organs.size();i++){
@@ -62,9 +65,28 @@ public class Player extends Sprite{
 		return _energy;
 	}
 	
-	public int getRandomOrganId(){
-		int id = (int) (Math.random()*5+1);
-		return id;
+	public ArrayList<Organ> getOrgans(){
+		return _organs;
+	}
+	
+	public void decreaseOrganHp(int number){
+		int randomnum = (int) (Math.random()*_organs.size());
+
+		Organ decreasecorgan = _organs.get(randomnum);
+		if(decreasecorgan.getHP()>0){
+			decreasecorgan.setHP(decreasecorgan.getHP()-number);
+		}
+		else{
+			_organs.remove(randomnum);
+		}
+	}
+	
+	public Organ StealedOrgan(){
+		int randomnum = (int) (Math.random()*_organs.size());
+
+		Organ stealedorgan = _organs.get(randomnum);
+		return stealedorgan;
+
 	}
 }
 

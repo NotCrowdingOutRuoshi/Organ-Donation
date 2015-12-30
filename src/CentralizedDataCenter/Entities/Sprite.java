@@ -11,6 +11,7 @@ public abstract class Sprite {
 		_id = 0;
 		_x = 0;
 		_y = 0;
+		_health = 500;
 
 	}
 
@@ -18,7 +19,7 @@ public abstract class Sprite {
 		_id = id;
 	}
 	
-	public int getID(){
+	public int getId(){
 		return _id;
 	}
 	
