@@ -28,7 +28,7 @@ public class TCPServer implements Runnable {
 		clientOut = new Vector<Socket>();
 	}
 	
-	public void initTCPServer() throws IOException {
+	private void initTCPServer() throws IOException {
 		serverSocket = new ServerSocket(9090);
 		while(true){
 			Socket socket = serverSocket.accept();
