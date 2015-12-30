@@ -3,7 +3,7 @@ package Common.Interfaces;
 import java.net.InetAddress;
 import java.util.Vector;
 
-public interface ITCPSM {
+public interface ITCPServer {
 	
 	public void startServer();
 	

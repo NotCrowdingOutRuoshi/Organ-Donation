@@ -2,7 +2,7 @@ package Common.Interfaces;
 
 import java.net.InetAddress;
 
-public interface ITCPCM {
+public interface ITCPClient {
 	
 	public boolean connectServer(InetAddress serverip);
 	

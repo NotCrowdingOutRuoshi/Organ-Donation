@@ -6,9 +6,9 @@ import java.util.Vector;
 
 import com.sun.jndi.cosnaming.IiopUrl.Address;
 
-import Common.Interfaces.ITCPSM;
+import Common.Interfaces.ITCPServer;
 
-public class TCPSMStub implements ITCPSM{
+public class TCPSMStub implements ITCPServer{
 
 	private Vector<InetAddress> ipTables;
 	@Override

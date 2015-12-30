@@ -1,8 +1,8 @@
 package Net.UDP.Test.Stub;
 
-import Common.Interfaces.ICDC;
+import Common.Interfaces.ICentralizedDataCenter;
 
-public class CDCStub implements ICDC {
+public class CDCStub implements ICentralizedDataCenter {
 
 	@Override
 	public void addPlayer(int id) {

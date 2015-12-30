@@ -7,9 +7,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import com.sun.corba.se.spi.activation.Server;
-import Common.Interfaces.ICDC;
-import Common.Interfaces.ITCPSM;
-import Common.Interfaces.IUDPBroadCast;
+import Common.Interfaces.ICentralizedDataCenter;
+import Common.Interfaces.ITCPServer;
+import Common.Interfaces.IUDPBroadcast;
 import Common.Interfaces.IUDPUpdateServer;
 import Net.UDP.Server.UDPBroadCast;
 import Net.UDP.Test.Mock.UDPUSMock;
@@ -18,9 +18,9 @@ import Net.UDP.Test.Stub.TCPSMStub;
 
 
 public class UDPBCTest {
-	private ICDC _cdc;
-	private ITCPSM _tcpsm;
-	private IUDPBroadCast udpBroadCast;
+	private ICentralizedDataCenter _cdc;
+	private ITCPServer _tcpsm;
+	private IUDPBroadcast udpBroadCast;
 	private IUDPUpdateServer udpusMock;
 	
 	@Before
