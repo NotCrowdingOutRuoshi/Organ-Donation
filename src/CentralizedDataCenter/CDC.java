@@ -12,7 +12,7 @@ import Common.StateType;
 public class CDC {
 	Map<Integer,Player> PlayerList;
 	Map<Integer,Organ> OrganList;
-	private int alive = 4;
+
 	public CDC(){
 		PlayerList = new HashMap<Integer,Player>();
 		OrganList = new HashMap<Integer,Organ>();
@@ -86,9 +86,9 @@ public class CDC {
 			targetX -= 1;
 		}
 		
-		for(int i=0;i<PlayerList.size();i++){
+		for(int i=1;i<=PlayerList.size();i++){
 			if(i!=player.getId()){
-				Player player2 = PlayerList.get(i+1);
+				Player player2 = PlayerList.get(i);
 				if(targetX==player2.getX() && targetY==player2.getY() && player2.getState().equals(StateType.EXHAUST)){
 					Organ o = player2.StealedOrgan();
 					player2.remove(o);
@@ -96,7 +96,6 @@ public class CDC {
 				}
 			}
 		}
-		player.setHealth(player.getHealth()-5);
 	}
 	
 	public String getUpdateInfo(){
@@ -150,6 +149,12 @@ public class CDC {
 	        public void run()
 	        {
 	        	while(true){
+	        		try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					};
 	        		enviromentLogic();
 	        		logic();
 	        		gameover();
@@ -161,6 +166,7 @@ public class CDC {
 	}
 	
 	public void logic(){
+		int alive = PlayerList.size();
 		for(int i=1;i<=PlayerList.size();i++){
 			Player player = PlayerList.get(i);
 			if(player.getHealth()==0){
@@ -168,22 +174,26 @@ public class CDC {
 			}
 			if(player.getEnergy()==0){
 				player.setState(StateType.DEATH);
+			}
+			if(player.getState().equals(StateType.DEATH)){
 				alive -= 1;
+				if(alive<=1){
+					System.out.println("gameover");
+				}
 			}
 		}
 	}
 	
 	public void enviromentLogic(){
-		for(int i=1;i<PlayerList.size();i++){
+		for(int i=1;i<=PlayerList.size();i++){
 			Player player = PlayerList.get(i);
-			player.decreaseOrganHp(2);
+			System.out.println(getUpdateInfo());
+			player.decreaseOrganHp(20);
 		}
 	}
 	
 	public void gameover(){
-		if(alive<=0){
-			//send gameover
-		}
+		//send gameover
 	}
 
 }

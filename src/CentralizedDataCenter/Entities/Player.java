@@ -70,15 +70,19 @@ public class Player extends Sprite{
 	}
 	
 	public void decreaseOrganHp(int number){
-		int randomnum = (int) (Math.random()*_organs.size());
-
-		Organ decreasecorgan = _organs.get(randomnum);
-		if(decreasecorgan.getHP()>0){
-			decreasecorgan.setHP(decreasecorgan.getHP()-number);
+		if(_organs.size()>0){
+			int randomnum = (int) (Math.random()*(_organs.size()-1));
+			System.out.println(randomnum);
+			Organ decreasecorgan = _organs.get(randomnum);
+			if(decreasecorgan.getHP()>0){
+				decreasecorgan.setHP(decreasecorgan.getHP()-number);
+			}
+			else{
+				System.out.println("---"+decreasecorgan.getName()+decreasecorgan.getHP());
+				_organs.remove(decreasecorgan);
+			}
 		}
-		else{
-			_organs.remove(randomnum);
-		}
+		
 	}
 	
 	public Organ StealedOrgan(){
