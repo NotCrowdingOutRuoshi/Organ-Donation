@@ -2,21 +2,22 @@ package CentralizedDataCenter.Entities;
 
 import java.util.ArrayList;
 
-import Common.Direction;
+import Common.Constants;
+import Common.StateType;
 
 public class Player extends Sprite{
 
 	private int _speed;
-	private Direction _dir;
-	private StateType _state;
+	private int _dir;
+	private String _state;
 	private ArrayList<Organ> _organs;
 	private int _energy;
 	
 	public Player(){
-		_speed = 0;
-		_dir = Direction.RIGHT;
+		_speed = 5;
+		_dir = Constants.ACTIONCODE_EAST;
 		_state = StateType.IDLE;
-		_energy = 500;
+		_energy = 0;
 		_organs = new ArrayList<Organ>();
 	}
 	
@@ -24,19 +25,19 @@ public class Player extends Sprite{
 		_organs.add(organ);
 	}
 	
-	public void setDir(Direction dir){
+	public void setDir(int dir){
 		_dir = dir;
 	}
 	
-	public Direction getDir(){
+	public int getDir(){
 		return _dir;
 	}
 	
-	public void setState(StateType state){
+	public void setState(String state){
 		_state = state;
 	}
 	
-	public StateType getState(){
+	public String getState(){
 		return _state;
 	}
 	
@@ -49,11 +50,21 @@ public class Player extends Sprite{
 	}
 	
 	public void setEnergy(int energy){
-		_energy = energy;
+		
+		
 	}
 	
 	public int getEnergy(){
+		_energy = 0;
+		for(int i=0;i<_organs.size();i++){
+			_energy += _organs.get(i).getHP();
+		}
 		return _energy;
+	}
+	
+	public int getRandomOrganId(){
+		int id = (int) (Math.random()*5+1);
+		return id;
 	}
 }
 

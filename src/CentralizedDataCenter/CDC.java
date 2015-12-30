@@ -3,39 +3,39 @@ package CentralizedDataCenter;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import CentralizedDataCenter.Entities.Organ;
 import CentralizedDataCenter.Entities.Player;
-import CentralizedDataCenter.Entities.StateType;
-import Common.Direction;
+import Common.Constants;
+import Common.StateType;
 
 public class CDC {
 	Map<Integer,Player> PlayerList;
-	
+	Map<Integer,Organ> OrganList;
 	public CDC(){
 		PlayerList = new HashMap<Integer,Player>();
-		
+		OrganList = new HashMap<Integer,Organ>();
 	}
 	
 	public void addPlayer(int id){
 		Player player = new Player();
 		player.setID(id);
-		for(int i=0;i<4;i++){
-			Organ organ = new Organ(id*10+i);
-			player.addOrgan(organ);
-		}
+		Organ organ = new Organ(id*10+1,"heart",100);
+		player.addOrgan(organ);
+		
 		
 		PlayerList.put(id, player);
 	}
 
-	public void updateDir(int id ,Direction dir,StateType state){
+	public void updateDir(int id ,int dir){
 		Player player = PlayerList.get(id);
 		player.setDir(dir);
 		
 	}
 	
-	public void setState(int id,StateType state){
+	public void setState(int id,String state){
 		Player player = PlayerList.get(id);
 		player.setState(state);
 		if(state == StateType.ATTACK){
@@ -47,16 +47,16 @@ public class CDC {
 		int targetX = player.getX();
 		int targetY = player.getY();
 		
-		if(player.getDir()==Direction.UP){
+		if(player.getDir()==Constants.ACTIONCODE_NORTH){
 			targetY -= 1;
 		}
-		else if(player.getDir()==Direction.DOWN){
+		else if(player.getDir()==Constants.ACTIONCODE_SOUTH){
 			targetY += 1;
 		}
-		else if(player.getDir()==Direction.LEFT){
+		else if(player.getDir()==Constants.ACTIONCODE_EAST){
 			targetX += 1;
 		}
-		else if(player.getDir()==Direction.RIGHT){
+		else if(player.getDir()==Constants.ACTIONCODE_WEST){
 			targetX -= 1;
 		}
 		
@@ -72,11 +72,11 @@ public class CDC {
 	}
 	
 	public String getUpdateInfo(){
-		JSONObject jsonObject = new JSONObject(PlayerList);
+		JSONObject jsonObject = new JSONObject(PlayerList.get(1));
 		return jsonObject.toString();
 	}
 	
-	public void computingXYThread(){
+	private void computingXYThread(){
 
 		Thread thread = new Thread()
 	    {
@@ -92,26 +92,19 @@ public class CDC {
 	        		for(int i=0;i<PlayerList.size();i++){
 	        			Player player = PlayerList.get(i+1);
 	        			if(player.getState()==StateType.WALK){
-	        				switch (player.getDir()) {
-		        			case UP:
-		        				player.setY(player.getY()-player.getSpeed()/2);;
-		        				break;
-
-		        			case DOWN:
-		        				player.setY(player.getY()+player.getSpeed()/2);;
-		        				break;
-		        				
-		        			case LEFT:
-		        				player.setX(player.getX()-player.getSpeed()/2);;
-		        				break;
-		        				
-		        			case RIGHT:
-		        				player.setX(player.getX()+player.getSpeed()/2);;
-		        				break;
-		        				
-		        			default:
-		        				break;
-		        			}	
+	        				if(player.getDir()==Constants.ACTIONCODE_NORTH){
+	        					player.setY(player.getY()-player.getSpeed()/2);
+	        				}
+	        				else if(player.getDir()==Constants.ACTIONCODE_SOUTH){
+	        					player.setY(player.getY()+player.getSpeed()/2);
+	        				}
+	        				else if(player.getDir()==Constants.ACTIONCODE_EAST){
+	        					player.setX(player.getX()+player.getSpeed()/2);
+	        				}
+	        				else if(player.getDir()==Constants.ACTIONCODE_WEST){
+	        					player.setX(player.getX()-player.getSpeed()/2);
+	        				}
+	        				
 	        			}
 	        					
 	        		}
@@ -122,7 +115,7 @@ public class CDC {
 	    thread.start();
 	}
 	
-	public void StateThread(){
+	public void GameLogicThread(){
 
 		Thread thread = new Thread()
 	    {
@@ -130,16 +123,33 @@ public class CDC {
 	        {
 	        	while(true){
 
-	        		for(int i=0;i<PlayerList.size();i++){
-	        			Player player = PlayerList.get(i+1);
-	        			if(player.getHealth()==0){
-	        				player.setState(StateType.EXHAUSTION);
-	        			}
-	        		}
+	        		logic();
 	        	}
 	        	
 	        }
 	    };
 	    thread.start();
+	}
+	
+	public void logic(){
+		for(int i=0;i<PlayerList.size();i++){
+			Player player = PlayerList.get(i+1);
+			if(player.getHealth()==0){
+				player.setState(StateType.EXHAUST);
+			}
+			if(player.getEnergy()==0){
+				
+			}
+		}
+	}
+	
+	public void enviromentLogic(){
+		for(int i=0;i<PlayerList.size();i++){
+			
+		}
+	}
+	
+	private void decreaseOrganHp(int organId,int number){
+		
 	}
 }
