@@ -1,4 +1,4 @@
-package Net.TCP.Server;
+package TCP.Server;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +10,7 @@ import java.util.Vector;
 
 import CentralizedDataCenter.CDC;
 
-public class TCPSM implements Runnable {
+public class TCPServer implements Runnable {
 
 	private ServerSocket serverSocket;
 
@@ -22,7 +22,7 @@ public class TCPSM implements Runnable {
 
 	public final static int MOVE = 22, GET = 33;
 	
-	public TCPSM(CDC cdc) {
+	public TCPServer(CDC cdc) {
 		this.cdc = cdc;
 		clientIPTable = new Vector<InetAddress>();
 		clientOut = new Vector<Socket>();
@@ -88,10 +88,10 @@ class ConnectThread extends Thread {
 			while (true) {
 				int moveCode = input.read();
 				switch (moveCode) {
-				case TCPSM.MOVE:
+				case TCPServer.MOVE:
 //					cdc.updateDirection(5, moveCode);
 					break;
-				case TCPSM.GET:
+				case TCPServer.GET:
 //					cdc.getItem(5);
 					break;
 				}

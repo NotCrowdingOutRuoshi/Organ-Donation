@@ -7,14 +7,14 @@ import DynamicObjectModule.Entities.Character;
 import DynamicObjectModule.Entities.Item;
 import DynamicObjectModule.Entities.Sprite;
 import DynamicObjectModule.Entities.Character.DIRECTIONS;
-import Net.TCP.Client.TCPCM;
+import TCP.Client.TCPClient;
 
 public class DynamicObjectModule {
 	private ArrayList<Item> _items;
 	private ArrayList<Character> _characters;
-	private TCPCM _tcpClientModule;
+	private TCPClient _tcpClientModule;
 
-	public DynamicObjectModule(TCPCM tcpClientModule) {
+	public DynamicObjectModule(TCPClient tcpClientModule) {
 		assert (tcpClientModule != null);
 
 		_items = new ArrayList<Item>();

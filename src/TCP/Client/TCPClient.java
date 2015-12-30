@@ -1,4 +1,4 @@
-package Net.TCP.Client;
+package TCP.Client;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class TCPCM implements Runnable {
+public class TCPClient implements Runnable {
 
 	private Socket socket;
 
@@ -16,7 +16,7 @@ public class TCPCM implements Runnable {
 	
 	private InputStream input;
 
-	public TCPCM() {
+	public TCPClient() {
 		// TODO Auto-generated constructor stub
 		socket = new Socket();
 	}
@@ -36,7 +36,7 @@ public class TCPCM implements Runnable {
 		assert (MoveCode == KeyEvent.VK_UP || MoveCode == KeyEvent.VK_DOWN
 				|| MoveCode == KeyEvent.VK_LEFT
 				|| MoveCode == KeyEvent.VK_RIGHT || MoveCode == KeyEvent.VK_UP
-				|| MoveCode == TCPCM.GET );
+				|| MoveCode == TCPClient.GET );
 		
 		assert(socket.isConnected());
 

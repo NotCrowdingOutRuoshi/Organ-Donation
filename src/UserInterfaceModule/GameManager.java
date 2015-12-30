@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 
 import CentralizedDataCenter.Entities.Player;
 import DynamicObjectModule.DynamicObjectModule;
-import Net.TCP.Client.TCPCM;
+import TCP.Client.TCPClient;
 
 public class GameManager {
 
@@ -13,7 +13,7 @@ public class GameManager {
 	private JPanel statusPanel;
 	private Player player;
 	private DynamicObjectModule dom;
-	private TCPCM tcp;
+	private TCPClient tcp;
 	
 	/**
      * 使用靜態變數記錄Singleton, 並建立實例
