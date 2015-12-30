@@ -1,6 +1,6 @@
 package Common.Interfaces;
 
-public interface ICDC {
+public interface ICentralizedDataCenter {
 
 	public void addPlayer(int id);
 	public void updateDir(int id ,int dir);

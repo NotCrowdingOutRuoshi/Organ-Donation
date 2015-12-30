@@ -1,6 +1,6 @@
 package Common.Interfaces;
 
-public interface IUDPBroadCast {
+public interface IUDPBroadcast {
 	public void startUDPBroadCast();
 	public void endUDPBroadCast();
 }

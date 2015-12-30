@@ -7,9 +7,9 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-import Common.Interfaces.IUDPBroadCast;
+import Common.Interfaces.IUDPBroadcast;
 
-public class UDPBCStub implements IUDPBroadCast {
+public class UDPBCStub implements IUDPBroadcast {
 	private int _port = 27016;;
 
 	private DatagramSocket _socket;

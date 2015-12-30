@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 
-import Common.Interfaces.DynamicObjectModuleInterface;
+import Common.Interfaces.IDynamicObjectModule;
 import DynamicObjectModule.Entities.VirtualCharacter;
 import DynamicObjectModule.Entities.VirtualItem;
 import DynamicObjectModule.Entities.Sprite;
@@ -12,7 +12,7 @@ import DynamicObjectModule.Updaters.VirtualCharacterUpdater;
 import DynamicObjectModule.Updaters.SpriteUpdater;
 import Net.TCP.Client.TCPClient;
 
-public class DynamicObjectModule implements DynamicObjectModuleInterface {
+public class DynamicObjectModule implements IDynamicObjectModule {
 	private int _countDown;
 	private TCPClient _tcpClientModule;
 	private ArrayList<SpriteUpdater<?>> _updaters;
@@ -43,7 +43,7 @@ public class DynamicObjectModule implements DynamicObjectModuleInterface {
 	}
 
 	@Override
-	public void addVirtualCharacter(int clientNumber, int x, int y, String direction, int speed) {
+	public void addVirtualCharacter(int clientNumber) {
 		assert (clientNumber >= 0);
 		assert (findSprite(clientNumber) == null);
 
@@ -51,7 +51,7 @@ public class DynamicObjectModule implements DynamicObjectModuleInterface {
 			assert (clientNumber != character.getId());
 		}
 
-		VirtualCharacter virtualCharacter = new VirtualCharacter(clientNumber, x, y, direction, speed);
+		VirtualCharacter virtualCharacter = new VirtualCharacter(clientNumber, Sprite.DEFAULT_X, Sprite.DEFAULT_Y, VirtualCharacter.DEFAULT_DIRECTION, VirtualCharacter.DEFAULT_SPEED);
 		_sprites.add(virtualCharacter);
 		_updaters.add(new VirtualCharacterUpdater(virtualCharacter));
 	}

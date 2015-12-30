@@ -12,20 +12,20 @@ import java.util.Vector;
 
 import com.sun.org.apache.bcel.internal.classfile.Code;
 
-import Common.Interfaces.ICDC;
-import Common.Interfaces.ITCPCM;
-import Common.Interfaces.ITCPSM;
-import Common.Interfaces.IUDPBroadCast;
+import Common.Interfaces.ICentralizedDataCenter;
+import Common.Interfaces.ITCPClient;
+import Common.Interfaces.ITCPServer;
+import Common.Interfaces.IUDPBroadcast;
 import jdk.internal.dynalink.linker.LinkerServices.Implementation;
 
 
-public class UDPBroadCast implements IUDPBroadCast {
+public class UDPBroadCast implements IUDPBroadcast {
 
 	private int port = 27016;;
 	private long updateSecond = 50;
 
-	private ITCPSM _tcpsm;
-	private ICDC _cdc;
+	private ITCPServer _tcpsm;
+	private ICentralizedDataCenter _cdc;
 
 	private Timer _broadCaseTimer;
 
@@ -33,9 +33,9 @@ public class UDPBroadCast implements IUDPBroadCast {
 
 	
 	
-	public UDPBroadCast(ITCPSM tcpsm, ICDC cdc) {
-		_tcpsm = tcpsm;
-		_cdc = cdc;
+	public UDPBroadCast(ITCPServer tCPServer, ICentralizedDataCenter centralizedDataCenter) {
+		_tcpsm = tCPServer;
+		_cdc = centralizedDataCenter;
 		_broadCaseTimer = new Timer();
 
 	}

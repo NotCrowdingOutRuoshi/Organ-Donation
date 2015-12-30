@@ -7,12 +7,12 @@ import java.net.SocketException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import Common.Interfaces.DynamicObjectModuleInterface;
+import Common.Interfaces.IDynamicObjectModule;
 import Common.Interfaces.IUDPUpdateServer;
 
 
 public class UDPUdateServer implements IUDPUpdateServer {
-	private DynamicObjectModuleInterface _dom;
+	private IDynamicObjectModule _dom;
 	private int _port = 27016;;
 	private int bufferSize = 512;
 	private long updateSecond = 50;
@@ -23,7 +23,7 @@ public class UDPUdateServer implements IUDPUpdateServer {
 
 	private Timer _reciveUDPDataTimer;
 
-	public UDPUdateServer(DynamicObjectModuleInterface dom) {
+	public UDPUdateServer(IDynamicObjectModule dom) {
 		_buffer = new byte[bufferSize];
 		_dataPacket = new DatagramPacket(_buffer, _buffer.length);
 		_reciveUDPDataTimer = new Timer();
