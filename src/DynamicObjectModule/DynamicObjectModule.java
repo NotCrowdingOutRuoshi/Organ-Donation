@@ -7,7 +7,7 @@ import DynamicObjectModule.Entities.Character;
 import DynamicObjectModule.Entities.Item;
 import DynamicObjectModule.Entities.Sprite;
 import DynamicObjectModule.Entities.Character.DIRECTIONS;
-import TCP.Client.TCPClient;
+import Net.TCP.Client.TCPClient;
 
 public class DynamicObjectModule {
 	private ArrayList<Item> _items;

@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 
 import CentralizedDataCenter.Entities.Player;
 import DynamicObjectModule.DynamicObjectModule;
-import TCP.Client.TCPClient;
+import Net.TCP.Client.TCPClient;
 
 public class GameManager {
 
