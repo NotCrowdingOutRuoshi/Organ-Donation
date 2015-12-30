@@ -1,5 +1,7 @@
 package RenderEngine.Sprite;
 
+import java.awt.Graphics;
+
 import DynamicObjectModule.DynamicObjectModule;
 import DynamicObjectModule.Entities.Sprite;
 
@@ -8,14 +10,15 @@ public class SpriteRenderEngine {
 
 	public SpriteRenderEngine(DynamicObjectModule dynamicObjectModule) {
 		assert (dynamicObjectModule != null);
+		
 		_dynamicObjectModule = dynamicObjectModule;
 	}
 
-	public void renderSprites() {
+	public void render(Graphics g) {		
 		Sprite[] entities = _dynamicObjectModule.getAllDynamicObjects();
 		
 		for (Sprite sprite : entities) {
-			//sprite.draw();
+			sprite.draw(g);
 		}
 	}
 }
