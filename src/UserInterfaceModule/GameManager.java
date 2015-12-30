@@ -32,12 +32,13 @@ public class GameManager {
     }
 	
     private GameManager(){
-		//tcp = new TCP();
+		tcp = new TCPClient();
+    	dom = new DynamicObjectModule(tcp);
 	}
     
-    public void setDom(DynamicObjectModule dom){
-    	this.dom = dom;
-    }
+//    public void setDom(DynamicObjectModule dom){
+//    	this.dom = dom;
+//    }
     
     public void setDirector(Director director){
     	this.director = director;

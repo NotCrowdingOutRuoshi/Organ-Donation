@@ -48,8 +48,8 @@ public class UserInterFace extends JFrame {
 		MenuScene ms = new MenuScene();
 		contentPane.add(ms);
 		Director director = new Director(this);
-		DynamicObjectModule dom = new DynamicObjectModule(null);
-		GameManager.getInstance().setDom(dom);
+
+
 		GameManager.getInstance().setDirector(director);
 
 	}

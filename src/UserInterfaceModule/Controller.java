@@ -7,16 +7,15 @@ import java.util.Map;
 
 import CentralizedDataCenter.Entities.Sprite;
 import CentralizedDataCenter.Entities.StateType;
-import Common.Direction;
-
+import Common.Constants;
 
 public class Controller implements KeyListener {
-	protected static Map<Integer, Direction> _keyCodeToDirection = new HashMap<Integer, Direction>() {
+	protected static Map<Integer, Integer> _keyCodeToDirection = new HashMap<Integer, Integer>() {
 		{
-			put(KeyEvent.VK_UP, Direction.UP);
-			put(KeyEvent.VK_DOWN, Direction.DOWN);
-			put(KeyEvent.VK_LEFT, Direction.LEFT);
-			put(KeyEvent.VK_RIGHT, Direction.RIGHT);
+			put(KeyEvent.VK_UP, Constants.ACTIONCODE_NORTH);
+			put(KeyEvent.VK_DOWN, Constants.ACTIONCODE_SOUTH);
+			put(KeyEvent.VK_LEFT, Constants.ACTIONCODE_WEST);
+			put(KeyEvent.VK_RIGHT, Constants.ACTIONCODE_EAST);
 		}
 	};
 
