@@ -2,6 +2,8 @@ package CentralizedDataCenter;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 
 import org.json.JSONArray;
@@ -17,17 +19,21 @@ public class CDC implements ICentralizedDataCenter {
 	Map<Integer, Player> PlayerList;
 	Map<Integer, Organ> OrganList;
 	private String _gameState = Constants.GAME_STATE_MENU;
-	private Vector<String> gameStateList;
+	private Vector<String> _gameStateList;
+	private Timer _enviromentTimer;
+	private Timer _logicTimer;
 
 	public CDC() {
 		PlayerList = new HashMap<Integer, Player>();
 		OrganList = new HashMap<Integer, Organ>();
-		gameStateList = new Vector<>();
-		gameStateList.add(Constants.GAME_STATE_INIT);
-		gameStateList.add(Constants.GAME_STATE_MENU);
-		gameStateList.add(Constants.GAME_STATE_START);
-		gameStateList.add(Constants.GAME_STATE_OVER);
-		gameStateList.add(Constants.GAME_STATE_WAIT);
+		_enviromentTimer = new Timer();
+		_logicTimer = new Timer();
+		_gameStateList = new Vector<>();
+		_gameStateList.add(Constants.GAME_STATE_INIT);
+		_gameStateList.add(Constants.GAME_STATE_MENU);
+		_gameStateList.add(Constants.GAME_STATE_START);
+		_gameStateList.add(Constants.GAME_STATE_OVER);
+		_gameStateList.add(Constants.GAME_STATE_WAIT);
 	}
 
 	public void addPlayer(int id) {
@@ -49,6 +55,117 @@ public class CDC implements ICentralizedDataCenter {
 			playerAttack(player);
 		} else if (state.equals(StateType.STEAL)) {
 			playerSteal(player);
+		}
+	}
+
+	public String getUpdateInfo() {
+		JSONArray j = new JSONArray(PlayerList.values());
+		return j.toString();
+	}
+
+	public void GameLogicThread() {
+
+		Thread thread = new Thread() {
+			public void run() {
+				while (true) {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					;
+					enviromentLogic();
+					logic();
+				}
+
+			}
+		};
+		thread.start();
+	}
+
+	@Override
+	public void setGameState(String gameState) {
+		// TODO Auto-generated method stub
+		if (_gameStateList.contains(gameState)) {
+			_gameState = gameState;
+		} else {
+			assert false;
+		}
+	}
+
+	@Override
+	public String getGameState() {
+		// TODO Auto-generated method stub
+		return _gameState;
+	}
+
+	@Override
+	public void startGameLogicSchedule() {
+		// TODO Auto-generated method stub
+		_enviromentTimer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				enviromentLogic();
+			}
+		}, 1000);
+
+		_logicTimer.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				updatePlayersLocation();
+				logic();
+			}
+		}, 10);
+
+	}
+
+	private void updatePlayersLocation() {
+
+		for (int i = 0; i < PlayerList.size(); i++) {
+			Player player = PlayerList.get(i + 1);
+			if (player.getState().equals(StateType.WALK)) {
+				if (player.getDir() == Constants.ACTIONCODE_NORTH) {
+					player.setY(player.getY() - player.getSpeed() / 2);
+				} else if (player.getDir() == Constants.ACTIONCODE_SOUTH) {
+					player.setY(player.getY() + player.getSpeed() / 2);
+				} else if (player.getDir() == Constants.ACTIONCODE_EAST) {
+					player.setX(player.getX() + player.getSpeed() / 2);
+				} else if (player.getDir() == Constants.ACTIONCODE_WEST) {
+					player.setX(player.getX() - player.getSpeed() / 2);
+				}
+			}
+		}
+
+	}
+
+	private void logic() {
+		int alive = PlayerList.size();
+		for (int i = 1; i <= PlayerList.size(); i++) {
+			Player player = PlayerList.get(i);
+			if (player.getHealth() == 0) {
+				player.setState(StateType.EXHAUST);
+			}
+			if (player.getEnergy() == 0) {
+				player.setState(StateType.DEATH);
+			}
+			if (player.getState().equals(StateType.DEATH)) {
+				alive -= 1;
+
+				if (alive <= 1) {
+					setGameState(Constants.GAME_STATE_OVER);
+				}
+			}
+		}
+	}
+
+	private void enviromentLogic() {
+		for (int i = 1; i <= PlayerList.size(); i++) {
+			Player player = PlayerList.get(i);
+			player.decreaseOrganHp(20);
 		}
 	}
 
@@ -102,109 +219,6 @@ public class CDC implements ICentralizedDataCenter {
 				}
 			}
 		}
-	}
-
-	public String getUpdateInfo() {
-		JSONArray j = new JSONArray(PlayerList.values());
-		return j.toString();
-	}
-
-	private void computingXYThread() {
-
-		Thread thread = new Thread() {
-			public void run() {
-				while (true) {
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					for (int i = 0; i < PlayerList.size(); i++) {
-						Player player = PlayerList.get(i + 1);
-						if (player.getState().equals(StateType.WALK)) {
-							if (player.getDir() == Constants.ACTIONCODE_NORTH) {
-								player.setY(player.getY() - player.getSpeed() / 2);
-							} else if (player.getDir() == Constants.ACTIONCODE_SOUTH) {
-								player.setY(player.getY() + player.getSpeed() / 2);
-							} else if (player.getDir() == Constants.ACTIONCODE_EAST) {
-								player.setX(player.getX() + player.getSpeed() / 2);
-							} else if (player.getDir() == Constants.ACTIONCODE_WEST) {
-								player.setX(player.getX() - player.getSpeed() / 2);
-							}
-
-						}
-
-					}
-				}
-
-			}
-		};
-		thread.start();
-	}
-
-	public void GameLogicThread() {
-
-		Thread thread = new Thread() {
-			public void run() {
-				while (true) {
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					;
-					enviromentLogic();
-					logic();
-				}
-
-			}
-		};
-		thread.start();
-	}
-
-	public void logic() {
-		int alive = PlayerList.size();
-		for (int i = 1; i <= PlayerList.size(); i++) {
-			Player player = PlayerList.get(i);
-			if (player.getHealth() == 0) {
-				player.setState(StateType.EXHAUST);
-			}
-			if (player.getEnergy() == 0) {
-				player.setState(StateType.DEATH);
-			}
-			if (player.getState().equals(StateType.DEATH)) {
-				alive -= 1;
-				if (alive <= 1) {
-					setGameState(Constants.GAME_STATE_OVER);
-				}
-			}
-		}
-	}
-
-	public void enviromentLogic() {
-		for (int i = 1; i <= PlayerList.size(); i++) {
-			Player player = PlayerList.get(i);
-			System.out.println(getUpdateInfo());
-			player.decreaseOrganHp(20);
-		}
-	}
-
-	@Override
-	public void setGameState(String gameState) {
-		// TODO Auto-generated method stub
-		if (gameStateList.contains(gameState)) {
-			_gameState = gameState;
-		} else {
-			assert false;
-		}
-	}
-
-	@Override
-	public String getGameState() {
-		// TODO Auto-generated method stub
-		return _gameState;
 	}
 
 }
