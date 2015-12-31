@@ -38,7 +38,7 @@ public class DynamicObjectModule implements IDynamicObjectModule {
 	}
 
 	@Override
-	public void addVirtualCharacter(int clientNumber) {
+	public void addVirtualCharacter(int clientNumber, JSONObject data) {
 		assert (clientNumber >= 0);
 		assert (findSprite(clientNumber) == null);
 

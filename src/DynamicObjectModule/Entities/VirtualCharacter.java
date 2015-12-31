@@ -40,8 +40,8 @@ public class VirtualCharacter extends Sprite {
 	protected void initPackageToDirection() {
 		_packageToDirection.put("Left", Direction.LEFT);
 		_packageToDirection.put("Right", Direction.RIGHT);
-		// _packageToDirection.put("Up", Direction.UP);
-		// _packageToDirection.put("Down", Direction.DOWN);
+		_packageToDirection.put("Up", Direction.UP);
+		_packageToDirection.put("Down", Direction.DOWN);
 	}
 
 	@Override
@@ -65,21 +65,13 @@ public class VirtualCharacter extends Sprite {
 
 					if (_packageToDirection.containsKey(directionPackage.getName())) {
 						directedAnimation.put(_packageToDirection.get(directionPackage.getName()),
-								new Animation(images, 10));
+								new Animation(images, 50));
 					}
 				}
 			}
 		}
 
 		_animations.put(StateType.IDLE, directedAnimation);
-	}
-
-	public String getDirection() {
-		return _direction;
-	}
-
-	public void setDirection(String direction) {
-		_direction = direction;
 	}
 
 	public int getSpeed() {

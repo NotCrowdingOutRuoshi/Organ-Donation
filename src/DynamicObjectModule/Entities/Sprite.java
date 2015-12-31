@@ -107,11 +107,25 @@ public abstract class Sprite {
 	public void setState(String state) {
 		_state = state;
 		
+		updateAnimation();
+	}
+	
+	public String getDirection() {
+		return _direction;
+	}
+
+	public void setDirection(String direction) {
+		_direction = direction;
+		
+		updateAnimation();
+	}
+	
+	private void updateAnimation() {
 		if (_currentAnimation != null) {
 			_currentAnimation.reset();
 		}
 		
-		_currentAnimation = _animations.get(state).get(_direction);
+		_currentAnimation = _animations.get(_state).get(_direction);
 		_currentAnimation.start();
 	}
 }
