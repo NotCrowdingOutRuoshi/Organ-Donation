@@ -1,13 +1,20 @@
 package RenderEngine;
 
 import java.awt.Graphics;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import Common.Direction;
+import Common.StateType;
 import Common.Interfaces.IRenderEngine;
 import DynamicObjectModule.DynamicObjectModule;
 import RenderEngine.Scene.SceneRenderEngine;
 import RenderEngine.Sprite.SpriteRenderEngine;
+import Resources.Resources;
 import SceneDataModule.SceneDataModule;
 
 public class RenderEngine implements IRenderEngine {
@@ -38,8 +45,9 @@ public class RenderEngine implements IRenderEngine {
 	public static void main(String[] args) throws IOException, URISyntaxException {		
 		SceneDataModule sdm = new SceneDataModule(ImageIO.read(Resources.getResourceStream("Scene/Scene.jpg")));
 		DynamicObjectModule dom = new DynamicObjectModule();
-		dom.addVirtualCharacter(0);
+		dom.addVirtualCharacter(0, null);
 		dom.findSprite(0).setState(StateType.IDLE);
+		dom.findSprite(0).setDirection(Direction.RIGHT);
 		
 		RenderEngine renderEngine = new RenderEngine(dom, sdm);
 		
