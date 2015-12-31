@@ -90,4 +90,10 @@ public class TCPClient implements Runnable, ITCPClient {
 		
 	}
 
+	@Override
+	public void disconnect() throws IOException {
+		// TODO Auto-generated method stub
+		socket.close();
+	}
+
 }

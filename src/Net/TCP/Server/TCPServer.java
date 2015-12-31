@@ -68,6 +68,12 @@ public class TCPServer implements Runnable, ITCPServer {
 		}
 	}
 
+	@Override
+	public void closeServer() throws IOException {
+		// TODO Auto-generated method stub
+		serverSocket.close();
+	}
+
 }
 
 class ConnectThread extends Thread {
