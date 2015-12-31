@@ -1,5 +1,7 @@
 package UserInterfaceModule;
 
+import java.io.IOException;
+
 import javax.swing.JPanel;
 
 import CentralizedDataCenter.Entities.Player;
@@ -44,7 +46,7 @@ public class GameManager {
     	this.director = director;
     }
 	
-	public void setGameStatus(String status){
+	public void setGameStatus(String status) throws IOException{
 		this.status = status;
 		switch(this.status){
 		case "menu":
@@ -58,7 +60,6 @@ public class GameManager {
 			break;
 		case "game":
 			GameScene gs = new GameScene(dom,player);
-			//KeyAdapterDemo k = new KeyAdapterDemo(gs);
 			statusPanel = gs;
 			break;
 		case "gameover":
