@@ -45,8 +45,8 @@ public class RenderEngine implements IRenderEngine {
 //		SceneDataModule sdm = new SceneDataModule(ImageIO.read(Resources.getResourceStream("Scene/Scene.jpg")));
 //		DynamicObjectModule dom = new DynamicObjectModule();
 //		dom.addVirtualCharacter(0, null);
-//		dom.findSprite(0).setState(StateType.EXHAUST);
-//		dom.findSprite(0).setDirection(Direction.UP);
+//		dom.findSprite(0).setState(StateType.STEAL);
+//		dom.findSprite(0).setDirection(Direction.DOWN);
 //		
 //		RenderEngine renderEngine = new RenderEngine(dom, sdm);
 //		
