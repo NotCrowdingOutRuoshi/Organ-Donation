@@ -12,4 +12,6 @@ public interface ITCPServer {
 	
 	public Vector<InetAddress> getClientIPTable();
 	
+	public void closeServer() throws IOException;
+	
 }

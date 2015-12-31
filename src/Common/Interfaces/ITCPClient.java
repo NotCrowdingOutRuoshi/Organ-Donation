@@ -10,4 +10,6 @@ public interface ITCPClient {
 	
 	public void inputMoves(String MoveCode) throws IOException;
 	
+	public void disconnect() throws IOException;
+	
 }
