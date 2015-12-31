@@ -1,21 +1,21 @@
-package Player.States;
+package DynamicObjectModule.Transitions.States;
 
 import Common.StateType;
 import DynamicObjectModule.Entities.Sprite;
 
-public class IdleState extends State {
-	public IdleState(Sprite sprite) {
+public class StealState extends State {
+	public StealState(Sprite sprite) {
 		super(sprite);
 	}
 
 	@Override
 	public void enter() {
-		
+
 	}
 
 	@Override
 	public void execute() {
-		
+		// Steal the _opponent's organ!
 	}
 
 	@Override
@@ -26,6 +26,7 @@ public class IdleState extends State {
 
 	@Override
 	public String getType() {
-		return StateType.IDLE;
+		return StateType.STEAL;
 	}
+
 }

@@ -1,4 +1,4 @@
-package Player;
+package DynamicObjectModule.Transitions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +8,7 @@ import com.google.common.collect.Multimap;
 
 import Common.StateType;
 import DynamicObjectModule.Entities.Sprite;
-import Player.States.State;
+import DynamicObjectModule.Transitions.States.State;
 
 public class FiniteStateMachine {
 	protected Multimap<StateType, StateType> _transitionTable;

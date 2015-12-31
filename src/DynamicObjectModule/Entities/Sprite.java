@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 
 import Common.Direction;
 import Common.StateType;
-import DynamicObjectModule.Animation;
+import DynamicObjectModule.Animations.Animation;
 import Resources.Resources;
 
 public abstract class Sprite {

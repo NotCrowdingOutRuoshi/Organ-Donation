@@ -1,4 +1,4 @@
-package DynamicObjectModule;
+package DynamicObjectModule.Animations;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;

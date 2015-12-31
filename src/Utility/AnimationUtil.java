@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import DynamicObjectModule.Animation;
+import DynamicObjectModule.Animations.Animation;
 
 
 public class AnimationUtil {
