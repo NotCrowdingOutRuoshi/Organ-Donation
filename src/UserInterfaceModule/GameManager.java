@@ -17,7 +17,7 @@ public class GameManager {
 	private Player player;
 	private DynamicObjectModule dom;
 	private TCPClient tcp;
-	
+	private GameScene gs = null;
 	/**
      * 使用靜態變數記錄Singleton, 並建立實例
      */
@@ -60,7 +60,7 @@ public class GameManager {
 			statusPanel = ws;
 			break;
 		case Constants.GAME_STATE_INIT:
-			GameScene gs = null;
+			
 			try {
 				gs = new GameScene(dom,player);
 			} catch (IOException e) {
@@ -71,6 +71,7 @@ public class GameManager {
 			statusPanel = gs;
 			break;
 		case Constants.GAME_STATE_START:
+			gs.gameStart();
 			break;
 		case Constants.GAME_STATE_OVER:
 			GameOverScene gos = new GameOverScene();
@@ -87,18 +88,23 @@ public class GameManager {
 		player.setID(clientid);
 	}
 	
-	public void setCountdown(){
-		
+	public void setCountdown(int i){
+		gs.setCountDown(i);
 	}
 	
 	public void addPlayer(int clientNumber){
 		dom.addVirtualCharacter(clientNumber);
+		setGameStatus(Constants.GAME_STATE_WAIT);
 	}
 	
 	public void sendtoTcp(String s){
 		System.out.println(s);
-		// Temporary comment out
-		//tcp.send();
+		try {
+			tcp.inputMoves(s);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	

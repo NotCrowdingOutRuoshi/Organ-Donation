@@ -8,6 +8,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Common.Constants;
+
 public class MenuScene extends JPanel {
 
 	/**
@@ -21,15 +23,14 @@ public class MenuScene extends JPanel {
 		JButton btn = new JButton("¹CÀ¸¶}©l");
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					GameManager.getInstance().setGameStatus("wait");
-					GameManager.getInstance().setClientId(1);
-					GameManager.getInstance().setGameStatus("game");
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 				
+				GameManager.getInstance().setGameStatus(Constants.GAME_STATE_WAIT);
+				GameManager.getInstance().addPlayer(1);
+				//GameManager.getInstance().setClientId(1);
+				//GameManager.getInstance().setGameStatus(Constants.GAME_STATE_WAIT);
+				//GameManager.getInstance().setGameStatus(Constants.GAME_STATE_INIT);
+				//GameManager.getInstance().setCountdown(3);
+				//GameManager.getInstance().setGameStatus(Constants.GAME_STATE_START);
 			}
 		});
 		btn.setBounds((this.getWidth()-100)/2, 50, 100, 30);
