@@ -41,26 +41,24 @@ public class RenderEngine implements IRenderEngine {
 	}
 	
 	// For scene render engine demo only.
-	/*
-	public static void main(String[] args) throws IOException, URISyntaxException {		
-		SceneDataModule sdm = new SceneDataModule(ImageIO.read(Resources.getResourceStream("Scene/Scene.jpg")));
-		DynamicObjectModule dom = new DynamicObjectModule();
-		dom.addVirtualCharacter(0, null);
-		dom.findSprite(0).setState(StateType.WALK);
-		dom.findSprite(0).setDirection(Direction.RIGHT);
-		
-		RenderEngine renderEngine = new RenderEngine(dom, sdm);
-		
-		JFrame frame = new JFrame("Organ Donation");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().add(renderEngine.getPanel());
-		frame.setSize(1450, 850);
-		frame.setVisible(true);
-		
-		renderEngine.startRendering();
-		//renderEngine.stopRendering();
-	}
-	*/
+//	public static void main(String[] args) throws IOException, URISyntaxException {		
+//		SceneDataModule sdm = new SceneDataModule(ImageIO.read(Resources.getResourceStream("Scene/Scene.jpg")));
+//		DynamicObjectModule dom = new DynamicObjectModule();
+//		dom.addVirtualCharacter(0, null);
+//		dom.findSprite(0).setState(StateType.ATTACK);
+//		dom.findSprite(0).setDirection(Direction.DOWN);
+//		
+//		RenderEngine renderEngine = new RenderEngine(dom, sdm);
+//		
+//		JFrame frame = new JFrame("Organ Donation");
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.getContentPane().add(renderEngine.getPanel());
+//		frame.setSize(1450, 850);
+//		frame.setVisible(true);
+//		
+//		renderEngine.startRendering();
+//		renderEngine.stopRendering();
+//	}
 
 	public JPanel getPanel() {
 		return _canvas;

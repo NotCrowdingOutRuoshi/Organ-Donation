@@ -48,6 +48,7 @@ public class VirtualCharacter extends Sprite {
 	protected void initPackageToState() {
 		_packageToState.put("Idle", StateType.IDLE);
 		_packageToState.put("Walk", StateType.WALK);
+		_packageToState.put("Attack", StateType.ATTACK);
 	}
 
 	@Override
@@ -68,7 +69,7 @@ public class VirtualCharacter extends Sprite {
 							images.add(ImageIO.read(image));
 						}
 
-						directedAnimation.put(currentDirection, new Animation(images, 50));
+						directedAnimation.put(currentDirection, new Animation(images, 40));
 					}
 				}
 
