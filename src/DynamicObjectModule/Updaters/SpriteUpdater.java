@@ -1,8 +1,7 @@
 package DynamicObjectModule.Updaters;
 
-import org.json.JSONObject;
-
 import DynamicObjectModule.Entities.Sprite;
+import Libraries.JSON.JSONObject;
 
 public abstract class SpriteUpdater<SpriteType extends Sprite> {
 	protected SpriteType _sprite;

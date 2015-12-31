@@ -1,16 +1,17 @@
-package Entities;
+package Player;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+
 import Common.StateType;
 import DynamicObjectModule.Entities.Sprite;
-import Entities.States.State;
+import Player.States.State;
 
 public class FiniteStateMachine {
-	// Warning: Map cannot has duplicate keys, data structure of _transition
-	// table should be manually implemented instead of using Map.
-	protected Map<StateType, StateType> _transitionTable;
+	protected Multimap<StateType, StateType> _transitionTable;
 	protected Map<StateType, State> _stateEntityTranslationTable;
 	protected Sprite _entity;
 	private State _currentState;
@@ -19,7 +20,7 @@ public class FiniteStateMachine {
 		assert owner != null;
 
 		_entity = owner;
-		_transitionTable = new HashMap<StateType, StateType>();
+		_transitionTable = ArrayListMultimap.create();
 		_stateEntityTranslationTable = new HashMap<StateType, State>();
 	}
 

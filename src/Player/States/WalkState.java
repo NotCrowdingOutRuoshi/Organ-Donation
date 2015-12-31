@@ -1,10 +1,13 @@
-package Entities.States;
+package Player.States;
 
+import Common.Direction;
 import Common.StateType;
 import DynamicObjectModule.Entities.Sprite;
 
-public class IdleState extends State {
-	public IdleState(Sprite sprite) {
+public class WalkState extends State {
+	private Direction _direction;
+
+	public WalkState(Sprite sprite) {
 		super(sprite);
 	}
 
@@ -20,12 +23,11 @@ public class IdleState extends State {
 
 	@Override
 	public void exit() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public String getType() {
-		return StateType.IDLE;
+		return StateType.WALK;
 	}
 }

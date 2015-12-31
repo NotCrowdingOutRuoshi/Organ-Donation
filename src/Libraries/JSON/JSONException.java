@@ -1,4 +1,4 @@
-package org.json;
+package Libraries.JSON;
 
 /**
  * The JSONException is thrown by the JSON.org classes when things are amiss.

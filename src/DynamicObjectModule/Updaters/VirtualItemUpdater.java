@@ -1,8 +1,7 @@
 package DynamicObjectModule.Updaters;
 
-import org.json.JSONObject;
-
 import DynamicObjectModule.Entities.VirtualItem;
+import Libraries.JSON.JSONObject;
 
 public class VirtualItemUpdater extends SpriteUpdater<VirtualItem> {
 

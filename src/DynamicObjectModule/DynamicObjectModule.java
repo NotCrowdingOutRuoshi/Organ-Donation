@@ -2,13 +2,12 @@ package DynamicObjectModule;
 
 import java.util.ArrayList;
 
-import org.json.JSONObject;
-
 import Common.Interfaces.IDynamicObjectModule;
 import DynamicObjectModule.Entities.VirtualCharacter;
 import DynamicObjectModule.Entities.VirtualItem;
 import DynamicObjectModule.Entities.Sprite;
 import DynamicObjectModule.Updaters.VirtualCharacterUpdater;
+import Libraries.JSON.JSONObject;
 import DynamicObjectModule.Updaters.SpriteUpdater;
 
 public class DynamicObjectModule implements IDynamicObjectModule {
