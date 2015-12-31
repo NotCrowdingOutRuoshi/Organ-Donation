@@ -1,13 +1,19 @@
 package DynamicObjectModule.Entities;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 import Common.Direction;
 import Common.StateType;
 import DynamicObjectModule.Animation;
+import Resources.Resources;
 
 public abstract class Sprite {
 	public static final int DEFAULT_X = 0;
@@ -43,21 +49,39 @@ public abstract class Sprite {
 		_packageToState = new HashMap<>();
 		_animations = new HashMap<String, Map<String, Animation>>();
 		
-		initPackageToDirection();
-		initPackageToState();
-		
-		try {
-			loadAnimations();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		initPackageToDirectionMap();
+		initPackageToStateMap();
 	}
 
 	public abstract void draw(Graphics g);
 	
-	protected abstract void loadAnimations() throws IOException;
-	protected abstract void initPackageToDirection();
-	protected abstract void initPackageToState();
+	protected void loadAnimations(String imageResourceRoot) throws IOException {
+		File file = Resources.getResourceFile(imageResourceRoot);
+
+		for (final File statePackage : file.listFiles()) {
+			if (_packageToState.containsKey(statePackage.getName())) {
+				String currentState = _packageToState.get(statePackage.getName());
+				Map<String, Animation> directedAnimation = new HashMap<>();
+
+				for (final File directionPackage : statePackage.listFiles()) {
+					if (_packageToDirection.containsKey(directionPackage.getName())) {
+						String currentDirection = _packageToDirection.get(directionPackage.getName());
+						ArrayList<BufferedImage> images = new ArrayList<BufferedImage>();
+
+						for (final File image : directionPackage.listFiles()) {
+							images.add(ImageIO.read(image));
+						}
+
+						directedAnimation.put(currentDirection, new Animation(images, 40));
+					}
+				}
+
+				_animations.put(currentState, directedAnimation);
+			}
+		}
+	}
+	protected abstract void initPackageToDirectionMap();
+	protected abstract void initPackageToStateMap();
 
 	public int getId() {
 		return _id;
@@ -124,9 +148,6 @@ public abstract class Sprite {
 		if (_currentAnimation != null) {
 			_currentAnimation.reset();
 		}
-		
-		Map<String, Animation> map = _animations.get(_state);
-		Animation mAnimation = map.get(_direction);
 		
 		_currentAnimation = _animations.get(_state).get(_direction);
 		_currentAnimation.start();
