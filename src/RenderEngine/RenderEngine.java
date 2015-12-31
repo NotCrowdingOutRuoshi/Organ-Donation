@@ -45,8 +45,8 @@ public class RenderEngine implements IRenderEngine {
 //		SceneDataModule sdm = new SceneDataModule(ImageIO.read(Resources.getResourceStream("Scene/Scene.jpg")));
 //		DynamicObjectModule dom = new DynamicObjectModule();
 //		dom.addVirtualCharacter(0, null);
-//		dom.findSprite(0).setState(StateType.ATTACK);
-//		dom.findSprite(0).setDirection(Direction.DOWN);
+//		dom.findSprite(0).setState(StateType.EXHAUST);
+//		dom.findSprite(0).setDirection(Direction.UP);
 //		
 //		RenderEngine renderEngine = new RenderEngine(dom, sdm);
 //		
@@ -57,7 +57,7 @@ public class RenderEngine implements IRenderEngine {
 //		frame.setVisible(true);
 //		
 //		renderEngine.startRendering();
-//		renderEngine.stopRendering();
+//		//renderEngine.stopRendering();
 //	}
 
 	public JPanel getPanel() {
