@@ -1,6 +1,7 @@
 package UserInterfaceModule;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -13,16 +14,22 @@ public class MenuScene extends JPanel {
 	 * Create the panel.
 	 */
 	public MenuScene() {
-		this.setSize(900, 600);
+		this.setSize(1450, 850);
 		this.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.setLayout(null);
 		
 		JButton btn = new JButton("¹CÀ¸¶}©l");
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GameManager.getInstance().setGameStatus("wait");
-				GameManager.getInstance().setClientId(1);
-				GameManager.getInstance().setGameStatus("game");
+				try {
+					GameManager.getInstance().setGameStatus("wait");
+					GameManager.getInstance().setClientId(1);
+					GameManager.getInstance().setGameStatus("game");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}
 		});
 		btn.setBounds((this.getWidth()-100)/2, 50, 100, 30);
