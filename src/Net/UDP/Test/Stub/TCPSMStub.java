@@ -1,10 +1,9 @@
 package Net.UDP.Test.Stub;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Vector;
-
-import com.sun.jndi.cosnaming.IiopUrl.Address;
 
 import Common.Interfaces.ITCPServer;
 
@@ -17,7 +16,6 @@ public class TCPSMStub implements ITCPServer{
 		
 	}
 
-	@Override
 	public void BroadcastAllClient() {
 		// TODO Auto-generated method stub
 		
@@ -33,6 +31,18 @@ public class TCPSMStub implements ITCPServer{
 			e.printStackTrace();
 		}
 		return ipTables;
+	}
+
+	@Override
+	public void BroadcastAllClient(String state) throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void closeServer() throws IOException {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

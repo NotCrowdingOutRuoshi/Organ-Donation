@@ -49,6 +49,7 @@ public class VirtualCharacter extends Sprite {
 		_packageToState.put("Idle", StateType.IDLE);
 		_packageToState.put("Walk", StateType.WALK);
 		_packageToState.put("Attack", StateType.ATTACK);
+		_packageToState.put("Exhaust", StateType.EXHAUST);
 	}
 
 	@Override
