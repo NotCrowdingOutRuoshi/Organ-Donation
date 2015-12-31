@@ -8,7 +8,7 @@ public interface ITCPServer {
 	
 	public void startServer();
 	
-	public void BroadcastAllClient() throws IOException;
+	public void BroadcastAllClient(String state) throws IOException;
 	
 	public Vector<InetAddress> getClientIPTable();
 	
