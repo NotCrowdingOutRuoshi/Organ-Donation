@@ -70,7 +70,7 @@ public class RenderEngine implements IRenderEngine {
 		_renderThread.interrupt();
 	}
 	
-	public void render(Graphics g) {
+	private void render(Graphics g) {
 		g.fillRect(0, 0, 100, 100);
 		_sceneRenderEngine.render(g);
 		_spriteRenderEngine.render(g);
