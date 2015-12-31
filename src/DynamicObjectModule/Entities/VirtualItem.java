@@ -18,12 +18,6 @@ public class VirtualItem extends Sprite {
 		_owner = EMPTY_OWNER;
 		_shared = shared;
 	}
-	
-	@Override
-	protected void loadAnimations() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void draw(Graphics g) {
@@ -61,13 +55,13 @@ public class VirtualItem extends Sprite {
 	}
 
 	@Override
-	protected void initPackageToDirection() {
+	protected void initPackageToDirectionMap() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected void initPackageToState() {
+	protected void initPackageToStateMap() {
 		// TODO Auto-generated method stub
 		
 	}
