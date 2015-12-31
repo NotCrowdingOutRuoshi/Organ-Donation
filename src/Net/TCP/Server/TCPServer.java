@@ -9,8 +9,9 @@ import java.net.Socket;
 import java.util.Vector;
 
 import CentralizedDataCenter.CDC;
+import Common.Interfaces.ITCPServer;
 
-public class TCPServer implements Runnable {
+public class TCPServer implements ITCPServer,Runnable {
 
 	private ServerSocket serverSocket;
 
