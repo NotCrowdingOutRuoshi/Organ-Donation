@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.swing.JPanel;
 
 import CentralizedDataCenter.Entities.Player;
+import Common.Constants;
 import DynamicObjectModule.DynamicObjectModule;
 import Net.TCP.Client.TCPClient;
 
@@ -46,23 +47,32 @@ public class GameManager {
     	this.director = director;
     }
 	
-	public void setGameStatus(String status) throws IOException{
+	public void setGameStatus(String status){
 		this.status = status;
 		switch(this.status){
-		case "menu":
+		case Constants.GAME_STATE_MENU:
 			MenuScene ms = new MenuScene();
 			statusPanel = ms;
 			break;
-		case "wait":
+		case Constants.GAME_STATE_WAIT:
 			player = new Player();
 			WaitScene ws = new WaitScene(dom);
 			statusPanel = ws;
 			break;
-		case "game":
-			GameScene gs = new GameScene(dom,player);
+		case Constants.GAME_STATE_INIT:
+			GameScene gs = null;
+			try {
+				gs = new GameScene(dom,player);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//KeyAdapterDemo k = new KeyAdapterDemo(gs);
 			statusPanel = gs;
 			break;
-		case "gameover":
+		case Constants.GAME_STATE_START:
+			break;
+		case Constants.GAME_STATE_OVER:
 			GameOverScene gos = new GameOverScene();
 			statusPanel = gos;
 			break;
