@@ -31,4 +31,22 @@ public class CDCStub implements ICentralizedDataCenter {
 	public void clearData() {
 		
 	}
+
+	@Override
+	public void startGameLogicSchedule() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setGameState(String gameState) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getGameState() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

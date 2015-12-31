@@ -1,18 +1,13 @@
 package RenderEngine;
 
 import java.awt.Graphics;
-import java.io.IOException;
-import java.net.URISyntaxException;
 
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import Common.Interfaces.IRenderEngine;
 import DynamicObjectModule.DynamicObjectModule;
 import RenderEngine.Scene.SceneRenderEngine;
 import RenderEngine.Sprite.SpriteRenderEngine;
-import Resources.Resources;
 import SceneDataModule.SceneDataModule;
 
 public class RenderEngine implements IRenderEngine {
@@ -21,11 +16,11 @@ public class RenderEngine implements IRenderEngine {
 	private SceneRenderEngine _sceneRenderEngine;
 	private Thread _renderThread;
 	private boolean _isRendering;
-	
+
 	public RenderEngine(DynamicObjectModule dom, SceneDataModule sdm) {
 		assert (dom != null);
 		assert (sdm != null);
-		
+
 		_spriteRenderEngine = new SpriteRenderEngine(dom);
 		_sceneRenderEngine = new SceneRenderEngine(sdm);
 		_canvas = new JPanel() {
@@ -38,10 +33,15 @@ public class RenderEngine implements IRenderEngine {
 		_renderThread = new Thread(new RenderThread());
 	}
 	
-	/* For scene render engine demo only.
+	// For scene render engine demo only.
+	/*
 	public static void main(String[] args) throws IOException, URISyntaxException {		
-		SceneDataModule sceneDataModule = new SceneDataModule(ImageIO.read(Resources.getResource("Scene/Scene.jpg")));
-		RenderEngine renderEngine = new RenderEngine(null, sceneDataModule);
+		SceneDataModule sdm = new SceneDataModule(ImageIO.read(Resources.getResourceStream("Scene/Scene.jpg")));
+		DynamicObjectModule dom = new DynamicObjectModule();
+		dom.addVirtualCharacter(0);
+		dom.findSprite(0).setState(StateType.IDLE);
+		
+		RenderEngine renderEngine = new RenderEngine(dom, sdm);
 		
 		JFrame frame = new JFrame("Organ Donation");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,10 +50,10 @@ public class RenderEngine implements IRenderEngine {
 		frame.setVisible(true);
 		
 		renderEngine.startRendering();
-		renderEngine.stopRendering();
+		//renderEngine.stopRendering();
 	}
 	*/
-	
+
 	public JPanel getPanel() {
 		return _canvas;
 	}
@@ -69,13 +69,13 @@ public class RenderEngine implements IRenderEngine {
 		_isRendering = false;
 		_renderThread.interrupt();
 	}
-	
+
 	private void render(Graphics g) {
 		g.fillRect(0, 0, 100, 100);
 		_sceneRenderEngine.render(g);
 		_spriteRenderEngine.render(g);
 	}
-	
+
 	class RenderThread implements Runnable {
 
 		@Override
@@ -84,6 +84,6 @@ public class RenderEngine implements IRenderEngine {
 				_canvas.repaint();
 			}
 		}
-		
+
 	}
 }

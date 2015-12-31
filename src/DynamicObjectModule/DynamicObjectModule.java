@@ -10,23 +10,18 @@ import DynamicObjectModule.Entities.VirtualItem;
 import DynamicObjectModule.Entities.Sprite;
 import DynamicObjectModule.Updaters.VirtualCharacterUpdater;
 import DynamicObjectModule.Updaters.SpriteUpdater;
-import Net.TCP.Client.TCPClient;
 
 public class DynamicObjectModule implements IDynamicObjectModule {
 	private int _countDown;
-	private TCPClient _tcpClientModule;
 	private ArrayList<SpriteUpdater<?>> _updaters;
 	private ArrayList<Sprite> _sprites;
 
-	public DynamicObjectModule(TCPClient tcpClientModule) {
-		assert (tcpClientModule != null);
+	public DynamicObjectModule() {
 		
 		_countDown = 0;
 
 		_updaters = new ArrayList<SpriteUpdater<?>>();
 		_sprites = new ArrayList<Sprite>();
-		
-		_tcpClientModule = tcpClientModule;
 	}
 
 	@Override

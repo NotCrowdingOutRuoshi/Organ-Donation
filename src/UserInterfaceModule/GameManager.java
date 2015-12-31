@@ -36,7 +36,7 @@ public class GameManager {
 	
     private GameManager(){
 		tcp = new TCPClient();
-    	dom = new DynamicObjectModule(tcp);
+    	dom = new DynamicObjectModule();
 	}
     
 //    public void setDom(DynamicObjectModule dom){

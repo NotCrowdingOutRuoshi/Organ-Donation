@@ -1,6 +1,5 @@
 package UserInterfaceModule;
 
-import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
@@ -29,7 +28,7 @@ public class GameScene extends JPanel implements KeyListener {
 		this.player = player;
 		
 		
-		SceneDataModule sceneDataModule = new SceneDataModule(ImageIO.read(Resources.getResource("Scene/Scene.jpg")));
+		SceneDataModule sceneDataModule = new SceneDataModule(ImageIO.read(Resources.getResourceStream("Scene/Scene.jpg")));
 		RenderEngine renderEngine = new RenderEngine(dom, sceneDataModule);
 		gamePanel = renderEngine.getPanel();
 		gamePanel.setSize(1450,850);
