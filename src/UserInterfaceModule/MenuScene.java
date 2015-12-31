@@ -25,7 +25,7 @@ public class MenuScene extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				GameManager.getInstance().setGameStatus(Constants.GAME_STATE_WAIT);
-				GameManager.getInstance().addPlayer(1);
+				//GameManager.getInstance().addPlayer(1);
 				//GameManager.getInstance().setClientId(1);
 				//GameManager.getInstance().setGameStatus(Constants.GAME_STATE_WAIT);
 				//GameManager.getInstance().setGameStatus(Constants.GAME_STATE_INIT);

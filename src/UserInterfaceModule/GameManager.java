@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 
 import javax.swing.JPanel;
 
+
 import CentralizedDataCenter.Entities.Player;
 import Common.Constants;
 import DynamicObjectModule.DynamicObjectModule;
@@ -71,8 +72,9 @@ public class GameManager {
 //			}
 			player = new Player();
 			ws = new WaitScene(dom);
+			Thread w = new Thread(ws);
+	        w.start();
 			statusPanel = ws;
-
 			break;
 		case Constants.GAME_STATE_INIT:
 
@@ -106,11 +108,6 @@ public class GameManager {
 		gs.setCountDown(i);
 	}
 	
-	public void addPlayer(int clientNumber){
-		dom.addVirtualCharacter(clientNumber);
-	}
-	
-
 	
 	public void sendtoTcp(String s){
 		System.out.println(s);

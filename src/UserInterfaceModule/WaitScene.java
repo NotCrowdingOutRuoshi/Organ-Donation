@@ -11,7 +11,7 @@ import java.awt.Graphics;
 
 import javax.swing.JLabel;
 
-public class WaitScene extends JPanel {
+public class WaitScene extends JPanel implements Runnable{
 
 	
 	private DynamicObjectModule dom;
@@ -30,8 +30,6 @@ public class WaitScene extends JPanel {
 		lblWait.setFont(new Font("Serif", Font.PLAIN, 30));
 		add(lblWait);
 
-		waitThread = new Thread(new WaitThread());
-		waitThread.start();
 	}
 
 	@Override
@@ -51,17 +49,12 @@ public class WaitScene extends JPanel {
 			add(Player1);
 		}
 	}
-	
 
-	
-	class WaitThread implements Runnable {
-
-		@Override
-		public void run() {
-			while (true) {
-				repaint();
-			}
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		while (true) {
+			repaint();
 		}
-		
 	}
 }
