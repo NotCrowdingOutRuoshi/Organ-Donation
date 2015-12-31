@@ -59,4 +59,16 @@ public class VirtualItem extends Sprite {
 	public void setShared(boolean isShared) {
 		_shared = isShared;
 	}
+
+	@Override
+	protected void initPackageToDirection() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void initPackageToState() {
+		// TODO Auto-generated method stub
+		
+	}
 }
