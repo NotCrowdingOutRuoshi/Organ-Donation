@@ -75,17 +75,29 @@ class ConnectThread extends Thread {
 	private Socket socket;
 	
 	private ICentralizedDataCenter cdc;
+	
+	private int playerId;
+	
+	private static int playerCnt = 0;
 
 	public ConnectThread(Socket socket,ICentralizedDataCenter cdc) {
 		this.socket = socket;
 		this.cdc = cdc;
+		playerCnt++;
+		playerId = playerCnt;
 	}
 
 	@Override
 	public void run() {
 		try {
 			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
+			OutputStream out = socket.getOutputStream();
+			
+			out.write(playerId);
+			out.flush();
+			
+			cdc.addPlayer(playerId);
+			
 			while (true) {
 				String[] recv = br.readLine().split(" ");
 				int clientId = Integer.valueOf(recv[0]);

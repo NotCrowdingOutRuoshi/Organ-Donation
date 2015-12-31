@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import UserInterfaceModule.GameManager;
 import Common.Interfaces.ITCPClient;
 
 public class TCPClient implements Runnable, ITCPClient {
@@ -48,10 +49,12 @@ public class TCPClient implements Runnable, ITCPClient {
 	public void run() {
 		// TODO Auto-generated method stub
 		try {
+			int clientId = input.read();
+			GameManager.getInstance().setClientId(clientId);
+			
 			while(true){
 				System.out.println("Client receive:"+input.read());
 			}
-			
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
