@@ -16,21 +16,21 @@ public class WaitScene extends JPanel {
 		this.setSize(900, 600);
 		this.setLayout(null);
 		
-		/* Temporary comment out
-		JLabel lblWait = new JLabel("wait"+dom.getPlayer().size());
+		/* Temporary comment out*/
+		JLabel lblWait = new JLabel("wait"+dom.getAllDynamicObjects().length);
 		lblWait.setBounds((this.getWidth()-100)/2, 20, 100, 30);
 		add(lblWait);
 		
 		for(int i=0;i<4;i++){
 			String s = "null";
-			if(i<dom.getPlayer().size()){
-				s = dom.getPlayer().get(i);
+			if(i<dom.getAllDynamicObjects().length){
+				s = "123";
 			}
 			JLabel Player1 = new JLabel(s);
 			Player1.setBounds(120+i*200, (this.getHeight()-100)/2, 100, 30);
 			add(Player1);
 		}
-		*/
+		
 		
 
 
