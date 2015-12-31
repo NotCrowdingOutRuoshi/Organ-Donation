@@ -1,4 +1,4 @@
-package Entities.States;
+package Player.States;
 
 import Common.StateType;
 import DynamicObjectModule.Entities.Sprite;

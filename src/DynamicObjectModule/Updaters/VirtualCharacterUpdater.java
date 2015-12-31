@@ -1,8 +1,7 @@
 package DynamicObjectModule.Updaters;
 
-import org.json.JSONObject;
-
 import DynamicObjectModule.Entities.VirtualCharacter;
+import Libraries.JSON.JSONObject;
 
 public class VirtualCharacterUpdater extends SpriteUpdater<VirtualCharacter> {
 

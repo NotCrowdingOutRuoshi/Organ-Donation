@@ -1,8 +1,7 @@
 package Common.Interfaces;
 
-import org.json.JSONObject;
-
 import DynamicObjectModule.Entities.Sprite;
+import Libraries.JSON.JSONObject;
 
 public interface IDynamicObjectModule {
 	public void addItem(String name, int index, boolean shared, int x, int y);

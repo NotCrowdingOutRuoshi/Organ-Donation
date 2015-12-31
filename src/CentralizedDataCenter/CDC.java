@@ -6,14 +6,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import CentralizedDataCenter.Entities.Organ;
 import CentralizedDataCenter.Entities.Player;
 import Common.Constants;
 import Common.StateType;
 import Common.Interfaces.ICentralizedDataCenter;
+import Libraries.JSON.JSONArray;
+import Libraries.JSON.JSONObject;
 
 public class CDC implements ICentralizedDataCenter {
 	Map<Integer, Player> PlayerList;
