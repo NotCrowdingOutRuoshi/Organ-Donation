@@ -19,10 +19,20 @@ public class Player extends Sprite{
 		_state = StateType.IDLE;
 		_energy = 0;
 		_organs = new ArrayList<Organ>();
-		Organ organ = new Organ("heart",100);
-		Organ organ1 = new Organ("lag",100);
-		_organs.add(organ);
-		_organs.add(organ1);
+		Organ heart = new Organ("heart",100);
+		Organ liver = new Organ("liver",100);
+		Organ lung = new Organ("lung",100);
+		Organ pancreas = new Organ("pancreas",100);
+		Organ kidney = new Organ("kidney",100);
+		Organ small = new Organ("small intestine",100);
+		Organ large = new Organ("large intestine",100);
+		_organs.add(heart);
+		_organs.add(liver);
+		_organs.add(lung);
+		_organs.add(pancreas);
+		_organs.add(kidney);
+		_organs.add(small);
+		_organs.add(large);
 	}
 	
 	public void addOrgan(Organ organ){
