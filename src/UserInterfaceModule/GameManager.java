@@ -1,6 +1,8 @@
 package UserInterfaceModule;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import javax.swing.JPanel;
 
@@ -9,8 +11,9 @@ import Common.Constants;
 import DynamicObjectModule.DynamicObjectModule;
 import Net.TCP.Client.TCPClient;
 
-public class GameManager {
 
+public class GameManager {
+	
 	private String status;
 	private Director director;
 	private JPanel statusPanel;
@@ -18,6 +21,7 @@ public class GameManager {
 	private DynamicObjectModule dom;
 	private TCPClient tcp;
 	private GameScene gs = null;
+	private WaitScene ws = null;
 	/**
      * 使用靜態變數記錄Singleton, 並建立實例
      */
@@ -55,19 +59,29 @@ public class GameManager {
 			statusPanel = ms;
 			break;
 		case Constants.GAME_STATE_WAIT:
+			
+//			try {
+//				tcp.connectServer(InetAddress.getByName("140.115.53.45"));
+//			} catch (UnknownHostException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 			player = new Player();
-			WaitScene ws = new WaitScene(dom);
+			ws = new WaitScene(dom);
 			statusPanel = ws;
+
 			break;
 		case Constants.GAME_STATE_INIT:
-			
+
 			try {
 				gs = new GameScene(dom,player);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			//KeyAdapterDemo k = new KeyAdapterDemo(gs);
 			statusPanel = gs;
 			break;
 		case Constants.GAME_STATE_START:
@@ -94,8 +108,9 @@ public class GameManager {
 	
 	public void addPlayer(int clientNumber){
 		dom.addVirtualCharacter(clientNumber);
-		setGameStatus(Constants.GAME_STATE_WAIT);
 	}
+	
+
 	
 	public void sendtoTcp(String s){
 		System.out.println(s);
