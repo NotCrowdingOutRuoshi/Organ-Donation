@@ -1,17 +1,16 @@
-package Player.States;
+package DynamicObjectModule.Transitions.States;
 
 import Common.StateType;
 import DynamicObjectModule.Entities.Sprite;
 
-public class AttackState extends State {
-	public AttackState(Sprite sprite) {
+public class IdleState extends State {
+	public IdleState(Sprite sprite) {
 		super(sprite);
 	}
 
 	@Override
 	public void enter() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -27,6 +26,6 @@ public class AttackState extends State {
 
 	@Override
 	public String getType() {
-		return StateType.ATTACK;
+		return StateType.IDLE;
 	}
 }

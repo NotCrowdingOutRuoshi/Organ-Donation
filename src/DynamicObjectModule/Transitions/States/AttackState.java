@@ -1,19 +1,17 @@
-package Player.States;
+package DynamicObjectModule.Transitions.States;
 
-import Common.Direction;
 import Common.StateType;
 import DynamicObjectModule.Entities.Sprite;
 
-public class WalkState extends State {
-	private Direction _direction;
-
-	public WalkState(Sprite sprite) {
+public class AttackState extends State {
+	public AttackState(Sprite sprite) {
 		super(sprite);
 	}
 
 	@Override
 	public void enter() {
-		
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
@@ -23,11 +21,12 @@ public class WalkState extends State {
 
 	@Override
 	public void exit() {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public String getType() {
-		return StateType.WALK;
+		return StateType.ATTACK;
 	}
 }
