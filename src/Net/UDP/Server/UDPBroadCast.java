@@ -12,16 +12,19 @@ import java.util.Vector;
 
 import com.sun.media.jfxmedia.events.PlayerStateEvent.PlayerState;
 import com.sun.org.apache.bcel.internal.classfile.Code;
+import com.sun.xml.internal.ws.api.pipe.Codec;
 
+import Common.Constants;
+import Common.ServerCommandType;
 import Common.Interfaces.ICentralizedDataCenter;
 import Common.Interfaces.ITCPClient;
 import Common.Interfaces.ITCPServer;
 import Common.Interfaces.IUDPBroadcast;
+import Utility.CodecUtil;
 import jdk.internal.dynalink.linker.LinkerServices.Implementation;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 
 public class UDPBroadCast implements IUDPBroadcast {
 
@@ -79,12 +82,25 @@ public class UDPBroadCast implements IUDPBroadcast {
 	private void broadCastToClient() throws IOException, UnknownHostException {
 		Vector<InetAddress> IPTable = _tcpsm.getClientIPTable();
 		JSONArray players = new JSONArray(_cdc.getUpdateInfo());
-		for (int i = 0; i < players.length(); i++) {
-			for (InetAddress ip : IPTable) {
-				byte buffer[] = players.get(i).toString().getBytes();
-				_socket.send(new DatagramPacket(buffer, buffer.length, ip, port));
+
+		if (_cdc.getGameState() == Constants.GAME_STATE_WAIT || _cdc.getGameState() == Constants.GAME_STATE_INIT) {
+			for (int i = 0; i < players.length(); i++) {
+				for (InetAddress ip : IPTable) {
+					byte buffer[] = CodecUtil.encode(ServerCommandType.ADD.toString(),players.get(i).toString()).getBytes();
+					_socket.send(new DatagramPacket(buffer, buffer.length, ip, port));
+				}
+			}
+		} 
+		else {
+			for (int i = 0; i < players.length(); i++) {
+				for (InetAddress ip : IPTable) {
+					byte buffer[] = players.get(i).toString().getBytes();
+					_socket.send(new DatagramPacket(buffer, buffer.length, ip, port));
+				}
 			}
 		}
+
+		
 
 	}
 
