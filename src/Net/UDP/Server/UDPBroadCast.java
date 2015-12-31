@@ -9,6 +9,8 @@ import java.net.UnknownHostException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
+
+import com.sun.media.jfxmedia.events.PlayerStateEvent.PlayerState;
 import com.sun.org.apache.bcel.internal.classfile.Code;
 
 import Common.Interfaces.ICentralizedDataCenter;
@@ -16,6 +18,8 @@ import Common.Interfaces.ITCPClient;
 import Common.Interfaces.ITCPServer;
 import Common.Interfaces.IUDPBroadcast;
 import jdk.internal.dynalink.linker.LinkerServices.Implementation;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 
@@ -74,12 +78,10 @@ public class UDPBroadCast implements IUDPBroadcast {
 
 	private void broadCastToClient() throws IOException, UnknownHostException {
 		Vector<InetAddress> IPTable = _tcpsm.getClientIPTable();
-		String data = _cdc.getUpdateInfo();
-		JSONObject jsonObject = new JSONObject(data);
-		for (int i = 0; i < 4; i++) {
-			JSONObject player = new JSONObject(jsonObject.get(String.valueOf(i)));
+		JSONArray players = new JSONArray(_cdc.getUpdateInfo());
+		for (int i = 0; i < players.length(); i++) {
 			for (InetAddress ip : IPTable) {
-				byte buffer[] = player.toString().getBytes();
+				byte buffer[] = players.get(i).toString().getBytes();
 				_socket.send(new DatagramPacket(buffer, buffer.length, ip, port));
 			}
 		}
