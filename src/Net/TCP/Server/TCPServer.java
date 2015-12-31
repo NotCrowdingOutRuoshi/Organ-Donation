@@ -104,19 +104,22 @@ class ConnectThread extends Thread {
 				String actionState = recv[recv.length-1]; 
 				
 				switch (actionState) {
-				case StateType.WALK:
-					cdc.updateDir(clientId, Integer.valueOf(recv[1]));
-					cdc.setState(clientId, actionState);
-					break;
-				case StateType.ATTACK:
-					cdc.setState(clientId, actionState);
-					break;
-				case StateType.STEAL:
-					cdc.setState(clientId, actionState);
-					break;
-				case StateType.IDLE:
-					cdc.setState(clientId, actionState);
-					break;
+					case StateType.WALK:
+						cdc.updateDir(clientId, Integer.valueOf(recv[1]));
+						cdc.setState(clientId, actionState);
+						break;
+					case StateType.ATTACK:
+						cdc.setState(clientId, actionState);
+						break;
+					case StateType.STEAL:
+						cdc.setState(clientId, actionState);
+						break;
+					case StateType.IDLE:
+						cdc.setState(clientId, actionState);
+						break;
+					default:
+						System.out.println(clientId+"send illegal message"+recv+" !!!!!!!!!");
+						break;
 				}
 			}
 		} catch (IOException e) {
