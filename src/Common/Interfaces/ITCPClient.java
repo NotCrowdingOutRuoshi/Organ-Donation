@@ -1,11 +1,13 @@
 package Common.Interfaces;
 
+import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public interface ITCPClient {
 	
-	public boolean connectServer(InetAddress serverip);
+	public boolean connectServer(InetAddress serverip) throws UnknownHostException, IOException;
 	
-	public void inputMoves(int MoveCode);
+	public void inputMoves(String MoveCode) throws IOException;
 	
 }
