@@ -125,6 +125,9 @@ public abstract class Sprite {
 			_currentAnimation.reset();
 		}
 		
+		Map<String, Animation> map = _animations.get(_state);
+		Animation mAnimation = map.get(_direction);
+		
 		_currentAnimation = _animations.get(_state).get(_direction);
 		_currentAnimation.start();
 	}

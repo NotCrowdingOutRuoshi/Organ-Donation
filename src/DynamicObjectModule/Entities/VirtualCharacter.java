@@ -47,31 +47,34 @@ public class VirtualCharacter extends Sprite {
 	@Override
 	protected void initPackageToState() {
 		_packageToState.put("Idle", StateType.IDLE);
+		_packageToState.put("Walk", StateType.WALK);
 	}
 
 	@Override
 	protected void loadAnimations() throws IOException {
 		File file = Resources.getResourceFile("Sprite");
-		Map<String, Animation> directedAnimation = new HashMap<>();
 
 		for (final File statePackage : file.listFiles()) {
 			if (_packageToState.containsKey(statePackage.getName())) {
+				String currentState = _packageToState.get(statePackage.getName());
+				Map<String, Animation> directedAnimation = new HashMap<>();
+
 				for (final File directionPackage : statePackage.listFiles()) {
-					ArrayList<BufferedImage> images = new ArrayList<BufferedImage>();
-
-					for (final File image : directionPackage.listFiles()) {
-						images.add(ImageIO.read(image));
-					}
-
 					if (_packageToDirection.containsKey(directionPackage.getName())) {
-						directedAnimation.put(_packageToDirection.get(directionPackage.getName()),
-								new Animation(images, 50));
+						String currentDirection = _packageToDirection.get(directionPackage.getName());
+						ArrayList<BufferedImage> images = new ArrayList<BufferedImage>();
+
+						for (final File image : directionPackage.listFiles()) {
+							images.add(ImageIO.read(image));
+						}
+
+						directedAnimation.put(currentDirection, new Animation(images, 50));
 					}
 				}
+
+				_animations.put(currentState, directedAnimation);
 			}
 		}
-
-		_animations.put(StateType.IDLE, directedAnimation);
 	}
 
 	public int getSpeed() {
