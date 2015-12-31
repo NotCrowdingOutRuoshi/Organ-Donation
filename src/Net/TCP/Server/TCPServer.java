@@ -1,16 +1,19 @@
 package Net.TCP.Server;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Vector;
 
-import CentralizedDataCenter.CDC;
+import Common.StateType;
+import Common.Interfaces.ICentralizedDataCenter;
+import Common.Interfaces.ITCPServer;
 
-public class TCPServer implements Runnable {
+public class TCPServer implements Runnable, ITCPServer {
 
 	private ServerSocket serverSocket;
 
@@ -18,11 +21,9 @@ public class TCPServer implements Runnable {
 	
 	private Vector<Socket> clientOut;
 	
-	private CDC cdc;
-
-	public final static int MOVE = 22, GET = 33;
+	private ICentralizedDataCenter cdc;
 	
-	public TCPServer(CDC cdc) {
+	public TCPServer(ICentralizedDataCenter cdc) {
 		this.cdc = cdc;
 		clientIPTable = new Vector<InetAddress>();
 		clientOut = new Vector<Socket>();
@@ -73,9 +74,9 @@ class ConnectThread extends Thread {
 
 	private Socket socket;
 	
-	private CDC cdc;
+	private ICentralizedDataCenter cdc;
 
-	public ConnectThread(Socket socket,CDC cdc) {
+	public ConnectThread(Socket socket,ICentralizedDataCenter cdc) {
 		this.socket = socket;
 		this.cdc = cdc;
 	}
@@ -83,16 +84,26 @@ class ConnectThread extends Thread {
 	@Override
 	public void run() {
 		try {
-			InputStream input = socket.getInputStream();
+			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 			while (true) {
-				int moveCode = input.read();
-				switch (moveCode) {
-				case TCPServer.MOVE:
-//					cdc.updateDirection(5, moveCode);
+				String[] recv = br.readLine().split(" ");
+				int clientId = Integer.valueOf(recv[0]);
+				String actionState = recv[recv.length-1]; 
+				
+				switch (actionState) {
+				case StateType.WALK:
+					cdc.updateDir(clientId, Integer.valueOf(recv[1]));
+					cdc.setState(clientId, actionState);
 					break;
-				case TCPServer.GET:
-//					cdc.getItem(5);
+				case StateType.ATTACK:
+					cdc.setState(clientId, actionState);
+					break;
+				case StateType.STEAL:
+					cdc.setState(clientId, actionState);
+					break;
+				case StateType.IDLE:
+					cdc.setState(clientId, actionState);
 					break;
 				}
 			}
