@@ -1,6 +1,5 @@
 package Net.TCP.Client;
 
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -8,11 +7,11 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class TCPClient implements Runnable {
+import Common.Interfaces.ITCPClient;
+
+public class TCPClient implements Runnable, ITCPClient {
 
 	private Socket socket;
-
-	public final static int GET = 33;
 	
 	private InputStream input;
 
@@ -32,16 +31,11 @@ public class TCPClient implements Runnable {
 		return socket.isConnected();
 	}
 
-	public void inputMoves(int MoveCode) throws IOException {
-		assert (MoveCode == KeyEvent.VK_UP || MoveCode == KeyEvent.VK_DOWN
-				|| MoveCode == KeyEvent.VK_LEFT
-				|| MoveCode == KeyEvent.VK_RIGHT || MoveCode == KeyEvent.VK_UP
-				|| MoveCode == TCPClient.GET );
-		
+	public void inputMoves(String MoveCode) throws IOException {
 		assert(socket.isConnected());
 
 		OutputStream output = socket.getOutputStream();
-		output.write(MoveCode);
+		output.write(MoveCode.getBytes());
 		output.flush();
 	}
 	
