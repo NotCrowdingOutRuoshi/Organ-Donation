@@ -1,14 +1,17 @@
 package Net.TCP.Client;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import UserInterfaceModule.GameManager;
+import Common.Constants;
 import Common.Interfaces.ITCPClient;
+import UserInterfaceModule.GameManager;
 
 public class TCPClient implements Runnable, ITCPClient {
 
@@ -52,8 +55,30 @@ public class TCPClient implements Runnable, ITCPClient {
 			int clientId = input.read();
 			GameManager.getInstance().setClientId(clientId);
 			
+			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			
 			while(true){
-				System.out.println("Client receive:"+input.read());
+				String recv = br.readLine();
+				switch(recv){
+					case Constants.GAME_STATE_MENU:
+						GameManager.getInstance().setGameStatus(recv);
+						break;
+					case Constants.GAME_STATE_WAIT:
+						GameManager.getInstance().setGameStatus(recv);
+						break;
+					case Constants.GAME_STATE_INIT:
+						GameManager.getInstance().setGameStatus(recv);
+						break;
+					case Constants.GAME_STATE_START:
+						GameManager.getInstance().setGameStatus(recv);
+						break;
+					case Constants.GAME_STATE_OVER:
+						GameManager.getInstance().setGameStatus(recv);
+						break;
+					default:
+						System.out.println("illegal message:"+recv+" !!!!!!!!!");
+						break;
+				}
 			}
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
