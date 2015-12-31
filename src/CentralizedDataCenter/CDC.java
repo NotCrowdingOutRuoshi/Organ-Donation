@@ -2,14 +2,17 @@ package CentralizedDataCenter;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import CentralizedDataCenter.Entities.Organ;
 import CentralizedDataCenter.Entities.Player;
 import Common.Constants;
 import Common.StateType;
+import Common.Interfaces.ICentralizedDataCenter;
 
-public class CDC {
+public class CDC implements ICentralizedDataCenter {
 	Map<Integer,Player> PlayerList;
 	Map<Integer,Organ> OrganList;
 
@@ -99,8 +102,8 @@ public class CDC {
 	}
 	
 	public String getUpdateInfo(){
-		JSONObject jsonObject = new JSONObject(PlayerList);
-		return jsonObject.toString();
+		JSONArray j = new JSONArray(PlayerList.values());
+		return j.toString();
 	}
 	
 	private void computingXYThread(){
