@@ -71,7 +71,7 @@ public class GameManager {
 //				e1.printStackTrace();
 //			}
 			player = new Player();
-			ws = new WaitScene(dom);
+			ws = new WaitScene(dom,player);
 			Thread w = new Thread(ws);
 	        w.start();
 			statusPanel = ws;

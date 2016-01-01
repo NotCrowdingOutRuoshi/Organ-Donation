@@ -1,6 +1,7 @@
 package UserInterfaceModule;
 import javax.swing.JPanel;
 
+import CentralizedDataCenter.Entities.Player;
 import DynamicObjectModule.DynamicObjectModule;
 import DynamicObjectModule.Entities.Sprite;
 
@@ -15,17 +16,17 @@ public class WaitScene extends JPanel implements Runnable{
 
 	
 	private DynamicObjectModule dom;
-	private Thread waitThread;
-	private boolean isWaiting;
+	private Player player;
 	/**
 	 * Create the panel.
 	 */
-	public WaitScene(DynamicObjectModule dom) {
+	public WaitScene(DynamicObjectModule dom,Player player) {
 		this.setSize(1450, 850);
 		this.setLayout(null);
 		this.dom = dom;
+		this.player = player;
 		/* Temporary comment out*/
-		JLabel lblWait = new JLabel("wait"+dom.getAllDynamicObjects().length);
+		JLabel lblWait = new JLabel("Waiting");
 		lblWait.setBounds((this.getWidth()-100)/2, 20, 100, 30);
 		lblWait.setFont(new Font("Serif", Font.PLAIN, 30));
 		add(lblWait);
@@ -36,8 +37,21 @@ public class WaitScene extends JPanel implements Runnable{
 	protected void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
-		for(int i=0;i<4;i++){
-			String s = "null";
+		JLabel label = new JLabel("Your id : ");
+		label.setBounds(150, (this.getHeight()-300)/2, 100, 30);
+		label.setFont(new Font("Serif", Font.PLAIN, 25));
+		add(label);
+		
+		if(player.getId()!=0){
+			JLabel Player = new JLabel(""+player.getId());
+			Player.setBounds(170, (this.getHeight()-300)/2, 100, 30);
+			Player.setFont(new Font("Serif", Font.PLAIN, 25));
+			add(Player);
+		}
+		
+		
+		for(int i=1;i<4;i++){
+			String s = "waiting";
 			Sprite player = null;
 			if(i<dom.getAllDynamicObjects().length){
 				player = dom.getAllDynamicObjects()[i];
