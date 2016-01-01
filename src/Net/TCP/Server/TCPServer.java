@@ -109,7 +109,7 @@ class ConnectThread extends Thread {
 
 			cdc.addPlayer(playerId);
 			
-			if(playerCnt==4){
+			if(playerCnt==Constants.MAX_PLAYER){
 				cdc.setGameState(Constants.GAME_STATE_INIT);
 			}
 			
