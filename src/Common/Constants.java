@@ -14,4 +14,8 @@ public class Constants {
 	public static final String GAME_STATE_WAIT = "GameWait";
 	public static final String GAME_STATE_OVER = "GameOver";
 	
+	public static final String SERVERIP = "127.0.0.1";
+	public static final int UDPSERVERPORT = 27016;
+	public static final int TCPSERVERPORT = 9090;
+	
 }

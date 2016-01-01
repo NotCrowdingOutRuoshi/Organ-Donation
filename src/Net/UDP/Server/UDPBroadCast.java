@@ -27,7 +27,6 @@ import jdk.internal.dynalink.linker.LinkerServices.Implementation;
 
 public class UDPBroadCast implements IUDPBroadcast {
 
-	private int port = 27016;;
 	private long updateSecond = 50;
 
 	private ITCPServer _tcpsm;
@@ -85,7 +84,7 @@ public class UDPBroadCast implements IUDPBroadcast {
 		for (int i = 0; i < players.length(); i++) {
 			for (InetAddress ip : IPTable) {
 				byte buffer[] = players.get(i).toString().getBytes();
-				_socket.send(new DatagramPacket(buffer, buffer.length, ip, port));
+				_socket.send(new DatagramPacket(buffer, buffer.length, ip, Constants.UDPSERVERPORT));
 			}
 		}
 

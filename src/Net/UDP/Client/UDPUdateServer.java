@@ -8,6 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
 
+import Common.Constants;
 import Common.Interfaces.IDynamicObjectModule;
 import Common.Interfaces.IUDPUpdateServer;
 import Libraries.JSON.JSONObject;
@@ -16,7 +17,6 @@ import Utility.CodecUtil;
 
 public class UDPUdateServer implements IUDPUpdateServer {
 	private IDynamicObjectModule _dom;
-	private int _port = 27016;;
 	private int bufferSize = 512;
 	private long updateSecond = 50;
 	private byte _buffer[];
@@ -36,7 +36,7 @@ public class UDPUdateServer implements IUDPUpdateServer {
 	@Override
 	public void initUDPserver() {
 		try {
-			_socket = new DatagramSocket(_port);
+			_socket = new DatagramSocket(Constants.UDPSERVERPORT);
 		} catch (SocketException e) {
 
 		}
