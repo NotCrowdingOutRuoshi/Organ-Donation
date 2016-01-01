@@ -36,6 +36,7 @@ public class TCPServer implements Runnable, ITCPServer {
 			new ConnectThread(socket, cdc).start();
 			clientIPTable.add(socket.getInetAddress());
 			clientOut.add(socket);
+			BroadcastAllClient("AAAAA");
 		}
 	}
 
@@ -50,6 +51,7 @@ public class TCPServer implements Runnable, ITCPServer {
 
 	public void BroadcastAllClient(String state) throws IOException {
 		assert (serverSocket != null);
+		state += "\r\n";
 		for (int i = 0; i < clientOut.size(); i++) {
 			OutputStream out = clientOut.get(i).getOutputStream();
 			out.write(state.getBytes());
@@ -109,7 +111,7 @@ class ConnectThread extends Thread {
 				String[] recv = br.readLine().split(" ");
 				int clientId = Integer.valueOf(recv[0]);
 				String actionState = recv[recv.length - 1];
-
+				
 				switch (actionState) {
 				case StateType.WALK:
 					cdc.updateDir(clientId, Integer.valueOf(recv[1]));
