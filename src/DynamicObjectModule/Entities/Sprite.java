@@ -10,16 +10,17 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import Common.Direction;
+import Common.Constants;
 import Common.StateType;
 import DynamicObjectModule.Animations.Animation;
 import Resources.Resources;
 
 public abstract class Sprite {
+	public static final int EMPTY_ID = -1;
 	public static final int DEFAULT_X = 0;
 	public static final int DEFAULT_Y = 0;
 	public static final int DEFAULT_TOTAL_HEALTH = 500;
-	public static final String DEFAULT_DIRECTION = Direction.RIGHT;
+	public static final int DEFAULT_DIRECTION = Constants.ACTIONCODE_EAST;
 
 	protected int _id;
 	protected int _x;
@@ -27,27 +28,26 @@ public abstract class Sprite {
 	protected int _totalHealth;
 	protected int _health;
 	protected String _state;
-	protected String _direction;
-	protected Map<String, Map<String, Animation>> _animations;
+	protected int _direction;
+	protected Map<String, Map<Integer, Animation>> _animations;
 	protected Animation _currentAnimation;
-	protected Map<String, String> _packageToDirection;
+	protected Map<String, Integer> _packageToDirection;
 	protected Map<String, String> _packageToState;
 
-	public Sprite(int id, int x, int y) {
-		assert (id >= 0);
+	public Sprite(int x, int y) {
 		assert (x >= 0);
 		assert (y >= 0);
 
-		_id = id;
+		_id = EMPTY_ID;
 		_x = x;
 		_y = y;
 		_totalHealth = DEFAULT_TOTAL_HEALTH;
 		_health = _totalHealth;
-		_state = StateType.EMPTY;
+		_state = StateType.IDLE;
 		_direction = DEFAULT_DIRECTION;
 		_packageToDirection = new HashMap<>();
 		_packageToState = new HashMap<>();
-		_animations = new HashMap<String, Map<String, Animation>>();
+		_animations = new HashMap<String, Map<Integer, Animation>>();
 		
 		initPackageToDirectionMap();
 		initPackageToStateMap();
@@ -61,11 +61,11 @@ public abstract class Sprite {
 		for (final File statePackage : file.listFiles()) {
 			if (_packageToState.containsKey(statePackage.getName())) {
 				String currentState = _packageToState.get(statePackage.getName());
-				Map<String, Animation> directedAnimation = new HashMap<>();
+				Map<Integer, Animation> directedAnimation = new HashMap<>();
 
 				for (final File directionPackage : statePackage.listFiles()) {
 					if (_packageToDirection.containsKey(directionPackage.getName())) {
-						String currentDirection = _packageToDirection.get(directionPackage.getName());
+						int currentDirection = _packageToDirection.get(directionPackage.getName());
 						ArrayList<BufferedImage> images = new ArrayList<BufferedImage>();
 
 						for (final File image : directionPackage.listFiles()) {
@@ -80,9 +80,10 @@ public abstract class Sprite {
 			}
 		}
 	}
+	
 	protected abstract void initPackageToDirectionMap();
 	protected abstract void initPackageToStateMap();
-
+	
 	public int getId() {
 		return _id;
 	}
@@ -134,11 +135,11 @@ public abstract class Sprite {
 		updateAnimation();
 	}
 	
-	public String getDirection() {
+	public int getDirection() {
 		return _direction;
 	}
 
-	public void setDirection(String direction) {
+	public void setDirection(int direction) {
 		_direction = direction;
 		
 		updateAnimation();

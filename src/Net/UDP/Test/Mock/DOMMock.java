@@ -7,12 +7,6 @@ import Libraries.JSON.JSONObject;
 public class  DOMMock implements IDynamicObjectModule {
 
 	private String result = "";
-	
-	@Override
-	public void addItem(String name, int index, boolean shared, int x, int y) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void addVirtualCharacter(int clientNumber, JSONObject data) {
@@ -33,7 +27,7 @@ public class  DOMMock implements IDynamicObjectModule {
 	}
 
 	@Override
-	public void updateSprite(int index, JSONObject data) {
+	public void updateVirtualCharacter(int index, JSONObject data) {
 		// TODO Auto-generated method stub
 		result = data.toString();
 	}
@@ -50,6 +44,12 @@ public class  DOMMock implements IDynamicObjectModule {
 
 	@Override
 	public void setCountDown(int number) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addSprite(Sprite sprite) {
 		// TODO Auto-generated method stub
 		
 	}

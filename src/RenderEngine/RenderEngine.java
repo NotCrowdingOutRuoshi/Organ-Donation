@@ -8,7 +8,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import Common.Direction;
 import Common.StateType;
 import Common.Interfaces.IRenderEngine;
 import DynamicObjectModule.DynamicObjectModule;
