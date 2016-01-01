@@ -10,10 +10,20 @@ import Common.Interfaces.ITCPServer;
 public class TCPSMStub implements ITCPServer{
 
 	private Vector<InetAddress> ipTables;
-	@Override
+
+	
+	public TCPSMStub() {
+		ipTables= new Vector<InetAddress>();
+		try {
+			ipTables.add(InetAddress.getByName("127.0.0.1"));
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public void startServer() {
 		// TODO Auto-generated method stub
-		
+	
 	}
 
 	public void BroadcastAllClient() {
@@ -24,12 +34,6 @@ public class TCPSMStub implements ITCPServer{
 	@Override
 	public Vector<InetAddress> getClientIPTable() {
 		// TODO Auto-generated method stub
-		try {
-			ipTables.add(InetAddress.getByName("127.0.0.1"));
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return ipTables;
 	}
 

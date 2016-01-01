@@ -11,6 +11,7 @@ import Common.Interfaces.ICentralizedDataCenter;
 import Common.Interfaces.ITCPServer;
 import Common.Interfaces.IUDPBroadcast;
 import Common.Interfaces.IUDPUpdateServer;
+import Libraries.JSON.JSONArray;
 import Net.UDP.Server.UDPBroadCast;
 import Net.UDP.Test.Mock.UDPUSMock;
 import Net.UDP.Test.Stub.CDCStub;
@@ -21,14 +22,14 @@ public class UDPBCTest {
 	private ICentralizedDataCenter _cdc;
 	private ITCPServer _tcpsm;
 	private IUDPBroadcast udpBroadCast;
-	private IUDPUpdateServer udpusMock;
+	private UDPUSMock udpusMock;
 	
 	@Before
 	public void seUP() {
 		_cdc = new CDCStub();
 		_tcpsm = new TCPSMStub();
 		udpBroadCast = new UDPBroadCast(_tcpsm, _cdc);
-		udpusMock = new UDPUSMock();
+		udpusMock = new UDPUSMock();		
 	}
 	
 
@@ -40,7 +41,10 @@ public class UDPBCTest {
 
 	@Test
 	public void testBroadCastOneMessage() {
-		
+		udpBroadCast.startUDPBroadCast();
+		JSONArray players = new JSONArray(_cdc.getUpdateInfo());
+		String receiveData = udpusMock.receiveData();
+		assertTrue(receiveData.equals(players.get(0).toString()));
 	
 	}
 
