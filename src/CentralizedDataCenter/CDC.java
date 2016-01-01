@@ -17,7 +17,7 @@ import Libraries.JSON.JSONObject;
 public class CDC implements ICentralizedDataCenter {
 	Map<Integer, Player> PlayerList;
 	Map<Integer, Organ> OrganList;
-	private String _gameState = Constants.GAME_STATE_MENU;
+	private String _gameState = Constants.GAME_STATE_WAIT;
 	private Vector<String> _gameStateList;
 	private Timer _enviromentTimer;
 	private Timer _logicTimer;

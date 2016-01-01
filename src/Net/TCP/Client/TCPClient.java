@@ -53,6 +53,7 @@ public class TCPClient implements Runnable, ITCPClient {
 		// TODO Auto-generated method stub
 		try {
 			int clientId = input.read();
+			System.out.println("client: "+clientId);
 			GameManager.getInstance().setClientId(clientId);
 			
 			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
