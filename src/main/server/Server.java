@@ -31,7 +31,12 @@ public class Server {
 		udpBroadcast.startUDPBroadCast();
 		
 		while(!cdc.getGameState().equals(Constants.GAME_STATE_OVER)){
-			
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if(!currentState.equals(cdc.getGameState())){
 				tcpServer.BroadcastAllClient(Constants.GAME_STATE_INIT);
 				currentState = Constants.GAME_STATE_INIT;
