@@ -1,11 +1,10 @@
 package DynamicObjectModule.Transitions.States;
 
-import Common.Direction;
 import Common.StateType;
 import DynamicObjectModule.Entities.Sprite;
 
 public class WalkState extends State {
-	private Direction _direction;
+	private int _direction;
 
 	public WalkState(Sprite sprite) {
 		super(sprite);

@@ -63,7 +63,7 @@ public class UDPUdateServer implements IUDPUpdateServer {
 		_socket.receive(_dataPacket);
 		String msg = new String(_dataPacket.getData(), 0, _dataPacket.getLength());
 		JSONObject player = new JSONObject(msg);
-		_dom.updateSprite(Integer.valueOf(player.get("id").toString()), player);
+		_dom.updateVirtualCharacter(Integer.valueOf(player.get("id").toString()), player);
 	}
 
 }
