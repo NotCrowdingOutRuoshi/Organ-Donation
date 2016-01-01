@@ -6,14 +6,11 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.Vector;
 
 import Common.Constants;
 import Common.Interfaces.IDynamicObjectModule;
 import Common.Interfaces.IUDPUpdateServer;
 import Libraries.JSON.JSONObject;
-import UserInterfaceModule.GameManager;
-import Utility.CodecUtil;
 
 public class UDPUdateServer implements IUDPUpdateServer {
 	private IDynamicObjectModule _dom;
@@ -65,8 +62,8 @@ public class UDPUdateServer implements IUDPUpdateServer {
 	private void reciveFromUDPServer() throws IOException {
 		_socket.receive(_dataPacket);
 		String msg = new String(_dataPacket.getData(), 0, _dataPacket.getLength());
-		JSONObject player =new JSONObject(msg);
-		_dom.updateSprite(Integer.valueOf(player.get("id").toString()),player);
+		JSONObject player = new JSONObject(msg);
+		_dom.updateSprite(Integer.valueOf(player.get("id").toString()), player);
 	}
 
 }
