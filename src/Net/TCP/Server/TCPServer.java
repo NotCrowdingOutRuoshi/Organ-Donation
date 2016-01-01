@@ -9,6 +9,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Vector;
 
+import Common.Constants;
 import Common.StateType;
 import Common.Interfaces.ICentralizedDataCenter;
 import Common.Interfaces.ITCPServer;
@@ -36,7 +37,6 @@ public class TCPServer implements Runnable, ITCPServer {
 			new ConnectThread(socket, cdc).start();
 			clientIPTable.add(socket.getInetAddress());
 			clientOut.add(socket);
-			BroadcastAllClient("AAAAA");
 		}
 	}
 
@@ -52,6 +52,7 @@ public class TCPServer implements Runnable, ITCPServer {
 	public void BroadcastAllClient(String state) throws IOException {
 		assert (serverSocket != null);
 		state += "\r\n";
+		System.out.println("Server Breadcast: "+state);
 		for (int i = 0; i < clientOut.size(); i++) {
 			OutputStream out = clientOut.get(i).getOutputStream();
 			out.write(state.getBytes());
@@ -94,19 +95,24 @@ class ConnectThread extends Thread {
 		playerCnt++;
 		playerId = playerCnt;
 	}
-
+	
 	@Override
 	public void run() {
 		try {
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					socket.getInputStream()));
 			OutputStream out = socket.getOutputStream();
-
+			
+			
 			out.write(playerId);
 			out.flush();
 
 			cdc.addPlayer(playerId);
-
+			
+			if(playerCnt==4){
+				cdc.setGameState(Constants.GAME_STATE_INIT);
+			}
+			
 			while (true) {
 				String[] recv = br.readLine().split(" ");
 				int clientId = Integer.valueOf(recv[0]);

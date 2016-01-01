@@ -7,10 +7,12 @@ import java.net.UnknownHostException;
 import javax.swing.JPanel;
 
 
+
 import CentralizedDataCenter.Entities.Player;
 import Common.Constants;
 import DynamicObjectModule.DynamicObjectModule;
 import Net.TCP.Client.TCPClient;
+import Net.UDP.Client.UDPUdateServer;
 
 
 public class GameManager {
@@ -21,16 +23,17 @@ public class GameManager {
 	private Player player;
 	private DynamicObjectModule dom;
 	private TCPClient tcp;
+	private UDPUdateServer udpServer;
 	private GameScene gs = null;
 	private WaitScene ws = null;
 	/**
-     * ¨Ï¥ÎÀRºAÅÜ¼Æ°O¿ýSingleton, ¨Ã«Ø¥ß¹ê¨Ò
+     * ï¿½Ï¥ï¿½ï¿½Rï¿½Aï¿½Ü¼Æ°Oï¿½ï¿½Singleton, ï¿½Ã«Ø¥ß¹ï¿½ï¿½
      */
     private static GameManager singleton;
 
   
     /**
-     * Åý¥~³¡¥u¯à³z¹L³o­Ómethod¨ú±oSingleton¹ê¨Ò
+     * ï¿½ï¿½ï¿½~ï¿½ï¿½ï¿½uï¿½ï¿½zï¿½Lï¿½oï¿½ï¿½methodï¿½ï¿½ï¿½oSingletonï¿½ï¿½ï¿½
      */
     public static GameManager getInstance() {
     	if (singleton == null) {
@@ -42,6 +45,7 @@ public class GameManager {
     private GameManager(){
 		tcp = new TCPClient();
     	dom = new DynamicObjectModule();
+//    	udpServer = new UDPUdateServer(dom);
 	}
     
 //    public void setDom(DynamicObjectModule dom){
@@ -60,24 +64,25 @@ public class GameManager {
 			statusPanel = ms;
 			break;
 		case Constants.GAME_STATE_WAIT:
-			
-//			try {
-//				tcp.connectServer(InetAddress.getByName("140.115.53.45"));
-//			} catch (UnknownHostException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			} catch (IOException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
 			player = new Player();
+			try {
+				tcp.connectServer(InetAddress.getByName("127.0.0.1"));
+//				udpServer.initUDPserver();
+			} catch (UnknownHostException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 			ws = new WaitScene(dom,player);
 			Thread w = new Thread(ws);
 	        w.start();
 			statusPanel = ws;
 			break;
 		case Constants.GAME_STATE_INIT:
-
+			
 			try {
 				gs = new GameScene(dom,player);
 			} catch (IOException e) {
