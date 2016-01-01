@@ -37,7 +37,7 @@ public class UDPUSMock implements IUDPUpdateServer {
 		}
 	}
 
-	public void receiveData() {
+	public String receiveData() {
 		try {
 			_socket = new DatagramSocket(_port);
 			_socket.receive(_dataPacket);
@@ -50,6 +50,7 @@ public class UDPUSMock implements IUDPUpdateServer {
 		}
 		result = new String(_buffer, 0, _dataPacket.getLength());
 		_socket.close();
+		return result;
 	}
 	
 	public String getResult() {

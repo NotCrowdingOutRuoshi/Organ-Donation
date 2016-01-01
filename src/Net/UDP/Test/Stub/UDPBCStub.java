@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+import Common.Constants;
 import Common.Interfaces.IUDPBroadcast;
 
 public class UDPBCStub implements IUDPBroadcast {
@@ -42,7 +43,7 @@ public class UDPBCStub implements IUDPBroadcast {
 
 		byte buffer[] = msg.getBytes();
 		try {
-			_socket.send(new DatagramPacket(buffer, buffer.length, InetAddress.getByName(ip), _port));
+			_socket.send(new DatagramPacket(buffer, buffer.length, InetAddress.getByName(Constants.SERVERIP),Constants.UDPSERVERPORT));
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
