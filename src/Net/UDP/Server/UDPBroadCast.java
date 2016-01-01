@@ -82,20 +82,10 @@ public class UDPBroadCast implements IUDPBroadcast {
 		Vector<InetAddress> IPTable = _tcpsm.getClientIPTable();
 		JSONArray players = new JSONArray(_cdc.getUpdateInfo());
 
-		if (_cdc.getGameState() == Constants.GAME_STATE_WAIT || _cdc.getGameState() == Constants.GAME_STATE_INIT) {
-			for (int i = 0; i < players.length(); i++) {
-				for (InetAddress ip : IPTable) {
-					byte buffer[] = CodecUtil.encode(ServerCommandType.ADD.toString(),players.get(i).toString()).getBytes();
-					_socket.send(new DatagramPacket(buffer, buffer.length, ip, port));
-				}
-			}
-		} 
-		else {
-			for (int i = 0; i < players.length(); i++) {
-				for (InetAddress ip : IPTable) {
-					byte buffer[] = players.get(i).toString().getBytes();
-					_socket.send(new DatagramPacket(buffer, buffer.length, ip, port));
-				}
+		for (int i = 0; i < players.length(); i++) {
+			for (InetAddress ip : IPTable) {
+				byte buffer[] = players.get(i).toString().getBytes();
+				_socket.send(new DatagramPacket(buffer, buffer.length, ip, port));
 			}
 		}
 
