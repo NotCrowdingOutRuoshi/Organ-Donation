@@ -65,15 +65,8 @@ public class UDPUdateServer implements IUDPUpdateServer {
 	private void reciveFromUDPServer() throws IOException {
 		_socket.receive(_dataPacket);
 		String msg = new String(_dataPacket.getData(), 0, _dataPacket.getLength());
-		Vector<String> msgList = CodecUtil.decode(msg);
-		if (msgList.size() == 1) {
-			JSONObject player = new JSONObject(msgList.get(0));
-			_dom.updateSprite(Integer.valueOf(player.getString("id")), player);
-		} else {
-			JSONObject player = new JSONObject(msgList.get(1));
-			_dom.addVirtualCharacter(Integer.valueOf(player.getString("id")), player);
-		}
-
+		JSONObject player =new JSONObject(msg);
+		_dom.updateSprite(Integer.valueOf(player.get("id").toString()),player);
 	}
 
 }
