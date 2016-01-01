@@ -85,9 +85,12 @@ public class DynamicObjectModule implements IDynamicObjectModule {
 	public void updateSprite(int index, JSONObject data) {
 		SpriteUpdater<?> updater = findUpdater(index);
 
-		assert (updater != null);
-
-		updater.update(data);
+		if(updater == null) {
+			addVirtualCharacter(index, data);
+		}
+		else {
+			updater.update(data);
+		}
 	}
 	
 	private SpriteUpdater<?> findUpdater(int id) {
