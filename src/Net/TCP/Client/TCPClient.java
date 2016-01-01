@@ -37,7 +37,7 @@ public class TCPClient implements Runnable, ITCPClient {
 
 	public void inputMoves(String MoveCode) throws IOException {
 		assert(socket.isConnected());
-
+		MoveCode += "\r\n"; 
 		OutputStream output = socket.getOutputStream();
 		output.write(MoveCode.getBytes());
 		output.flush();
