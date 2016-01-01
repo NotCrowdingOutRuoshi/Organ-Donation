@@ -1,31 +1,58 @@
 package Net.UDP.Test.Mock;
 
-import Net.UDP.Test.Stub.DOMStub;
+import Common.Interfaces.IDynamicObjectModule;
+import DynamicObjectModule.Entities.Sprite;
+import Libraries.JSON.JSONObject;
 
-public class  DOMMock extends DOMStub {
+public class  DOMMock implements IDynamicObjectModule {
 
 	private String result = "";
-	public void addVirtualCharacter(String msg) {
-		result = "addVirtualCharacter " + msg;
+	
+	@Override
+	public void addItem(String name, int index, boolean shared, int x, int y) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public synchronized void addItem(String msg) {
-		result = "addItem " + msg;
+	@Override
+	public void addVirtualCharacter(int clientNumber, JSONObject data) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public void updateVirtualCharacter(String msg) {
-		result = "updateVirtualCharacter " + msg;
+	@Override
+	public Sprite findSprite(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public void updateItem(String msg) {
-		result = "updateItem " + msg;
+	@Override
+	public Sprite[] getAllDynamicObjects() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateSprite(int index, JSONObject data) {
+		// TODO Auto-generated method stub
+		result = data.toString();
 	}
 	
 	public String getResult() {
 		return result;
 	}
-	
-	public void initResult() {
-		result = "";
+
+	@Override
+	public int getCountDown() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
+
+	@Override
+	public void setCountDown(int number) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 }
