@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import CentralizedDataCenter.Entities.Sprite;
-import CentralizedDataCenter.Entities.StateType;
 import Common.Constants;
+import Common.StateType;
 
 public class Controller implements KeyListener {
 	protected static Map<Integer, Integer> _keyCodeToDirection = new HashMap<Integer, Integer>() {
