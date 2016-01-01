@@ -10,20 +10,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
 
-import com.sun.media.jfxmedia.events.PlayerStateEvent.PlayerState;
-import com.sun.org.apache.bcel.internal.classfile.Code;
-import com.sun.xml.internal.ws.api.pipe.Codec;
-
 import Common.Constants;
-import Common.ServerCommandType;
 import Common.Interfaces.ICentralizedDataCenter;
-import Common.Interfaces.ITCPClient;
 import Common.Interfaces.ITCPServer;
 import Common.Interfaces.IUDPBroadcast;
 import Libraries.JSON.JSONArray;
-import Libraries.JSON.JSONObject;
-import Utility.CodecUtil;
-import jdk.internal.dynalink.linker.LinkerServices.Implementation;
 
 public class UDPBroadCast implements IUDPBroadcast {
 
@@ -87,9 +78,6 @@ public class UDPBroadCast implements IUDPBroadcast {
 				_socket.send(new DatagramPacket(buffer, buffer.length, ip, Constants.UDPSERVERPORT));
 			}
 		}
-
-		
-
 	}
 
 }
