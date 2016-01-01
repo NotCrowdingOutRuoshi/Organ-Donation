@@ -26,15 +26,9 @@ public class GameManager {
 	private UDPUdateServer udpServer;
 	private GameScene gs = null;
 	private WaitScene ws = null;
-	/**
-     * �ϥ��R�A�ܼưO��Singleton, �ëإ߹��
-     */
+
     private static GameManager singleton;
 
-  
-    /**
-     * ���~���u��z�L�o��method���oSingleton���
-     */
     public static GameManager getInstance() {
     	if (singleton == null) {
             singleton = new GameManager();
@@ -45,7 +39,7 @@ public class GameManager {
     private GameManager(){
 		tcp = new TCPClient();
     	dom = new DynamicObjectModule();
-//    	udpServer = new UDPUdateServer(dom);
+    	udpServer = new UDPUdateServer(dom);
 	}
     
 //    public void setDom(DynamicObjectModule dom){
@@ -66,8 +60,8 @@ public class GameManager {
 		case Constants.GAME_STATE_WAIT:
 			player = new Player();
 			try {
-				tcp.connectServer(InetAddress.getByName("127.0.0.1"));
-//				udpServer.initUDPserver();
+				udpServer.initUDPserver();
+				tcp.connectServer(InetAddress.getByName(Constants.SERVERIP));
 			} catch (UnknownHostException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
