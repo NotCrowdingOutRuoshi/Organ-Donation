@@ -33,36 +33,45 @@ public class Controller implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		String state ="";
 		if (_keyCodeToDirection.containsKey(e.getKeyCode())) {
 			_isDirectionKeyPressed = true;
-			
-			data = GameManager.getInstance().getClientId()+" "+_keyCodeToDirection.get(e.getKeyCode())+" "+StateType.WALK;
+			state = StateType.WALK;
+			data = GameManager.getInstance().getClientId()+" "+_keyCodeToDirection.get(e.getKeyCode())+" "+state;
 			
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_Z) {
-			data = GameManager.getInstance().getClientId()+" "+StateType.ATTACK;
+			state = StateType.ATTACK;
+			data = GameManager.getInstance().getClientId()+" "+state;
 			
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_X) {
-			data = GameManager.getInstance().getClientId()+" "+StateType.STEAL;
+			state = StateType.STEAL;
+			data = GameManager.getInstance().getClientId()+" "+state;
 			
 		}
 		if(_entity == null) {
 			assert false;
 		}
-		GameManager.getInstance().sendtoTcp(data);
+		if(_entity.setState(state)){
+			GameManager.getInstance().sendtoTcp(data);
+		}
+		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		String state ="";
 		if (_keyCodeToDirection.containsKey(e.getKeyCode())) {
 			_isDirectionKeyPressed = false;
-			
-			data = GameManager.getInstance().getClientId()+" "+StateType.IDLE;
+			state = StateType.IDLE;
+			data = GameManager.getInstance().getClientId()+" "+state;
 		}
-		GameManager.getInstance().sendtoTcp(data);
+		if(_entity.setState(state)){
+			GameManager.getInstance().sendtoTcp(data);
+		}
 	}
 
 	@Override
