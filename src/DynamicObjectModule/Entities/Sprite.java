@@ -157,14 +157,16 @@ public abstract class Sprite {
 		return _fsm.getCurrentState().getType();
 	}
 
-	public void setState(String state) {
+	public boolean setState(String state) {
 		assertStates(state);
 		
 		if (_fsm.setState(state)) {
 			_fsm.executeState();
+			return true;
 		}
 
 		updateAnimation();
+		return false;
 	}
 
 	public State<?> getCurrentState() {
