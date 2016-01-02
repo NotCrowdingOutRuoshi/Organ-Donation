@@ -62,12 +62,27 @@ public class GameScene extends JPanel implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		controller.keyPressed(e);
+		if(player == null) {
+			player = dom.findSprite(GameManager.getInstance().getClientId());
+			controller.setEntity(player);
+			keyPressed(e);
+		}
+		else {
+			controller.keyPressed(e);
+		}
+		
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		controller.keyReleased(e);
+		if(player == null) {
+			player = dom.findSprite(GameManager.getInstance().getClientId());
+			controller.setEntity(player);
+			keyReleased(e);
+		}
+		else {
+			controller.keyReleased(e);
+		}
 	}
 	
 

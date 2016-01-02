@@ -26,12 +26,16 @@ public class Controller implements KeyListener {
 		_entity = sprite;
 		_isDirectionKeyPressed = false;
 	}
+	
+	public void setEntity(Sprite sprite) {
+		_entity = sprite;
+	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (_keyCodeToDirection.containsKey(e.getKeyCode())) {
 			_isDirectionKeyPressed = true;
-
+			
 			data = GameManager.getInstance().getClientId()+" "+_keyCodeToDirection.get(e.getKeyCode())+" "+StateType.WALK;
 			
 		}
@@ -45,7 +49,9 @@ public class Controller implements KeyListener {
 			data = GameManager.getInstance().getClientId()+" "+StateType.STEAL;
 			
 		}
-		
+		if(_entity == null) {
+			assert false;
+		}
 		GameManager.getInstance().sendtoTcp(data);
 	}
 
