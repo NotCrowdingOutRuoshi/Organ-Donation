@@ -19,6 +19,7 @@ public class SpriteRenderEngine {
 		
 		for (Sprite sprite : entities) {
 			sprite.draw(g);
+			sprite.updateAnimation();
 		}
 	}
 }

@@ -1,5 +1,6 @@
 package DynamicObjectModule.Transitions.States.VirtualCharacter;
 
+import Common.StateType;
 import DynamicObjectModule.Entities.VirtualCharacter;
 import DynamicObjectModule.Transitions.States.DeathState;
 
@@ -7,13 +8,13 @@ public class CharacterDeathState extends DeathState<VirtualCharacter> {
 
 	public CharacterDeathState(VirtualCharacter sprite) {
 		super(sprite);
-		// TODO Auto-generated constructor stub
+		
+		_returnState = StateType.DEATH;
 	}
 
 	@Override
 	public void enter() {
-		// TODO Auto-generated method stub
-		
+		super.enter();
 	}
 
 	@Override

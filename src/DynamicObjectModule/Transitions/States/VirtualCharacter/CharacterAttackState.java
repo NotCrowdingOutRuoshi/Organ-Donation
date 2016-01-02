@@ -1,5 +1,6 @@
 package DynamicObjectModule.Transitions.States.VirtualCharacter;
 
+import Common.StateType;
 import DynamicObjectModule.Entities.VirtualCharacter;
 import DynamicObjectModule.Transitions.States.AttackState;
 
@@ -7,13 +8,15 @@ public class CharacterAttackState extends AttackState<VirtualCharacter> {
 
 	public CharacterAttackState(VirtualCharacter sprite) {
 		super(sprite);
-		// TODO Auto-generated constructor stub
+		
+		_returnState = StateType.IDLE;
 	}
 
 	@Override
 	public void enter() {
-		// TODO Auto-generated method stub
-		
+		_entity.setAnimation(getType(), _entity.getDirection());
+		_entity.getCurrentAnimation().loop(1);
+		_entity.getCurrentAnimation().start();
 	}
 
 	@Override

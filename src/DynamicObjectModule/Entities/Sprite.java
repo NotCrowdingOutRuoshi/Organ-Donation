@@ -175,13 +175,24 @@ public abstract class Sprite {
 
 		updateAnimation();
 	}
-
-	private void updateAnimation() {
+	
+	public Animation getCurrentAnimation() {
+		return _currentAnimation;
+	}
+	
+	public void setAnimation(String stateType, int direction) {
 		if (_currentAnimation != null) {
 			_currentAnimation.reset();
 		}
 		
-		_currentAnimation = _animations.get(getState()).get(_direction);
-		_currentAnimation.start();
+		_currentAnimation = _animations.get(stateType).get(_direction);
+	}
+
+	public void updateAnimation() {
+		if (_currentAnimation != null && _currentAnimation.isStopped()) {
+			String returnState = _fsm.getCurrentState().getReturnState();
+			_currentAnimation.reset();
+			_fsm.setState(returnState);
+		}
 	}
 }
