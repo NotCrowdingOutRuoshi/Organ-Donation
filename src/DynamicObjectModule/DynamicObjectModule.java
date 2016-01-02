@@ -1,136 +1,111 @@
 package DynamicObjectModule;
 
-import java.awt.Point;
 import java.util.ArrayList;
 
-import DynamicObjectModule.Entities.Character;
-import DynamicObjectModule.Entities.Item;
+import Common.Interfaces.IDynamicObjectModule;
+import DynamicObjectModule.Entities.VirtualCharacter;
+import DynamicObjectModule.Entities.VirtualOrgan;
 import DynamicObjectModule.Entities.Sprite;
-import DynamicObjectModule.Entities.Character.DIRECTIONS;
-import DynamicObjectModule.Mocks.MoveCodes;
-import DynamicObjectModule.Mocks.TCPClientModule;
+import DynamicObjectModule.Updaters.VirtualCharacterUpdater;
+import Libraries.JSON.JSONObject;
+import DynamicObjectModule.Updaters.SpriteUpdater;
 
-public class DynamicObjectModule {
-	private ArrayList<Item> _items;
-	private ArrayList<Character> _characters;
-	private TCPClientModule _tcpClientModule;
+public class DynamicObjectModule implements IDynamicObjectModule {
+	private int _countDown;
+	private ArrayList<SpriteUpdater<?>> _updaters;
+	private ArrayList<Sprite> _sprites;
 
-	public DynamicObjectModule(TCPClientModule tcpClientModule) {
-		assert (tcpClientModule != null);
+	public DynamicObjectModule() {
 
-		_items = new ArrayList<Item>();
-		_characters = new ArrayList<Character>();
-		_tcpClientModule = tcpClientModule;
+		_countDown = 0;
+
+		_updaters = new ArrayList<SpriteUpdater<?>>();
+		_sprites = new ArrayList<Sprite>();
 	}
 
-	public void addItem(String name, int index, boolean shared, int x, int y) {
-		assert (name != null && !name.isEmpty());
-		assert (index >= 0);
+	// For test update only.
+//	public static void main(String[] args) {
+//		DynamicObjectModule dom = new DynamicObjectModule();
+//		dom.addVirtualCharacter(1, new JSONObject("{\"organs\":[{\"name\":\"heart\",\"HP\":100},{\"name\":\"liver\",\"HP\":100},{\"name\":\"lung\",\"HP\":100},{\"name\":\"pancreas\",\"HP\":100},{\"name\":\"kidney\",\"HP\":100},{\"name\":\"small intestine\",\"HP\":100},{\"name\":\"large intestine\",\"HP\":100}],\"x\":0,\"health\":500,\"y\":0,\"state\":\"Idle state\",\"id\":1,\"dir\":39,\"speed\":5,\"energy\":700}"));
+//		Sprite[] sprites = dom.getAllDynamicObjects();
+//		System.out.println("Hi");
+//	}
 
-		for (Item item : _items) {
-			assert (index != item.getId());
-		}
+	@Override
+	public void addSprite(Sprite sprite) {
+		assert (findSprite(sprite.getId()) == null);
 
-		Item item = new Item(name, index, shared, x, y);
-		_items.add(item);
+		_sprites.add(sprite);
 	}
 
-	public void addVirtualCharacter(int clientNumber) {
+	@Override
+	public void addVirtualCharacter(int clientNumber, JSONObject data) {
 		assert (clientNumber >= 0);
-		assert (findVirtualCharacter(clientNumber) == null);
+		assert (findSprite(clientNumber) == null);
 
-		for (Character character : _characters) {
+		for (Sprite character : _sprites) {
 			assert (clientNumber != character.getId());
 		}
 
-		Character character = new Character(clientNumber, Character.DEFAULT_X, Character.DEFAULT_Y, Character.DEFAULT_DIRECTION, Character.DEFAULT_SPEED);
-		_characters.add(character);
+		VirtualCharacter character = new VirtualCharacter(clientNumber, Sprite.DEFAULT_X, Sprite.DEFAULT_Y,
+				VirtualCharacter.DEFAULT_DIRECTION, VirtualCharacter.DEFAULT_SPEED);
+		VirtualCharacterUpdater updater = new VirtualCharacterUpdater(character);
+
+		updater.update(data);
+
+		_sprites.add(character);
+		_updaters.add(updater);
 	}
 
-	public Item findItem(int index) {
-		assert (index >= 0);
-
-		for (Item item : _items) {
-			if (item.getId() == index) {
-				return item;
+	@Override
+	public Sprite findSprite(int id) {
+		for (Sprite sprite : _sprites) {
+			if (sprite.getId() == id) {
+				return sprite;
 			}
 		}
 
 		return null;
 	}
 
-	public Character findVirtualCharacter(int id) {
-		for (Character character : _characters) {
-			if (character.getId() == id) {
-				return character;
-			}
-		}
-
-		return null;
-	}
-
+	@Override
 	public Sprite[] getAllDynamicObjects() {
-		Character[] characters = new Character[_characters.size()];
-		_characters.toArray(characters);
+		Sprite[] result = new Sprite[_sprites.size()];
+		_sprites.toArray(result);
 
-		Item[] items = new Item[_items.size()];
-		_items.toArray(items);
-
-		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
-		sprites.addAll(_characters);
-		sprites.addAll(_items);
-
-		Sprite[] result = new Sprite[sprites.size()];
-		sprites.toArray(result);
-		
 		return result;
 	}
 
-	public Point getVirtualCharacterPosition(int clientNumber) {
-		Character character = findVirtualCharacter(clientNumber);
-
-		assert (character != null);
-
-		return new Point(character.getX(), character.getY());
+	@Override
+	public int getCountDown() {
+		return _countDown;
 	}
 
-	public boolean keyGETPressed(int id) {
-		Character character = findVirtualCharacter(id);
-		
-		assert (character != null);
-		
-		for (Item item : _items) {
-			if (item.getX() == character.getX() && item.getY() == character.getY()) {
-				_tcpClientModule.inputMoves(MoveCodes.GET);
-				return true;
+	@Override
+	public void setCountDown(int number) {
+		assert (number >= 0);
+
+		_countDown = number;
+	}
+
+	@Override
+	public void updateVirtualCharacter(int index, JSONObject data) {
+		SpriteUpdater<?> updater = findUpdater(index);
+
+		if (updater == null) {
+			addVirtualCharacter(index, data);
+		} else {
+			updater.update(data);
+		}
+	}
+
+	private SpriteUpdater<?> findUpdater(int id) {
+		for (SpriteUpdater<?> updater : _updaters) {
+			if (updater.getSpriteId() == id) {
+				return updater;
 			}
 		}
-		
-		return false;
-	}
 
-	public void updateItem(int index, boolean shared, int ownerId, int x, int y) {
-		Item item = findItem(index);
-		Character owner = findVirtualCharacter(ownerId); 
-
-		assert (item != null);
-		assert owner != null || ownerId == Item.EMPTY_OWNER;
-
-		item.setShared(shared);		
-		item.setOwner(ownerId);
-		
-		item.setX(x);
-		item.setY(y);
-	}
-
-	public void updateVirtualCharacter(int clientNumber, DIRECTIONS direction, int speed, int x, int y) {
-		Character character = findVirtualCharacter(clientNumber);
-
-		assert (character != null);
-
-		character.setDirection(direction);
-		character.setSpeed(speed);
-		character.setX(x);
-		character.setY(y);
+		return null;
 	}
 }
