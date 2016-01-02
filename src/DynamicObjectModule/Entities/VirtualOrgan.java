@@ -31,6 +31,15 @@ public class VirtualOrgan extends Sprite {
 	public VirtualCharacter getOwner() {
 		return _owner;
 	}
+	
+	@Override
+	public void setHealth(int health) {
+		super.setHealth(health);
+		
+		if (_health == 0) {
+			//setState(StateType.DEATH);
+		}
+	}
 
 	public void setOwner(VirtualCharacter owner) {
 		assert (owner != null);
@@ -69,7 +78,7 @@ public class VirtualOrgan extends Sprite {
 
 	@Override
 	protected void loadAnimations() throws IOException {
-		loadAnimations("Sprite/VirtualOrgan");
+		//loadAnimations("Sprite/VirtualOrgan");
 	}
 
 	@Override
