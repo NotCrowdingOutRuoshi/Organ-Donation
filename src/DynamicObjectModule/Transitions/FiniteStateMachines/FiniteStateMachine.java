@@ -103,7 +103,7 @@ public class FiniteStateMachine<EntityType extends Sprite> {
 			_transitionTable.get(currentStateType).toArray(s);
 
 			for (String type : _transitionTable.get(currentStateType)) {
-				if (type == stateType) {
+				if (type.equals(stateType)) {
 					return true;
 				}
 			}

@@ -155,6 +155,8 @@ public abstract class Sprite {
 	}
 
 	public void setState(String state) {
+		assertStates(state);
+		
 		if (_fsm.setState(state)) {
 			_fsm.executeState();
 		}
@@ -175,12 +177,12 @@ public abstract class Sprite {
 
 		updateAnimation();
 	}
-	
+
 	public Animation getCurrentAnimation() {
 		return _currentAnimation;
 	}
-	
-	public void setAnimation(String stateType, int direction) {		
+
+	public void setAnimation(String stateType, int direction) {
 		_currentAnimation = _animations.get(stateType).get(_direction);
 	}
 
@@ -190,5 +192,10 @@ public abstract class Sprite {
 			_currentAnimation.reset();
 			_fsm.setState(returnState);
 		}
+	}
+
+	private void assertStates(String stateType) {		
+		assert (stateType.equals(StateType.IDLE) || stateType.equals(StateType.WALK) || stateType.equals(StateType.ATTACK)
+				|| stateType.equals(StateType.STEAL) || stateType.equals(StateType.EXHAUST) || stateType.equals(StateType.DEATH));
 	}
 }

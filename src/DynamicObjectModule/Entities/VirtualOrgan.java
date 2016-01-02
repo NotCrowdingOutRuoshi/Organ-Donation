@@ -1,8 +1,11 @@
 package DynamicObjectModule.Entities;
 
 import java.awt.Graphics;
+import java.io.IOException;
 
+import Common.StateType;
 import DynamicObjectModule.Transitions.FiniteStateMachines.FiniteStateMachine;
+import DynamicObjectModule.Transitions.States.VirtualOrgan.*;
 
 public class VirtualOrgan extends Sprite {
 	protected String _name;
@@ -42,23 +45,31 @@ public class VirtualOrgan extends Sprite {
 		assert (name != null && !name.isEmpty());
 		_name = name;
 	}
+	
+	@Override
+	public int getDirection() {
+		assert (false);
+		return -1;
+	}
+	
+	@Override
+	public void setDirection(int direction) {
+		assert (false);
+	}
 
 	@Override
 	protected void initPackageToDirectionMap() {
-		// TODO Auto-generated method stub
-
+		_packageToDirection.put("Right", Sprite.DEFAULT_DIRECTION);
 	}
 
 	@Override
 	protected void initPackageToStateMap() {
-		// TODO Auto-generated method stub
-
+		_packageToState.put("Death", StateType.DEATH);
 	}
 
 	@Override
-	protected void loadAnimations() {
-		// TODO Auto-generated method stub
-
+	protected void loadAnimations() throws IOException {
+		loadAnimations("Sprite/VirtualOrgan");
 	}
 
 	@Override
@@ -68,13 +79,12 @@ public class VirtualOrgan extends Sprite {
 
 	@Override
 	protected void initTransitionTable() {
-		// TODO Auto-generated method stub
-
+		_fsm.addTransition(StateType.IDLE, StateType.DEATH);
 	}
 
 	@Override
 	protected void initStateEntityTranslationTable() {
-		// TODO Auto-generated method stub
-
+		_fsm.addStateTranslation(StateType.IDLE, new OrganIdleState(this));
+		_fsm.addStateTranslation(StateType.DEATH, new OrganDeathState(this));
 	}
 }
