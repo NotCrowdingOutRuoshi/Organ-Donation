@@ -7,6 +7,9 @@ import java.io.IOException;
 
 import Common.Constants;
 import Common.StateType;
+import DynamicObjectModule.Transitions.FiniteStateMachines.FiniteStateMachine;
+import DynamicObjectModule.Transitions.States.State;
+import DynamicObjectModule.Transitions.States.VirtualCharacter.*;
 
 public class VirtualCharacter extends Sprite {
 	public static final int DEFAULT_SPEED = 0;
@@ -31,13 +34,28 @@ public class VirtualCharacter extends Sprite {
 		for (VirtualOrgan organ : _organs) {
 			_organTotalHealth += organ.getTotalHealth();
 		}
-		
+
 		try {
 			loadAnimations("Sprite/VirtualCharacter");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+
+	// For test only.
+//	public static void main(String[] args) {
+//		VirtualCharacter player = new VirtualCharacter(0, 0, 0, Sprite.DEFAULT_DIRECTION, 0);
+//		State s = player.getCurrentState();
+//		System.out.println(s.toString());
+//
+//		player.setState(StateType.ATTACK);
+//		s = player.getCurrentState();
+//		System.out.println(s.toString());
+//
+//		player.setState(StateType.STEAL);
+//		s = player.getCurrentState();
+//		System.out.println(s.toString());
+//	}
 
 	@Override
 	public void draw(Graphics g) {
@@ -61,30 +79,75 @@ public class VirtualCharacter extends Sprite {
 		_packageToState.put("Steal", StateType.STEAL);
 		_packageToState.put("Exhaust", StateType.EXHAUST);
 	}
-	
+
+	@Override
+	protected void loadAnimations() throws IOException {
+		loadAnimations("Sprite/VirtualCharacter");
+	}
+
+	@Override
+	protected void initFiniteStateMachine() {
+		_fsm = new FiniteStateMachine<VirtualCharacter>(this);
+	}
+
+	@Override
+	protected void initTransitionTable() {
+		_fsm.addTransition(StateType.IDLE, StateType.IDLE);
+		_fsm.addTransition(StateType.IDLE, StateType.WALK);
+		_fsm.addTransition(StateType.IDLE, StateType.ATTACK);
+		_fsm.addTransition(StateType.IDLE, StateType.STEAL);
+		_fsm.addTransition(StateType.IDLE, StateType.EXHAUST);
+
+		_fsm.addTransition(StateType.WALK, StateType.WALK);
+		_fsm.addTransition(StateType.WALK, StateType.IDLE);
+		_fsm.addTransition(StateType.WALK, StateType.ATTACK);
+		_fsm.addTransition(StateType.WALK, StateType.STEAL);
+		_fsm.addTransition(StateType.WALK, StateType.EXHAUST);
+
+		_fsm.addTransition(StateType.ATTACK, StateType.IDLE);
+		_fsm.addTransition(StateType.STEAL, StateType.IDLE);
+		_fsm.addTransition(StateType.EXHAUST, StateType.IDLE);
+
+		_fsm.addTransition(StateType.IDLE, StateType.DEATH);
+		_fsm.addTransition(StateType.WALK, StateType.DEATH);
+		_fsm.addTransition(StateType.ATTACK, StateType.DEATH);
+		_fsm.addTransition(StateType.STEAL, StateType.DEATH);
+		_fsm.addTransition(StateType.EXHAUST, StateType.DEATH);
+	}
+
+	@Override
+	protected void initStateEntityTranslationTable() {
+		_fsm.addStateTranslation(StateType.IDLE, new CharacterIdleState(this));
+		_fsm.addStateTranslation(StateType.WALK, new CharacterWalkState(this));
+		_fsm.addStateTranslation(StateType.ATTACK, new CharacterAttackState(this));
+		_fsm.addStateTranslation(StateType.STEAL, new CharacterStealState(this));
+		_fsm.addStateTranslation(StateType.EXHAUST, new CharacterExhaustState(this));
+		_fsm.addStateTranslation(StateType.DEATH, new CharacterDeathState(this));
+	}
+
 	@Override
 	public int getHealth() {
 		int result = 0;
-		
+
 		for (VirtualOrgan organ : _organs) {
 			result += organ.getHealth();
 		}
-		
+
 		return result;
 	}
-	
+
 	@Override
 	public void setHealth(int health) {
 		assert (false);
 	}
-	
+
 	public int getEnergy() {
 		return _health;
 	}
-	
+
 	public void setEnergy(int energy) {
 		assert (energy >= 0);
-		
+
 		_health = energy;
 	}
 
@@ -96,30 +159,30 @@ public class VirtualCharacter extends Sprite {
 		assert (speed >= 0);
 		_speed = speed;
 	}
-	
+
 	public VirtualOrgan findOrgan(String name) {
 		for (VirtualOrgan virtualOrgan : _organs) {
 			if (virtualOrgan.getName() == name) {
 				return virtualOrgan;
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	public void updateOrganList(ArrayList<VirtualOrgan> organs) {
 		assert (organs != null);
-		
+
 		_organs = organs;
 	}
-	
+
 	private void initOrgans() {
-		_organs.add(new VirtualOrgan("heart", this));
-		_organs.add(new VirtualOrgan("liver", this));
-		_organs.add(new VirtualOrgan("lung", this));
-		_organs.add(new VirtualOrgan("pancreas", this));
-		_organs.add(new VirtualOrgan("kidney", this));
-		_organs.add(new VirtualOrgan("small intestine", this));
-		_organs.add(new VirtualOrgan("large intestine", this));
+		// _organs.add(new VirtualOrgan("heart", this));
+		// _organs.add(new VirtualOrgan("liver", this));
+		// _organs.add(new VirtualOrgan("lung", this));
+		// _organs.add(new VirtualOrgan("pancreas", this));
+		// _organs.add(new VirtualOrgan("kidney", this));
+		// _organs.add(new VirtualOrgan("small intestine", this));
+		// _organs.add(new VirtualOrgan("large intestine", this));
 	}
 }

@@ -1,19 +1,13 @@
 package RenderEngine;
 
 import java.awt.Graphics;
-import java.io.IOException;
-import java.net.URISyntaxException;
 
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import Common.StateType;
 import Common.Interfaces.IRenderEngine;
 import DynamicObjectModule.DynamicObjectModule;
 import RenderEngine.Scene.SceneRenderEngine;
 import RenderEngine.Sprite.SpriteRenderEngine;
-import Resources.Resources;
 import SceneDataModule.SceneDataModule;
 
 public class RenderEngine implements IRenderEngine {
@@ -38,26 +32,6 @@ public class RenderEngine implements IRenderEngine {
 		_isRendering = false;
 		_renderThread = new Thread(new RenderThread());
 	}
-	
-	// For scene render engine demo only.
-//	public static void main(String[] args) throws IOException, URISyntaxException {		
-//		SceneDataModule sdm = new SceneDataModule(ImageIO.read(Resources.getResourceStream("Scene/Scene.jpg")));
-//		DynamicObjectModule dom = new DynamicObjectModule();
-//		dom.addVirtualCharacter(0, null);
-//		dom.findSprite(0).setState(StateType.STEAL);
-//		dom.findSprite(0).setDirection(Direction.DOWN);
-//		
-//		RenderEngine renderEngine = new RenderEngine(dom, sdm);
-//		
-//		JFrame frame = new JFrame("Organ Donation");
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		frame.getContentPane().add(renderEngine.getPanel());
-//		frame.setSize(1450, 850);
-//		frame.setVisible(true);
-//		
-//		renderEngine.startRendering();
-//		//renderEngine.stopRendering();
-//	}
 
 	public JPanel getPanel() {
 		return _canvas;

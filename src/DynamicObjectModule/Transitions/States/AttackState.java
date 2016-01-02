@@ -3,26 +3,9 @@ package DynamicObjectModule.Transitions.States;
 import Common.StateType;
 import DynamicObjectModule.Entities.Sprite;
 
-public class AttackState extends State {
-	public AttackState(Sprite sprite) {
+public abstract class AttackState<EntityType extends Sprite> extends State<EntityType> {
+	protected AttackState(EntityType sprite) {
 		super(sprite);
-	}
-
-	@Override
-	public void enter() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void execute() {
-		
-	}
-
-	@Override
-	public void exit() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

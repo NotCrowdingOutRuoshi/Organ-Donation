@@ -13,7 +13,8 @@ import javax.imageio.ImageIO;
 import Common.Constants;
 import Common.StateType;
 import DynamicObjectModule.Animations.Animation;
-import DynamicObjectModule.Transitions.FiniteStateMachine;
+import DynamicObjectModule.Transitions.FiniteStateMachines.FiniteStateMachine;
+import DynamicObjectModule.Transitions.States.State;
 import Resources.Resources;
 
 public abstract class Sprite {
@@ -28,13 +29,16 @@ public abstract class Sprite {
 	protected int _y;
 	protected int _totalHealth;
 	protected int _health;
-	protected String _state;
 	protected int _direction;
+
+	// Animations.
 	protected Map<String, Map<Integer, Animation>> _animations;
 	protected Animation _currentAnimation;
 	protected Map<String, Integer> _packageToDirection;
 	protected Map<String, String> _packageToState;
-	protected FiniteStateMachine _fsm;
+
+	// Finite state machine.
+	protected FiniteStateMachine<?> _fsm;
 
 	public Sprite(int x, int y) {
 		assert (x >= 0);
@@ -45,19 +49,28 @@ public abstract class Sprite {
 		_y = y;
 		_totalHealth = DEFAULT_TOTAL_HEALTH;
 		_health = _totalHealth;
-		_state = StateType.IDLE;
 		_direction = DEFAULT_DIRECTION;
 		_packageToDirection = new HashMap<>();
 		_packageToState = new HashMap<>();
 		_animations = new HashMap<String, Map<Integer, Animation>>();
-		_fsm = new FiniteStateMachine(this);
-		
+
 		initPackageToDirectionMap();
 		initPackageToStateMap();
+		try {
+			loadAnimations();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		initFiniteStateMachine();
+		initTransitionTable();
+		initStateEntityTranslationTable();
+		setState(StateType.IDLE);
 	}
 
 	public abstract void draw(Graphics g);
-	
+
 	protected void loadAnimations(String imageResourceRoot) throws IOException {
 		File file = Resources.getResourceFile(imageResourceRoot);
 
@@ -83,10 +96,19 @@ public abstract class Sprite {
 			}
 		}
 	}
-	
+
 	protected abstract void initPackageToDirectionMap();
+
 	protected abstract void initPackageToStateMap();
-	
+
+	protected abstract void loadAnimations() throws IOException;
+
+	protected abstract void initFiniteStateMachine();
+
+	protected abstract void initTransitionTable();
+
+	protected abstract void initStateEntityTranslationTable();
+
 	public int getId() {
 		return _id;
 	}
@@ -113,47 +135,53 @@ public abstract class Sprite {
 		assert y >= 0;
 		_y = y;
 	}
-	
+
 	public int getHealth() {
 		return _health;
 	}
-	
+
 	public void setHealth(int health) {
 		assert (health >= 0 && health <= _totalHealth);
-		
+
 		_health = health;
 	}
-	
+
 	public int getTotalHealth() {
 		return _totalHealth;
 	}
-	
+
 	public String getState() {
-		return _state;
+		return _fsm.getCurrentState().getType();
 	}
-	
+
 	public void setState(String state) {
-		_state = state;
-		
+		if (_fsm.setState(state)) {
+			_fsm.executeState();
+		}
+
 		updateAnimation();
 	}
-	
+
+	public State<?> getCurrentState() {
+		return _fsm.getCurrentState();
+	}
+
 	public int getDirection() {
 		return _direction;
 	}
 
 	public void setDirection(int direction) {
 		_direction = direction;
-		
+
 		updateAnimation();
 	}
-	
+
 	private void updateAnimation() {
 		if (_currentAnimation != null) {
 			_currentAnimation.reset();
 		}
 		
-		_currentAnimation = _animations.get(_state).get(_direction);
+		_currentAnimation = _animations.get(getState()).get(_direction);
 		_currentAnimation.start();
 	}
 }
