@@ -140,7 +140,7 @@ public class CDC implements ICentralizedDataCenter {
 				// TODO Auto-generated method stub
 				enviromentLogic();
 			}
-		}, 1000);
+		}, 0,1000);
 
 		_logicTimer.schedule(new TimerTask() {
 
@@ -150,7 +150,7 @@ public class CDC implements ICentralizedDataCenter {
 				updatePlayersLocation();
 				logic();
 			}
-		}, 10);
+		}, 0,10);
 
 	}
 
