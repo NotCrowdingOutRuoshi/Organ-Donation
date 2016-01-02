@@ -1,5 +1,6 @@
 package DynamicObjectModule.Transitions.States.VirtualOrgan;
 
+import Common.StateType;
 import DynamicObjectModule.Entities.VirtualOrgan;
 import DynamicObjectModule.Transitions.States.IdleState;
 
@@ -18,8 +19,9 @@ public class OrganIdleState extends IdleState<VirtualOrgan> {
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
-		
+		if (_entity.getHealth() == 0) {
+			_entity.setState(StateType.DEATH);
+		}
 	}
 
 	@Override

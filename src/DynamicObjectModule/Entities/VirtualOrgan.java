@@ -33,15 +33,6 @@ public class VirtualOrgan extends Sprite {
 		_y = y;
 	}
 
-	@Override
-	public void setHealth(int health) {
-		super.setHealth(health);
-
-		if (_health == 0) {
-			setState(StateType.DEATH);
-		}
-	}
-
 	public void setOwner(VirtualCharacter owner) {
 		assert (owner != null);
 		_owner = owner;
@@ -91,17 +82,9 @@ public class VirtualOrgan extends Sprite {
 	public void draw(Graphics g) {
 		if (_fsm.getCurrentState().getType() == StateType.DEATH) {
 			g.drawImage(_currentAnimation.getImage(), _x, _y, null);
-			_fsm.executeState();
-			_currentAnimation.update();
 		}
-	}
-
-	@Override
-	public void updateAnimation() {
-		if (_currentAnimation != null && _currentAnimation.isStopped()) {
-			String returnState = _fsm.getCurrentState().getReturnState();
-			_fsm.setState(returnState);
-		}
+		
+		_fsm.executeState();
 	}
 
 	@Override

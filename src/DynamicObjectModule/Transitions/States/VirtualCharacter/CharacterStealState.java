@@ -13,20 +13,9 @@ public class CharacterStealState extends StealState<VirtualCharacter> {
 	}
 
 	@Override
-	public void enter() {
-		super.enter();
-	}
-
-	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void exit() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

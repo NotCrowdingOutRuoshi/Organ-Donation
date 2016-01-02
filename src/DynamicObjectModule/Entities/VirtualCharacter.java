@@ -72,10 +72,9 @@ public class VirtualCharacter extends Sprite {
 		
 		for (VirtualOrgan organ : _organs) {
 			organ.draw(g);
-			organ.updateAnimation();
 		}
 		
-		_currentAnimation.update();
+		_fsm.executeState();
 	}
 
 	@Override

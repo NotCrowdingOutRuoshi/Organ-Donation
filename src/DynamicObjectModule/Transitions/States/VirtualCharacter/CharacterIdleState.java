@@ -4,7 +4,7 @@ import Common.StateType;
 import DynamicObjectModule.Entities.VirtualCharacter;
 import DynamicObjectModule.Transitions.States.IdleState;
 
-public class CharacterIdleState extends IdleState<VirtualCharacter>{
+public class CharacterIdleState extends IdleState<VirtualCharacter> {
 
 	public CharacterIdleState(VirtualCharacter sprite) {
 		super(sprite);
@@ -19,15 +19,9 @@ public class CharacterIdleState extends IdleState<VirtualCharacter>{
 	}
 
 	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void exit() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
