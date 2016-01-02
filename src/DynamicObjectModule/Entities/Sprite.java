@@ -30,6 +30,7 @@ public abstract class Sprite {
 	protected int _totalHealth;
 	protected int _health;
 	protected int _direction;
+	protected String _packageName;
 
 	// Animations.
 	protected Map<String, Map<Integer, Animation>> _animations;
@@ -40,10 +41,12 @@ public abstract class Sprite {
 	// Finite state machine.
 	protected FiniteStateMachine<?> _fsm;
 
-	public Sprite(int x, int y) {
+	public Sprite(int x, int y, String packageName) {
 		assert (x >= 0);
 		assert (y >= 0);
 
+		_packageName = packageName;
+		
 		_id = EMPTY_ID;
 		_x = x;
 		_y = y;
@@ -188,8 +191,6 @@ public abstract class Sprite {
 	}
 
 	public void setAnimation(String stateType, int direction) {
-		Map<Integer, Animation> map = _animations.get(stateType);
-		Animation mAnimation = map.get(_direction);
 		_currentAnimation = _animations.get(stateType).get(_direction);
 	}
 

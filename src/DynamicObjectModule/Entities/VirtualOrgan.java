@@ -10,18 +10,15 @@ import DynamicObjectModule.Transitions.States.VirtualOrgan.*;
 public class VirtualOrgan extends Sprite {
 	
 	protected String _name;
-	protected String _packageName;
 	protected VirtualCharacter _owner;
 
 	public VirtualOrgan(String name, String packageName, VirtualCharacter owner) {
-		super(0, 0);
+		super(0, 0, packageName);
 
 		assert (name != null && !name.isEmpty());
-		assert (packageName != null && !packageName.isEmpty());
 		assert (owner != null);
 
 		_name = name;
-		_packageName = packageName;
 		_owner = owner;
 		_totalHealth = 100;
 		_health = _totalHealth;
@@ -36,7 +33,7 @@ public class VirtualOrgan extends Sprite {
 		super.setHealth(health);
 
 		if (_health == 0) {
-			// setState(StateType.DEATH);
+			setState(StateType.DEATH);
 		}
 	}
 
@@ -93,7 +90,17 @@ public class VirtualOrgan extends Sprite {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(_currentAnimation.getImage(), _x, _y, null);
+		if (_fsm.getCurrentState().getType() == StateType.DEATH) {
+			g.drawImage(_currentAnimation.getImage(), _x, _y, null);
+			_fsm.executeState();
+		}
+	}
+	
+	@Override
+	public void updateAnimation() {
+		if (_currentAnimation != null && _currentAnimation.isStopped()) {
+			_owner.removeOrgan(this);
+		}
 	}
 
 	@Override

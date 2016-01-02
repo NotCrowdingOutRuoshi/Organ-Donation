@@ -18,7 +18,7 @@ public class Constants {
 	public static final int UDPSERVERPORT = 27016;
 	public static final int TCPSERVERPORT = 9090;
 	
-	public static final int MAX_PLAYER = 2;
+	public static final int MAX_PLAYER = 1;
 	
 	public static final int MAX_X = 1000;
 	public static final int MAX_Y = 650;

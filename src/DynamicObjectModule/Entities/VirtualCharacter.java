@@ -10,7 +10,6 @@ import java.io.IOException;
 import Common.Constants;
 import Common.StateType;
 import DynamicObjectModule.Transitions.FiniteStateMachines.FiniteStateMachine;
-import DynamicObjectModule.Transitions.States.State;
 import DynamicObjectModule.Transitions.States.VirtualCharacter.*;
 
 public class VirtualCharacter extends Sprite {
@@ -21,7 +20,7 @@ public class VirtualCharacter extends Sprite {
 	protected ArrayList<VirtualOrgan> _organs;
 
 	public VirtualCharacter(int id, int x, int y, int direction, int speed) {
-		super(x, y);
+		super(x, y, null);
 
 		assert (id >= 0);
 		assert (speed >= 0);
@@ -64,6 +63,7 @@ public class VirtualCharacter extends Sprite {
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setStroke(new BasicStroke(3.0f));
 		g.setColor(Color.red);
+		
 		if(getEnergy()>500){
 			g.drawLine(_x, _y-20, _x+Constants.IMAGE_WIDTH, _y-20);
 		}
@@ -74,6 +74,11 @@ public class VirtualCharacter extends Sprite {
 		g.setColor(Color.green);
 		g.drawLine(_x, _y-10, _x+(int) (Constants.IMAGE_WIDTH*((double)getEnergy()/500)), _y-10);
 		g.drawImage(_currentAnimation.getImage(), _x, _y, null);
+		
+		for (VirtualOrgan organ : _organs) {
+			organ.draw(g);
+		}
+		
 		_currentAnimation.update();
 	}
 
@@ -177,12 +182,16 @@ public class VirtualCharacter extends Sprite {
 
 	public VirtualOrgan findOrgan(String name) {
 		for (VirtualOrgan virtualOrgan : _organs) {
-			if (virtualOrgan.getName() == name) {
+			if (virtualOrgan.getName().equals(name)) {
 				return virtualOrgan;
 			}
 		}
 
 		return null;
+	}
+	
+	public boolean removeOrgan(VirtualOrgan organ) {
+		return _organs.remove(organ);
 	}
 
 	public void updateOrganList(ArrayList<VirtualOrgan> organs) {
