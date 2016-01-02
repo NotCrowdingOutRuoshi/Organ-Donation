@@ -1,11 +1,11 @@
 package Common;
 
 public class StateType {
-	public static final String EMPTY = "Empty state";
-	public static final String IDLE = "Idle state";
-	public static final String WALK = "Walk state";
-	public static final String ATTACK = "Attack state";
-	public static final String STEAL = "Steal state";
-	public static final String EXHAUST = "Exhaust state";
-	public static final String DEATH = "Death state";
+	public static final String EMPTY = "EmptyState";
+	public static final String IDLE = "IdleState";
+	public static final String WALK = "WalkState";
+	public static final String ATTACK = "AttackState";
+	public static final String STEAL = "StealState";
+	public static final String EXHAUST = "ExhaustState";
+	public static final String DEATH = "DeathState";
 }

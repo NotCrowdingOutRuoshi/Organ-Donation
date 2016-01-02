@@ -78,42 +78,6 @@ public class CDC implements ICentralizedDataCenter {
 		return j.toString();
 	}
 
-	public void GameLogicThread() {
-
-		Thread thread = new Thread() {
-			public void run() {
-				while (true) {
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					;
-					enviromentLogic();
-				}
-			}
-		};
-		thread.start();
-		
-		Thread thread2 = new Thread() {
-			public void run() {
-				while (true) {
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					;
-					updatePlayersLocation();
-					logic();
-				}
-			}
-		};
-		thread2.start();
-	}
-
 	@Override
 	public void setGameState(String gameState) {
 		// TODO Auto-generated method stub
@@ -169,7 +133,7 @@ public class CDC implements ICentralizedDataCenter {
 					player.setX(player.getX() - player.getSpeed() / 2);
 				}
 			}
-			System.out.println(player.getId()+" "+player.getX()+" "+player.getY());
+//			System.out.println(player.getId()+" "+player.getX()+" "+player.getY());
 		}
 
 	}

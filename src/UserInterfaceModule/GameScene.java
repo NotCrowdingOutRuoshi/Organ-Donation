@@ -38,7 +38,7 @@ public class GameScene extends JPanel implements KeyListener {
 		add(gamePanel);
 		
 		renderEngine.startRendering();
-		renderEngine.stopRendering();
+//		renderEngine.stopRendering();
 
 	}
 	
