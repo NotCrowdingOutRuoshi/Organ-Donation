@@ -40,8 +40,8 @@ public class WaitScene extends JPanel implements Runnable{
 		label.setFont(new Font("Serif", Font.PLAIN, 25));
 		add(label);
 		
-		if(player.getId()!=0){
-			JLabel Player = new JLabel(""+player.getId());
+		if(GameManager.getInstance().getClientId()!=0){
+			JLabel Player = new JLabel(""+GameManager.getInstance().getClientId());
 			Player.setBounds(240, (this.getHeight()-300)/2, 100, 30);
 			Player.setFont(new Font("Serif", Font.PLAIN, 25));
 			add(Player);
@@ -51,7 +51,7 @@ public class WaitScene extends JPanel implements Runnable{
 		int j=0;
 		for(int i=0;i<dom.getAllDynamicObjects().length;i++){
 			otherplayer = dom.getAllDynamicObjects()[i];
-			if(otherplayer.getId()!=player.getId()){
+			if(otherplayer.getId()!=GameManager.getInstance().getClientId()){
 				playerId[j] = "Player "+otherplayer.getId();
 				j++;
 			}
