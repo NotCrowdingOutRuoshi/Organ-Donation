@@ -1,10 +1,9 @@
 package UserInterfaceModule;
 import javax.swing.JPanel;
 
-import CentralizedDataCenter.Entities.Player;
 import DynamicObjectModule.DynamicObjectModule;
 import DynamicObjectModule.Entities.Sprite;
-
+import DynamicObjectModule.Entities.VirtualCharacter;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -16,15 +15,14 @@ public class WaitScene extends JPanel implements Runnable{
 
 	
 	private DynamicObjectModule dom;
-	private Player player;
+	private VirtualCharacter player;
 	/**
 	 * Create the panel.
 	 */
-	public WaitScene(DynamicObjectModule dom,Player player) {
+	public WaitScene(DynamicObjectModule dom) {
 		this.setSize(1450, 850);
 		this.setLayout(null);
 		this.dom = dom;
-		this.player = player;
 		/* Temporary comment out*/
 		JLabel lblWait = new JLabel("Waiting");
 		lblWait.setBounds((this.getWidth()-100)/2, 20, 100, 30);
