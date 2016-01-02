@@ -15,7 +15,13 @@ public class Organ{
 		return _name;
 	}
 	public void setHP(int hp){
-		_hp = hp;
+		if(hp <= 0) {
+			_hp = 0;
+		} 
+		else {
+			_hp = hp;
+		}
+		
 	}
 	
 }
