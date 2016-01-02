@@ -20,9 +20,9 @@ public class VirtualCharacterUpdater extends SpriteUpdater<VirtualCharacter> {
 		_sprite.setX(Integer.parseInt(data.get("x").toString()));
 		_sprite.setY(Integer.parseInt(data.get("y").toString()));
 		_sprite.setDirection(Integer.parseInt(data.get("dir").toString()));
+		_sprite.setState(data.get("state").toString());
 		_sprite.setSpeed(Integer.parseInt(data.get("speed").toString()));
 		_sprite.setEnergy(Integer.parseInt(data.get("energy").toString()));
-
 		//updateOrgans(data.getJSONArray("organs"));
 	}
 
@@ -50,6 +50,7 @@ public class VirtualCharacterUpdater extends SpriteUpdater<VirtualCharacter> {
 		assert character.has("x");
 		assert character.has("y");
 		assert character.has("dir");
+		assert character.has("state");
 		assert character.has("speed");
 		assert character.has("energy");
 		assert character.has("organs");

@@ -15,6 +15,7 @@ public class CharacterIdleState extends IdleState<VirtualCharacter>{
 	@Override
 	public void enter() {
 		super.enter();
+		_entity.getCurrentAnimation().loop();
 	}
 
 	@Override

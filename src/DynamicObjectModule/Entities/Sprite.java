@@ -180,11 +180,7 @@ public abstract class Sprite {
 		return _currentAnimation;
 	}
 	
-	public void setAnimation(String stateType, int direction) {
-		if (_currentAnimation != null) {
-			_currentAnimation.reset();
-		}
-		
+	public void setAnimation(String stateType, int direction) {		
 		_currentAnimation = _animations.get(stateType).get(_direction);
 	}
 
