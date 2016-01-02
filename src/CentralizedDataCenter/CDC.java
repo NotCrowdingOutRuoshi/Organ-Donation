@@ -38,6 +38,22 @@ public class CDC implements ICentralizedDataCenter {
 	public void addPlayer(int id) {
 		Player player = new Player();
 		player.setID(id);
+		if(id==1){
+			player.setX(Constants.MIN_X);
+			player.setY(Constants.MIN_Y);
+		}
+		else if(id==2){
+			player.setX(Constants.MAX_X);
+			player.setY(Constants.MIN_Y);
+		}
+		else if(id==3){
+			player.setX(Constants.MIN_X);
+			player.setY(Constants.MAX_Y);
+		}
+		else if(id==4){
+			player.setX(Constants.MAX_X);
+			player.setY(Constants.MAX_Y);
+		}
 		PlayerList.put(id, player);
 	}
 
@@ -75,12 +91,27 @@ public class CDC implements ICentralizedDataCenter {
 					}
 					;
 					enviromentLogic();
-					logic();
 				}
-
 			}
 		};
 		thread.start();
+		
+		Thread thread2 = new Thread() {
+			public void run() {
+				while (true) {
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					;
+					updatePlayersLocation();
+					logic();
+				}
+			}
+		};
+		thread2.start();
 	}
 
 	@Override
@@ -102,6 +133,7 @@ public class CDC implements ICentralizedDataCenter {
 	@Override
 	public void startGameLogicSchedule() {
 		// TODO Auto-generated method stub
+
 		_enviromentTimer.schedule(new TimerTask() {
 			@Override
 			public void run() {
@@ -126,17 +158,18 @@ public class CDC implements ICentralizedDataCenter {
 
 		for (int i = 0; i < PlayerList.size(); i++) {
 			Player player = PlayerList.get(i + 1);
-			if (player.getState().equals(StateType.WALK)) {
-				if (player.getDir() == Constants.ACTIONCODE_NORTH) {
+			if (player.getState().equals(StateType.WALK)    ) {
+				if (player.getDir() == Constants.ACTIONCODE_NORTH && player.getY()>Constants.MIN_Y) {
 					player.setY(player.getY() - player.getSpeed() / 2);
-				} else if (player.getDir() == Constants.ACTIONCODE_SOUTH) {
+				} else if (player.getDir() == Constants.ACTIONCODE_SOUTH && player.getY()<Constants.MAX_Y) {
 					player.setY(player.getY() + player.getSpeed() / 2);
-				} else if (player.getDir() == Constants.ACTIONCODE_EAST) {
+				} else if (player.getDir() == Constants.ACTIONCODE_EAST && player.getX()<Constants.MAX_X) {
 					player.setX(player.getX() + player.getSpeed() / 2);
-				} else if (player.getDir() == Constants.ACTIONCODE_WEST) {
+				} else if (player.getDir() == Constants.ACTIONCODE_WEST && player.getX()>Constants.MIN_X) {
 					player.setX(player.getX() - player.getSpeed() / 2);
 				}
 			}
+			System.out.println(player.getId()+" "+player.getX()+" "+player.getY());
 		}
 
 	}
@@ -156,6 +189,7 @@ public class CDC implements ICentralizedDataCenter {
 
 				if (alive <= 1) {
 					setGameState(Constants.GAME_STATE_OVER);
+					System.out.println("GAME OVER");
 				}
 			}
 		}
@@ -165,6 +199,12 @@ public class CDC implements ICentralizedDataCenter {
 		for (int i = 1; i <= PlayerList.size(); i++) {
 			Player player = PlayerList.get(i);
 			player.decreaseOrganHp(20);
+			if(player.getHealth()<=475){
+				player.setHealth(player.getHealth()+25);
+			}
+			else if(player.getHealth()<500 && player.getHealth()>475){
+				player.setHealth(500);
+			}
 		}
 	}
 
@@ -173,20 +213,21 @@ public class CDC implements ICentralizedDataCenter {
 		int targetY = player.getY();
 
 		if (player.getDir() == Constants.ACTIONCODE_NORTH) {
-			targetY -= 1;
+			targetY -= Constants.IMAGE_HEIGHT;
 		} else if (player.getDir() == Constants.ACTIONCODE_SOUTH) {
-			targetY += 1;
+			targetY += Constants.IMAGE_HEIGHT;
 		} else if (player.getDir() == Constants.ACTIONCODE_EAST) {
-			targetX += 1;
+			targetX += Constants.IMAGE_WIDTH;
 		} else if (player.getDir() == Constants.ACTIONCODE_WEST) {
-			targetX -= 1;
+			targetX -= Constants.IMAGE_WIDTH;
 		}
 
 		for (int i = 1; i <= PlayerList.size(); i++) {
 			if (i != player.getId()) {
 				Player player2 = PlayerList.get(i);
-				if (targetX == player2.getX() && targetY == player2.getY()) {
+				if (Math.abs(targetX - player2.getX())< Constants.IMAGE_WIDTH && Math.abs(targetY -player2.getY())<Constants.IMAGE_HEIGHT) {
 					player2.setHealth(player2.getHealth() - 50);
+					System.out.println("ATTACK SUCCESS");
 				}
 			}
 		}
@@ -198,23 +239,24 @@ public class CDC implements ICentralizedDataCenter {
 		int targetY = player.getY();
 
 		if (player.getDir() == Constants.ACTIONCODE_NORTH) {
-			targetY -= 1;
+			targetY -= Constants.IMAGE_HEIGHT;
 		} else if (player.getDir() == Constants.ACTIONCODE_SOUTH) {
-			targetY += 1;
+			targetY += Constants.IMAGE_HEIGHT;
 		} else if (player.getDir() == Constants.ACTIONCODE_EAST) {
-			targetX += 1;
+			targetX += Constants.IMAGE_WIDTH;
 		} else if (player.getDir() == Constants.ACTIONCODE_WEST) {
-			targetX -= 1;
+			targetX -= Constants.IMAGE_WIDTH;
 		}
 
 		for (int i = 1; i <= PlayerList.size(); i++) {
 			if (i != player.getId()) {
 				Player player2 = PlayerList.get(i);
-				if (targetX == player2.getX() && targetY == player2.getY()
+				if (Math.abs(targetX - player2.getX())< Constants.IMAGE_WIDTH && Math.abs(targetY -player2.getY())<Constants.IMAGE_HEIGHT
 						&& player2.getState().equals(StateType.EXHAUST)) {
 					Organ o = player2.StealedOrgan();
 					player2.remove(o);
 					player.addOrgan(o);
+					System.out.println("STEAL SUCCESS");
 				}
 			}
 		}
