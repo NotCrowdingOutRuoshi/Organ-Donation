@@ -2,6 +2,8 @@ package DynamicObjectModule.Entities;
 
 import java.awt.Graphics;
 
+import DynamicObjectModule.Transitions.FiniteStateMachines.FiniteStateMachine;
+
 public class VirtualOrgan extends Sprite {
 	protected String _name;
 	protected VirtualCharacter _owner;
@@ -44,12 +46,35 @@ public class VirtualOrgan extends Sprite {
 	@Override
 	protected void initPackageToDirectionMap() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void initPackageToStateMap() {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	protected void loadAnimations() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void initFiniteStateMachine() {
+		_fsm = new FiniteStateMachine<VirtualOrgan>(this);
+	}
+
+	@Override
+	protected void initTransitionTable() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void initStateEntityTranslationTable() {
+		// TODO Auto-generated method stub
+
 	}
 }

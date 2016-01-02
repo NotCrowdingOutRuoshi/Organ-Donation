@@ -1,12 +1,11 @@
 package DynamicObjectModule.Transitions.States;
 
-import Common.StateType;
 import DynamicObjectModule.Entities.Sprite;
 
-public abstract class State {
-	protected Sprite _entity;
+public abstract class State<EntityType extends Sprite> {
+	protected EntityType _entity;
 
-	protected State(Sprite sprite) {
+	protected State(EntityType sprite) {
 		assert sprite != null;
 
 		_entity = sprite;
