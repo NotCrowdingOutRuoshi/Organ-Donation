@@ -4,14 +4,14 @@ public abstract class Sprite {
 	protected int _id;
 	protected int _x;
 	protected int _y;
-	protected int _health;
+	protected int _energy;
 
 
 	public Sprite() {
 		_id = 0;
 		_x = 0;
 		_y = 0;
-		_health = 500;
+		_energy = 500;
 
 	}
 
@@ -39,12 +39,12 @@ public abstract class Sprite {
 		_y = y;
 	}
 	
-	public int getHealth() {
-		return _health;
+	public int getEnergy() {
+		return _energy;
 	}
 
-	public void setHealth(int health) {
-		_health = health;
+	public void setEnergy(int health) {
+		_energy = health;
 	}
 
 }

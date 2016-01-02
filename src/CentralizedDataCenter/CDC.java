@@ -59,6 +59,7 @@ public class CDC implements ICentralizedDataCenter {
 
 	public void updateDir(int id, int dir) {
 		Player player = PlayerList.get(id);
+		player.setEnergy(player.getEnergy() - 1);
 		player.setDir(dir);
 
 	}
@@ -142,10 +143,10 @@ public class CDC implements ICentralizedDataCenter {
 		int alive = PlayerList.size();
 		for (int i = 1; i <= PlayerList.size(); i++) {
 			Player player = PlayerList.get(i);
-			if (player.getHealth() == 0) {
+			if (player.getEnergy() == 0) {
 				player.setState(StateType.EXHAUST);
 			}
-			if (player.getEnergy() == 0) {
+			if (player.getHealth() == 0) {
 				player.setState(StateType.DEATH);
 			}
 			if (player.getState().equals(StateType.DEATH)) {
@@ -163,11 +164,8 @@ public class CDC implements ICentralizedDataCenter {
 		for (int i = 1; i <= PlayerList.size(); i++) {
 			Player player = PlayerList.get(i);
 			player.decreaseOrganHp(20);
-			if(player.getHealth()<=475){
-				player.setHealth(player.getHealth()+25);
-			}
-			else if(player.getHealth()<500 && player.getHealth()>475){
-				player.setHealth(500);
+			if(player.getHealth() <= 495 ){
+				player.setEnergy(player.getEnergy() + 5 );
 			}
 		}
 	}
@@ -190,12 +188,12 @@ public class CDC implements ICentralizedDataCenter {
 			if (i != player.getId()) {
 				Player player2 = PlayerList.get(i);
 				if (Math.abs(targetX - player2.getX())< Constants.IMAGE_WIDTH && Math.abs(targetY -player2.getY())<Constants.IMAGE_HEIGHT) {
-					player2.setHealth(player2.getHealth() - 50);
+					player2.setEnergy(player2.getEnergy() - 50);
 					System.out.println("ATTACK SUCCESS");
 				}
 			}
 		}
-		player.setHealth(player.getHealth() - 5);
+		player.setEnergy(player.getEnergy() - 1);
 	}
 
 	private void playerSteal(Player player) {
@@ -224,6 +222,7 @@ public class CDC implements ICentralizedDataCenter {
 				}
 			}
 		}
+		player.setEnergy(player.getEnergy() - 1);
 	}
 
 }
