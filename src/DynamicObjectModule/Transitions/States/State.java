@@ -1,5 +1,6 @@
 package DynamicObjectModule.Transitions.States;
 
+import DynamicObjectModule.Animations.Animation;
 import DynamicObjectModule.Entities.Sprite;
 
 public abstract class State<EntityType extends Sprite> {
@@ -13,6 +14,11 @@ public abstract class State<EntityType extends Sprite> {
 	}
 
 	public void enter() {
+		Animation currentAnimation = _entity.getCurrentAnimation();
+		if (currentAnimation != null) {
+			currentAnimation.reset();
+		}
+		
 		_entity.setAnimation(getType(), _entity.getDirection());
 		_entity.getCurrentAnimation().start();
 	}

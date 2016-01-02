@@ -92,7 +92,7 @@ public class VirtualCharacter extends Sprite {
 
 	@Override
 	protected void initTransitionTable() {
-		_fsm.addTransition(StateType.IDLE, StateType.IDLE);
+		//_fsm.addTransition(StateType.IDLE, StateType.IDLE);
 		_fsm.addTransition(StateType.IDLE, StateType.WALK);
 		_fsm.addTransition(StateType.IDLE, StateType.ATTACK);
 		_fsm.addTransition(StateType.IDLE, StateType.STEAL);

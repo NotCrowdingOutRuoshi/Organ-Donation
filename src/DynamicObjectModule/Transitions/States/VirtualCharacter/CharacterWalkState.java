@@ -5,7 +5,7 @@ import DynamicObjectModule.Entities.VirtualCharacter;
 import DynamicObjectModule.Transitions.States.WalkState;
 
 public class CharacterWalkState extends WalkState<VirtualCharacter> {
-
+	
 	public CharacterWalkState(VirtualCharacter sprite) {
 		super(sprite);
 		
@@ -14,8 +14,8 @@ public class CharacterWalkState extends WalkState<VirtualCharacter> {
 
 	@Override
 	public void enter() {
-		super.enter();
-		_entity.getCurrentAnimation().loop();
+		_entity.setAnimation(getType(), _entity.getDirection());
+		_entity.getCurrentAnimation().loop();		
 	}
 
 	@Override
