@@ -15,24 +15,19 @@ public class CharacterExhaustState extends ExhaustState<VirtualCharacter> {
 	@Override
 	public void enter() {
 		super.enter();
+		_entity.getCurrentAnimation().loop(7);
 	}
 
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void exit() {
 		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
