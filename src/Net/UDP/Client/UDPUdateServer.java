@@ -37,17 +37,31 @@ public class UDPUdateServer implements IUDPUpdateServer {
 		} catch (SocketException e) {
 
 		}
-		_reciveUDPDataTimer.schedule(new TimerTask() {
-
-			@Override
+		
+		new Thread(new Runnable() {
 			public void run() {
-				// TODO Auto-generated method stub
-				try {
-					reciveFromUDPServer();
-				} catch (IOException e) {
+				while (true) {
+					try {
+						receiveFromUDPServer();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 				}
 			}
-		}, 0, updateSecond);
+		}).start();
+//		_reciveUDPDataTimer.schedule(new TimerTask() {
+//
+//			@Override
+//			public void run() {
+//				// TODO Auto-generated method stub
+//				try {
+//					reciveFromUDPServer();
+//				} catch (IOException e) {
+//				}
+//			}
+//		}, 0, updateSecond);
 	}
 
 	@Override
@@ -59,7 +73,7 @@ public class UDPUdateServer implements IUDPUpdateServer {
 		}
 	}
 
-	private void reciveFromUDPServer() throws IOException {
+	private void receiveFromUDPServer() throws IOException {
 		_socket.receive(_dataPacket);
 		String msg = new String(_dataPacket.getData(), 0, _dataPacket.getLength());
 		JSONObject player = new JSONObject(msg);
