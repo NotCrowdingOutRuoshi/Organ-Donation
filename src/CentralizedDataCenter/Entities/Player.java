@@ -67,7 +67,7 @@ public class Player extends Sprite{
 		return _speed;
 	}
 	
-	public int getEnergy(){
+	public int getHealth(){
 		_energy = 0;
 		for(int i=0;i<_organs.size();i++){
 			_energy += _organs.get(i).getHP();
