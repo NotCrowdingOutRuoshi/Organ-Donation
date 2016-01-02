@@ -23,7 +23,7 @@ public class VirtualCharacterUpdater extends SpriteUpdater<VirtualCharacter> {
 		_sprite.setSpeed(Integer.parseInt(data.get("speed").toString()));
 		_sprite.setEnergy(Integer.parseInt(data.get("energy").toString()));
 
-		updateOrgans(data.getJSONArray("organs"));
+		//updateOrgans(data.getJSONArray("organs"));
 	}
 
 	private void updateOrgans(JSONArray data) {
