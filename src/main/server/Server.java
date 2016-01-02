@@ -26,7 +26,7 @@ public class Server {
 		tcpServer = new TCPServer(cdc);
 		udpBroadcast = new UDPBroadCast(tcpServer, cdc);
 		
-		cdc.startGameLogicSchedule();
+		tcpServer.startServer();
 		udpBroadcast.startUDPBroadCast();
 		
 		while(!cdc.getGameState().equals(Constants.GAME_STATE_OVER)){
@@ -42,7 +42,7 @@ public class Server {
 				tcpServer.BroadcastAllClient(Constants.GAME_STATE_START);
 				currentState = Constants.GAME_STATE_START;
 				cdc.setGameState(Constants.GAME_STATE_START);
-				tcpServer.startServer();
+				cdc.startGameLogicSchedule();
 				
 			}
 		}
