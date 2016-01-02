@@ -44,7 +44,13 @@ public abstract class Sprite {
 	}
 
 	public void setEnergy(int health) {
-		_energy = health;
+		if(health <= 0) {
+			_energy = 0;
+		} 
+		else {
+			_energy = health;
+		}
+		
 	}
 
 }
