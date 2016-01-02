@@ -5,9 +5,9 @@ import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import CentralizedDataCenter.Entities.Sprite;
 import Common.Constants;
 import Common.StateType;
+import DynamicObjectModule.Entities.Sprite;
 
 public class Controller implements KeyListener {
 	protected static Map<Integer, Integer> _keyCodeToDirection = new HashMap<Integer, Integer>() {

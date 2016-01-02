@@ -8,25 +8,28 @@ import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import CentralizedDataCenter.Entities.Player;
 import DynamicObjectModule.DynamicObjectModule;
+import DynamicObjectModule.Entities.Sprite;
 import RenderEngine.RenderEngine;
 import Resources.Resources;
 import SceneDataModule.SceneDataModule;
 
 public class GameScene extends JPanel implements KeyListener {
 	private Controller controller;
-	private Player player;
+	private Sprite player;
 	private JPanel gamePanel;
+	private DynamicObjectModule dom;
+	
 	/**
 	 * Create the panel.
 	 * @throws IOException 
 	 */
-	public GameScene(DynamicObjectModule dom,Player player) throws IOException {
+	public GameScene(DynamicObjectModule dom) throws IOException {
 		this.setSize(1450, 850);
 		this.setLayout(null);
-		this.player = player;
 		
+		this.dom = dom;
+		this.player = dom.findSprite(GameManager.getInstance().getClientId());
 		
 		SceneDataModule sceneDataModule = new SceneDataModule(ImageIO.read(Resources.getResourceStream("Scene/Scene.jpg")));
 		RenderEngine renderEngine = new RenderEngine(dom, sceneDataModule);
@@ -41,6 +44,7 @@ public class GameScene extends JPanel implements KeyListener {
 	
 	public void gameStart(){
 		this.addKeyListener(this);
+		this.player = dom.findSprite(GameManager.getInstance().getClientId());
 		controller = new Controller(this.player);
 	}
 	

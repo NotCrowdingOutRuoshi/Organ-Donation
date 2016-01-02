@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import Common.Constants;
 import Common.StateType;
 import DynamicObjectModule.Animations.Animation;
+import DynamicObjectModule.Transitions.FiniteStateMachine;
 import Resources.Resources;
 
 public abstract class Sprite {
@@ -33,6 +34,7 @@ public abstract class Sprite {
 	protected Animation _currentAnimation;
 	protected Map<String, Integer> _packageToDirection;
 	protected Map<String, String> _packageToState;
+	protected FiniteStateMachine _fsm;
 
 	public Sprite(int x, int y) {
 		assert (x >= 0);
@@ -48,6 +50,7 @@ public abstract class Sprite {
 		_packageToDirection = new HashMap<>();
 		_packageToState = new HashMap<>();
 		_animations = new HashMap<String, Map<Integer, Animation>>();
+		_fsm = new FiniteStateMachine(this);
 		
 		initPackageToDirectionMap();
 		initPackageToStateMap();

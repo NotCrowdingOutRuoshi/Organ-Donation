@@ -11,16 +11,18 @@ import javax.swing.JPanel;
 import CentralizedDataCenter.Entities.Player;
 import Common.Constants;
 import DynamicObjectModule.DynamicObjectModule;
+import DynamicObjectModule.Entities.Sprite;
+import DynamicObjectModule.Entities.VirtualCharacter;
 import Net.TCP.Client.TCPClient;
 import Net.UDP.Client.UDPUdateServer;
 
 
 public class GameManager {
 	
+	private int clientId;
 	private String status;
 	private Director director;
 	private JPanel statusPanel;
-	private Player player;
 	private DynamicObjectModule dom;
 	private TCPClient tcp;
 	private UDPUdateServer udpServer;
@@ -58,7 +60,6 @@ public class GameManager {
 			statusPanel = ms;
 			break;
 		case Constants.GAME_STATE_WAIT:
-			player = new Player();
 			try {
 				udpServer.initUDPserver();
 				tcp.connectServer(InetAddress.getByName(Constants.SERVERIP));
@@ -70,7 +71,7 @@ public class GameManager {
 				e1.printStackTrace();
 			}
 			
-			ws = new WaitScene(dom,player);
+			ws = new WaitScene(dom);
 			Thread w = new Thread(ws);
 	        w.start();
 			statusPanel = ws;
@@ -78,7 +79,7 @@ public class GameManager {
 		case Constants.GAME_STATE_INIT:
 			
 			try {
-				gs = new GameScene(dom,player);
+				gs = new GameScene(dom);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -99,8 +100,12 @@ public class GameManager {
 		statusPanel.requestFocusInWindow();
 	}
 	
+	public int getClientId() {
+		return clientId;
+	}
+	
 	public void setClientId(int clientid){
-		player.setID(clientid);
+		clientId = clientid;
 	}
 	
 	public void setCountdown(int i){
