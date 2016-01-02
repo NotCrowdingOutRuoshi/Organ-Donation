@@ -114,7 +114,6 @@ public class GameManager {
 	
 	
 	public void sendtoTcp(String s){
-		System.out.println(s);
 		try {
 			tcp.inputMoves(s);
 		} catch (IOException e) {
