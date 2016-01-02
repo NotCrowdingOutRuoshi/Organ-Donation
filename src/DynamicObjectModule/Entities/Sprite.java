@@ -186,6 +186,8 @@ public abstract class Sprite {
 	}
 
 	public void setAnimation(String stateType, int direction) {
+		Map<Integer, Animation> map = _animations.get(stateType);
+		Animation mAnimation = map.get(_direction);
 		_currentAnimation = _animations.get(stateType).get(_direction);
 	}
 
