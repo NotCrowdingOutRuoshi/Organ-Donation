@@ -1,5 +1,6 @@
 package DynamicObjectModule.Transitions.States.VirtualCharacter;
 
+import Common.StateType;
 import DynamicObjectModule.Entities.VirtualCharacter;
 import DynamicObjectModule.Transitions.States.ExhaustState;
 
@@ -7,13 +8,13 @@ public class CharacterExhaustState extends ExhaustState<VirtualCharacter> {
 
 	public CharacterExhaustState(VirtualCharacter sprite) {
 		super(sprite);
-		// TODO Auto-generated constructor stub
+
+		_returnState = StateType.IDLE;
 	}
 
 	@Override
 	public void enter() {
-		// TODO Auto-generated method stub
-		
+		super.enter();
 	}
 
 	@Override
