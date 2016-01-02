@@ -20,4 +20,11 @@ public class Constants {
 	
 	public static final int MAX_PLAYER = 2;
 	
+	public static final int MAX_X = 1000;
+	public static final int MAX_Y = 650;
+	public static final int MIN_X = 0;
+	public static final int MIN_Y = 300;
+	
+	public static final int IMAGE_WIDTH = 50;
+	public static final int IMAGE_HEIGHT = 100;
 }
