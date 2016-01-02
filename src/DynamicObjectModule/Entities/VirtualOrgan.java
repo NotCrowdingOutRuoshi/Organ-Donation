@@ -8,7 +8,7 @@ import DynamicObjectModule.Transitions.FiniteStateMachines.FiniteStateMachine;
 import DynamicObjectModule.Transitions.States.VirtualOrgan.*;
 
 public class VirtualOrgan extends Sprite {
-	
+
 	protected String _name;
 	protected VirtualCharacter _owner;
 
@@ -26,6 +26,11 @@ public class VirtualOrgan extends Sprite {
 
 	public VirtualCharacter getOwner() {
 		return _owner;
+	}
+	
+	@Override
+	public void setY(int y) {
+		_y = y;
 	}
 
 	@Override
@@ -49,12 +54,6 @@ public class VirtualOrgan extends Sprite {
 	public void setName(String name) {
 		assert (name != null && !name.isEmpty());
 		_name = name;
-	}
-
-	@Override
-	public int getDirection() {
-		assert (false);
-		return -1;
 	}
 
 	@Override
@@ -93,18 +92,20 @@ public class VirtualOrgan extends Sprite {
 		if (_fsm.getCurrentState().getType() == StateType.DEATH) {
 			g.drawImage(_currentAnimation.getImage(), _x, _y, null);
 			_fsm.executeState();
+			_currentAnimation.update();
 		}
 	}
-	
+
 	@Override
 	public void updateAnimation() {
 		if (_currentAnimation != null && _currentAnimation.isStopped()) {
-			_owner.removeOrgan(this);
+			String returnState = _fsm.getCurrentState().getReturnState();
+			_fsm.setState(returnState);
 		}
 	}
 
 	@Override
 	protected void loadAnimations() throws IOException {
-		loadAnimations("Sprite/VirtualOrgan/" + _packageName);
+		loadAnimations("Sprite/VirtualOrgan/" + _packageName, 60);
 	}
 }

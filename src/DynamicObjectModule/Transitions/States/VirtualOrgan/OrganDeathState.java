@@ -22,7 +22,7 @@ public class OrganDeathState extends DeathState<VirtualOrgan> {
 
 	@Override
 	public void execute() {
-		_entity.setY(_entity.getY() + 10);
+		_entity.setY(_entity.getY() - 1);
 	}
 
 	@Override

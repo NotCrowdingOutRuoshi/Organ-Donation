@@ -74,7 +74,7 @@ public abstract class Sprite {
 
 	public abstract void draw(Graphics g);
 
-	protected void loadAnimations(String imageResourceRoot) throws IOException {
+	protected void loadAnimations(String imageResourceRoot, int delay) throws IOException {
 		File file = Resources.getResourceFile(imageResourceRoot);
 
 		for (final File statePackage : file.listFiles()) {
@@ -91,7 +91,7 @@ public abstract class Sprite {
 							images.add(ImageIO.read(image));
 						}
 
-						directedAnimation.put(currentDirection, new Animation(images, 40));
+						directedAnimation.put(currentDirection, new Animation(images, delay));
 					}
 				}
 

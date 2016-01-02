@@ -10,8 +10,9 @@ import Libraries.JSON.JSONArray;
 import Libraries.JSON.JSONObject;
 
 public class VirtualCharacterUpdater extends SpriteUpdater<VirtualCharacter> {
-	
+
 	private static final Map<String, String> _organNameMap;
+
 	static {
 		_organNameMap = new HashMap<String, String>();
 		_organNameMap.put("heart", "Heart");
@@ -41,25 +42,19 @@ public class VirtualCharacterUpdater extends SpriteUpdater<VirtualCharacter> {
 	}
 
 	private void updateOrgans(JSONArray data) {
-		ArrayList<VirtualOrgan> updatedOrgans = new ArrayList<VirtualOrgan>();
-
 		for (Object organ : data) {
 			JSONObject newOrganData = new JSONObject(organ.toString());
-			updatedOrgans.add(createOrgan(newOrganData));
+			updateOrgan(newOrganData);
 		}
-
-		_sprite.updateOrganList(updatedOrgans);
 	}
 
-	private VirtualOrgan createOrgan(JSONObject data) {
+	private void updateOrgan(JSONObject data) {
 		organAssertValidation(data);
 
 		String organName = data.get("name").toString();
-		
-		VirtualOrgan organ = new VirtualOrgan(organName, _organNameMap.get(organName), _sprite);
-		organ.setHealth(Integer.parseInt(data.get("HP").toString()));
 
-		return organ;
+		VirtualOrgan organ = _sprite.findOrgan(organName);
+		organ.setHealth(Integer.parseInt(data.get("HP").toString()));
 	}
 
 	private void characterAssertValidation(JSONObject character) {

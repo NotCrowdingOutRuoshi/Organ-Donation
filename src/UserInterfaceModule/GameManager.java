@@ -112,6 +112,9 @@ public class GameManager {
 		gs.setCountDown(i);
 	}
 	
+	public DynamicObjectModule getDOM() {
+		return dom;
+	}
 	
 	public void sendtoTcp(String s){
 		try {
