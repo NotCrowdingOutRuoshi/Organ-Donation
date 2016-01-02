@@ -9,7 +9,7 @@ public class CharacterDeathState extends DeathState<VirtualCharacter> {
 	public CharacterDeathState(VirtualCharacter sprite) {
 		super(sprite);
 		
-		_returnState = StateType.DEATH;
+		_returnState = StateType.EMPTY;
 	}
 
 	@Override
@@ -27,12 +27,6 @@ public class CharacterDeathState extends DeathState<VirtualCharacter> {
 	public void exit() {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

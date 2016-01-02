@@ -26,6 +26,8 @@ public class MainForTest {
 		panel.addKeyListener(new HeyMyListener(v));
 		panel.setFocusable(true);
 		panel.requestFocusInWindow();
+		
+		v.setState(StateType.DEATH);
 
 		JFrame frame = new JFrame("Organ Donation");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -92,6 +92,7 @@ public class VirtualCharacter extends Sprite {
 		_packageToState.put("Attack", StateType.ATTACK);
 		_packageToState.put("Steal", StateType.STEAL);
 		_packageToState.put("Exhaust", StateType.EXHAUST);
+		_packageToState.put("Death", StateType.DEATH);
 	}
 
 	@Override
