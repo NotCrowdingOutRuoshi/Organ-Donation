@@ -194,8 +194,10 @@ public abstract class Sprite {
 	public void updateAnimation() {
 		if (_currentAnimation != null && _currentAnimation.isStopped()) {
 			String returnState = _fsm.getCurrentState().getReturnState();
-			_currentAnimation.reset();
-			_fsm.setState(returnState);
+			if (returnState != StateType.EMPTY) {
+				_currentAnimation.reset();
+				_fsm.setState(returnState);
+			}
 		}
 	}
 

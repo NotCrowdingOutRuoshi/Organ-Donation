@@ -1,5 +1,6 @@
 package DynamicObjectModule.Transitions.States;
 
+import Common.StateType;
 import DynamicObjectModule.Entities.Sprite;
 
 public abstract class DeathState<EntityType extends Sprite> extends State<EntityType> {
@@ -9,4 +10,9 @@ public abstract class DeathState<EntityType extends Sprite> extends State<Entity
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public String getType() {
+		return StateType.DEATH;
+	}
+	
 }
