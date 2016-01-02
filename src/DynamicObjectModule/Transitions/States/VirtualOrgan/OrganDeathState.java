@@ -9,6 +9,12 @@ public class OrganDeathState extends DeathState<VirtualOrgan> {
 		super(sprite);
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Override
+	public void enter() {
+		// TODO Auto-generated method stub
+		
+	};
 
 	@Override
 	public void execute() {

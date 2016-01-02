@@ -141,9 +141,12 @@ public abstract class Sprite {
 	}
 
 	public void setHealth(int health) {
-		assert (health >= 0 && health <= _totalHealth);
-
-		_health = health;
+		if (health <= 0) {
+			_health = 0;
+		}
+		else {
+			_health = health;
+		}
 	}
 
 	public int getTotalHealth() {
