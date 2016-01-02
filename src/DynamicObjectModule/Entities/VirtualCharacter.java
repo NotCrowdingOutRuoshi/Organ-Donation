@@ -1,6 +1,9 @@
 package DynamicObjectModule.Entities;
 
 import java.util.ArrayList;
+
+import com.sun.javafx.scene.paint.GradientUtils.Point;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -11,6 +14,7 @@ import Common.Constants;
 import Common.StateType;
 import DynamicObjectModule.Transitions.FiniteStateMachines.FiniteStateMachine;
 import DynamicObjectModule.Transitions.States.VirtualCharacter.*;
+import UserInterfaceModule.GameManager;
 
 public class VirtualCharacter extends Sprite {
 	public static final int DEFAULT_SPEED = 0;
@@ -55,10 +59,24 @@ public class VirtualCharacter extends Sprite {
 
 	@Override
 	public void draw(Graphics g) {
+		drawCurrentPlayerHint(g);
 		drawInformation(g);
 		drawHPMP(g);
 		drawOrgans(g);
 		_fsm.executeState();
+	}
+	
+	private void drawCurrentPlayerHint(Graphics g) {
+		if (_id == GameManager.getInstance().getClientId()) {
+			g.setColor(Color.black);
+			int middle = _x + Constants.IMAGE_WIDTH / 2;
+			int[] xPoints = {middle - 10, middle + 10, middle};
+			int[] yPoints = {_y - 60, _y - 60, _y - 40};
+			int numberOfPoints = 3;
+			
+			g.drawPolygon(xPoints, yPoints, numberOfPoints);
+			g.fillPolygon(xPoints, yPoints, numberOfPoints);
+		}
 	}
 	
 	private void drawInformation(Graphics g) {
