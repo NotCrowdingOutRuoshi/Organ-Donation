@@ -179,7 +179,7 @@ public class CDC implements ICentralizedDataCenter {
 	private void enviromentLogic() {
 		for (int i = 1; i <= PlayerList.size(); i++) {
 			Player player = PlayerList.get(i);
-			player.decreaseOrganHp(20);
+			player.decreaseOrganHp(1);
 			if (player.getEnergy() <= 495) {
 				player.setEnergy(player.getEnergy() + 5);
 			}
@@ -234,9 +234,10 @@ public class CDC implements ICentralizedDataCenter {
 						&& Math.abs(targetY - player2.getY()) < Constants.IMAGE_HEIGHT
 						&& player2.getState().equals(StateType.EXHAUST)) {
 					Organ o = player2.StealedOrgan();
-					player2.remove(o);
-					player.addOrgan(o);
-					System.out.println("STEAL SUCCESS");
+					player.StealOrganIncressHp(o);
+//					player2.remove(o);
+//					player.addOrgan(o);
+					System.out.println("STEAL SUCCESS "+o.getName());
 				}
 			}
 		}

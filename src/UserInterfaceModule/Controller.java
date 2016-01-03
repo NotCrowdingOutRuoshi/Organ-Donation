@@ -64,8 +64,11 @@ public class Controller implements KeyListener {
 		String state = "";
 		if (_keyCodeToDirection.containsKey(e.getKeyCode())) {
 			_isDirectionKeyPressed = false;
-			state = StateType.IDLE;
-			data = GameManager.getInstance().getClientId() + " " + state;
+			if(_entity.getState().equals(StateType.WALK)){
+				state = StateType.IDLE;
+				data = GameManager.getInstance().getClientId() + " " + state;
+			}
+			
 		}
 		if (_entity == null) {
 			assert false;
