@@ -9,6 +9,7 @@ import Libraries.JSON.JSONArray;
 import Libraries.JSON.JSONObject;
 
 public class VirtualCharacterUpdater extends SpriteUpdater<VirtualCharacter> {
+	private String _serverCurrentState;
 
 	private static final Map<String, String> _organNameMap;
 
@@ -25,6 +26,7 @@ public class VirtualCharacterUpdater extends SpriteUpdater<VirtualCharacter> {
 
 	public VirtualCharacterUpdater(VirtualCharacter sprite) {
 		super(sprite);
+		_serverCurrentState = "";
 	}
 
 	@Override
@@ -34,7 +36,13 @@ public class VirtualCharacterUpdater extends SpriteUpdater<VirtualCharacter> {
 		_sprite.setX(Integer.parseInt(data.get("x").toString()));
 		_sprite.setY(Integer.parseInt(data.get("y").toString()));
 		_sprite.setDirection(Integer.parseInt(data.get("dir").toString()));
-		_sprite.setState(data.get("state").toString());
+		
+		String newState = data.get("state").toString();
+		if (!_serverCurrentState.equals(newState) && !_sprite.getState().equals(newState)) {
+			_sprite.setState(data.get("state").toString());
+			_serverCurrentState = newState;
+		}
+		
 		_sprite.setSpeed(Integer.parseInt(data.get("speed").toString()));
 		_sprite.setEnergy(Integer.parseInt(data.get("energy").toString()));
 		updateOrgans(data.getJSONArray("organs"));
