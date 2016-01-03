@@ -15,18 +15,18 @@ public class test {
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 		CDC cdc = new CDC();
-//		cdc.startGameLogicSchedule();
+		cdc.startGameLogicSchedule();
 		cdc.addPlayer(1);
 		cdc.addPlayer(2);
 		cdc.addPlayer(3);
 		cdc.addPlayer(4);
-		cdc.PlayerList.get(2).setX(200);
+		cdc.PlayerList.get(2).setX(50);
 		cdc.PlayerList.get(2).setY(340);
 		cdc.setState(2, StateType.EXHAUST);
 		cdc.updateDir(1, Constants.ACTIONCODE_EAST);
 		cdc.setState(1, StateType.STEAL);
 		cdc.updateDir(2, Constants.ACTIONCODE_EAST);
-		cdc.setState(2, StateType.WALK);
+//		cdc.setState(2, StateType.WALK);
 		cdc.updateDir(3, Constants.ACTIONCODE_EAST);
 		cdc.setState(3, StateType.WALK);
 		cdc.updateDir(4, Constants.ACTIONCODE_EAST);

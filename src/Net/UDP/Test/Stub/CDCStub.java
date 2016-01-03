@@ -62,4 +62,9 @@ public class CDCStub implements ICentralizedDataCenter {
 		// TODO Auto-generated method stub
 		return "";
 	}
+	@Override
+	public int getWinnerId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

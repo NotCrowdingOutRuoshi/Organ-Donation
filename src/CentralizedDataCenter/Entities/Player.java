@@ -67,13 +67,7 @@ public class Player extends Sprite{
 		return _speed;
 	}
 	
-	public int getHealth(){
-		_energy = 0;
-		for(int i=0;i<_organs.size();i++){
-			_energy += _organs.get(i).getHP();
-		}
-		return _energy;
-	}
+	
 	
 	public ArrayList<Organ> getOrgans(){
 		return _organs;
@@ -101,6 +95,24 @@ public class Player extends Sprite{
 		Organ stealedorgan = _organs.get(randomnum);
 		return stealedorgan;
 
+	}
+	
+	public void StealOrganIncressHp(Organ o){
+		for(Organ organ : _organs){
+			if(organ.getName().equals(o.getName())){
+				organ.setHP(organ.getHP()+o.getHP());
+				o.setHP(0);
+			}
+		}
+		getHealth();
+	}
+	
+	public int getHealth(){
+		_energy = 0;
+		for(int i=0;i<_organs.size();i++){
+			_energy += _organs.get(i).getHP();
+		}
+		return _energy;
 	}
 }
 
