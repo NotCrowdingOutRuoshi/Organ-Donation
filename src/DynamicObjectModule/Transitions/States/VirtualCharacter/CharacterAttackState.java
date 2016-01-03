@@ -29,7 +29,7 @@ public class CharacterAttackState extends AttackState<VirtualCharacter> {
 	@Override
 	public void execute() {
 		super.execute();
-		if (_entity.getCurrentAnimation().getCurrentFrameCount() == 6 && !_isSoundPlayed) {
+		if (_entity.getCurrentAnimation().getCurrentFrameCount() == 4 && !_isSoundPlayed) {
 			try {
 				SoundPlayer.play("SoundEffects/swipe.wav");
 			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
