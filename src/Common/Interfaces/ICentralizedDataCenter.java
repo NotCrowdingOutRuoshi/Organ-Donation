@@ -9,4 +9,5 @@ public interface ICentralizedDataCenter {
 	public void setGameState(String gameState);
 	public String getGameState();
 	public String getUpdateInfo();
+	public int getWinnerId();
 }
