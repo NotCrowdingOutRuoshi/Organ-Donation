@@ -18,12 +18,12 @@ public class Constants {
 	public static final int UDPSERVERPORT = 27016;
 	public static final int TCPSERVERPORT = 9090;
 	
-	public static final int MAX_PLAYER = 1;
+	public static final int MAX_PLAYER = 3;
 	
-	public static final int MAX_X = 1000;
+	public static final int MAX_X = 1200;
 	public static final int MAX_Y = 650;
 	public static final int MIN_X = 0;
-	public static final int MIN_Y = 300;
+	public static final int MIN_Y = 50;
 	
 	public static final int IMAGE_WIDTH = 100;
 	public static final int IMAGE_HEIGHT = 100;
