@@ -18,10 +18,4 @@ public class CharacterExhaustState extends ExhaustState<VirtualCharacter> {
 		_entity.getCurrentAnimation().loop(7);
 	}
 
-	@Override
-	public void exit() {
-		// TODO Auto-generated method stub
-
-	}
-
 }

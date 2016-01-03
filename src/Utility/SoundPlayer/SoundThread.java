@@ -16,20 +16,21 @@ import Resources.Resources;
 public class SoundThread extends Thread {
 	private static final int _BUFFER_SIZE = 128000;
 	private String _resourceLocation;
-	
+
 	public SoundThread(String resourceLocation) {
 		_resourceLocation = resourceLocation;
 	}
-	
+
 	public void run() {
 		try {
 			playSound(_resourceLocation);
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 			e.printStackTrace();
 		}
-    }
-	
-	private void playSound(String resourceLocation) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+	}
+
+	private void playSound(String resourceLocation)
+			throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 		File soundFile = Resources.getResourceFile(resourceLocation);
 		AudioInputStream audioStream;
 		AudioFormat audioFormat;

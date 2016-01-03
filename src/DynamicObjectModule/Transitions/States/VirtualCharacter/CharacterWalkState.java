@@ -13,15 +13,22 @@ public class CharacterWalkState extends WalkState<VirtualCharacter> {
 	}
 
 	@Override
-	public void enter() {
+	public void execute() {
+		super.execute();
+		int currentFrame = _entity.getCurrentAnimation().getCurrentFrameCount();
+		if (currentFrame == 1 || currentFrame == 6) {
+			playSound("SoundEffects/walk.wav");
+		}
+		
+		if (_entity.getCurrentAnimation().isAtFrameEnd()) {
+			resetSoundFrame();
+		}
+	}
+	
+	@Override
+	protected void setupAnimation() {
 		_entity.setAnimation(getType(), _entity.getDirection());
 		_entity.getCurrentAnimation().loop();
-	}
-
-	@Override
-	public void exit() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

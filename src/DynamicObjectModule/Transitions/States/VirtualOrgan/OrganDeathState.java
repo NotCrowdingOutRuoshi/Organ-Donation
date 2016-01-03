@@ -1,10 +1,16 @@
 package DynamicObjectModule.Transitions.States.VirtualOrgan;
 
+import java.io.IOException;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import Common.StateType;
 import DynamicObjectModule.Animations.Animation;
 import DynamicObjectModule.Entities.VirtualOrgan;
 import DynamicObjectModule.Transitions.FiniteStateMachines.FiniteStateMachine;
 import DynamicObjectModule.Transitions.States.DeathState;
+import Utility.SoundPlayer.SoundPlayer;
 
 public class OrganDeathState extends DeathState<VirtualOrgan> {
 	private int _counter;
@@ -18,11 +24,15 @@ public class OrganDeathState extends DeathState<VirtualOrgan> {
 	
 	@Override
 	public void enter() {
+		super.enter();
 		_entity.setX(_entity.getOwner().getX());
 		_entity.setY(_entity.getOwner().getY());
-		
-		_entity.setAnimation(getType(), _entity.getDirection());
-		_entity.getCurrentAnimation().loop(10);
+		try {
+			SoundPlayer.play("SoundEffects/organ_died.wav");
+		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	};
 
 	@Override
@@ -35,11 +45,11 @@ public class OrganDeathState extends DeathState<VirtualOrgan> {
 			_counter = _INITIAL_COUNTER;
 		}
 	}
-
+	
 	@Override
-	public void exit() {
-		// TODO Auto-generated method stub
-		
+	protected void setupAnimation() {
+		_entity.setAnimation(getType(), _entity.getDirection());
+		_entity.getCurrentAnimation().loop(10);
 	}
 	
 	@Override

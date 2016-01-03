@@ -189,7 +189,7 @@ public abstract class Sprite {
 	public void setAnimation(String stateType, int direction) {
 		_currentAnimation = _animations.get(stateType).get(_direction);
 	}
-	
+
 	public FiniteStateMachine<?> getFSM() {
 		return _fsm;
 	}

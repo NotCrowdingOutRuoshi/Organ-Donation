@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import Common.Constants;
+import Common.StateType;
 import DynamicObjectModule.DynamicObjectModule;
 import DynamicObjectModule.Entities.VirtualCharacter;
 import RenderEngine.RenderEngine;
