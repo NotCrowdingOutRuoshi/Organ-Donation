@@ -55,7 +55,7 @@ public class WaitScene extends JPanel implements Runnable{
 		
 		if(GameManager.getInstance().getClientId()!=0){
 			JLabel Player = new JLabel(""+GameManager.getInstance().getClientId());
-			Player.setBounds(240, (this.getHeight()-300)/2, 50, 30);
+			Player.setBounds(280, (this.getHeight()-300)/2, 50, 30);
 			Player.setFont(new Font("Serif", Font.PLAIN, 35));
 			Player.setForeground(Color.white);
 			add(Player);
