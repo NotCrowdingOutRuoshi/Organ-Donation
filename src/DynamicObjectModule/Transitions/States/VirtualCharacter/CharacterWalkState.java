@@ -5,29 +5,30 @@ import DynamicObjectModule.Entities.VirtualCharacter;
 import DynamicObjectModule.Transitions.States.WalkState;
 
 public class CharacterWalkState extends WalkState<VirtualCharacter> {
-	
+
 	public CharacterWalkState(VirtualCharacter sprite) {
 		super(sprite);
-		
+
 		_returnState = StateType.IDLE;
 	}
 
 	@Override
-	public void enter() {
-		_entity.setAnimation(getType(), _entity.getDirection());
-		_entity.getCurrentAnimation().loop();		
-	}
-
-	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		super.execute();
+		int currentFrame = _entity.getCurrentAnimation().getCurrentFrameCount();
+		if (currentFrame == 1 || currentFrame == 6) {
+			playSound("SoundEffects/walk.wav");
+		}
 		
+		if (_entity.getCurrentAnimation().isAtFrameEnd()) {
+			resetSoundFrame();
+		}
 	}
-
+	
 	@Override
-	public void exit() {
-		// TODO Auto-generated method stub
-		
+	protected void setupAnimation() {
+		_entity.setAnimation(getType(), _entity.getDirection());
+		_entity.getCurrentAnimation().loop();
 	}
 
 }

@@ -13,6 +13,7 @@ import DynamicObjectModule.Entities.Sprite;
 import RenderEngine.RenderEngine;
 import Resources.Resources;
 import SceneDataModule.SceneDataModule;
+import Utility.Audio.AudioManager;
 
 public class GameScene extends JPanel implements KeyListener {
 	private Controller controller;
@@ -30,13 +31,16 @@ public class GameScene extends JPanel implements KeyListener {
 		
 		this.dom = dom;
 		this.player = dom.findSprite(GameManager.getInstance().getClientId());
+		AudioManager.getInstance().stop();
+		AudioManager.getInstance().addBackGroundMusic("Music/GameScene.wav");
+		AudioManager.getInstance().setLoop();
+		AudioManager.getInstance().play();
 		
-		SceneDataModule sceneDataModule = new SceneDataModule(ImageIO.read(Resources.getResourceStream("Scene/Scene.jpg")));
+		SceneDataModule sceneDataModule = new SceneDataModule(ImageIO.read(Resources.getResourceStream("Scene/Scene.png")));
 		RenderEngine renderEngine = new RenderEngine(dom, sceneDataModule);
 		gamePanel = renderEngine.getPanel();
 		gamePanel.setSize(1450,850);
 		add(gamePanel);
-		
 		renderEngine.startRendering();
 //		renderEngine.stopRendering();
 

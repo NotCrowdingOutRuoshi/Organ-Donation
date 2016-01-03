@@ -20,6 +20,7 @@ import Net.UDP.Client.UDPUdateServer;
 public class GameManager {
 	
 	private int clientId;
+	private int winnerId;
 	private String status;
 	private Director director;
 	private JPanel statusPanel;
@@ -112,6 +113,9 @@ public class GameManager {
 		gs.setCountDown(i);
 	}
 	
+	public DynamicObjectModule getDOM() {
+		return dom;
+	}
 	
 	public void sendtoTcp(String s){
 		try {
@@ -122,5 +126,12 @@ public class GameManager {
 		}
 	}
 	
+	public void setWinnerId(int id){
+		winnerId = id;
+	}
+	
+	public int getWinnerId(){
+		return winnerId;
+	}
 	
 }

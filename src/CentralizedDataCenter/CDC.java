@@ -21,7 +21,8 @@ public class CDC implements ICentralizedDataCenter {
 	private Vector<String> _gameStateList;
 	private Timer _enviromentTimer;
 	private Timer _logicTimer;
-
+	private int winnerId;
+	
 	public CDC() {
 		PlayerList = new HashMap<Integer, Player>();
 		OrganList = new HashMap<Integer, Organ>();
@@ -91,6 +92,19 @@ public class CDC implements ICentralizedDataCenter {
 		// TODO Auto-generated method stub
 		return _gameState;
 	}
+	
+	private void setWinner(){
+		for (int i = 1; i <= PlayerList.size(); i++) {
+			Player player = PlayerList.get(i);
+			if(!player.getState().equals(StateType.DEATH)){
+				winnerId = player.getId();
+			}
+		}
+	}
+	
+	public int getWinnerId(){
+		return winnerId;
+	}
 
 	@Override
 	public void startGameLogicSchedule() {
@@ -151,17 +165,21 @@ public class CDC implements ICentralizedDataCenter {
 				alive -= 1;
 
 				if (alive <= 1) {
+					setWinner();
 					setGameState(Constants.GAME_STATE_OVER);
-					System.out.println("GAME OVER");
+					
+//					System.out.println("GAME OVER");
 				}
 			}
+
+			
 		}
 	}
 
 	private void enviromentLogic() {
 		for (int i = 1; i <= PlayerList.size(); i++) {
 			Player player = PlayerList.get(i);
-			player.decreaseOrganHp(20);
+			player.decreaseOrganHp(1);
 			if (player.getEnergy() <= 495) {
 				player.setEnergy(player.getEnergy() + 5);
 			}
@@ -216,9 +234,10 @@ public class CDC implements ICentralizedDataCenter {
 						&& Math.abs(targetY - player2.getY()) < Constants.IMAGE_HEIGHT
 						&& player2.getState().equals(StateType.EXHAUST)) {
 					Organ o = player2.StealedOrgan();
-					player2.remove(o);
-					player.addOrgan(o);
-					System.out.println("STEAL SUCCESS");
+					player.StealOrganIncressHp(o);
+//					player2.remove(o);
+//					player.addOrgan(o);
+					System.out.println("STEAL SUCCESS "+o.getName());
 				}
 			}
 		}

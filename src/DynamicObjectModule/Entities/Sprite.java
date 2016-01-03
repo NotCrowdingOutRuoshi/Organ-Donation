@@ -30,6 +30,7 @@ public abstract class Sprite {
 	protected int _totalHealth;
 	protected int _health;
 	protected int _direction;
+	protected String _packageName;
 
 	// Animations.
 	protected Map<String, Map<Integer, Animation>> _animations;
@@ -40,9 +41,11 @@ public abstract class Sprite {
 	// Finite state machine.
 	protected FiniteStateMachine<?> _fsm;
 
-	public Sprite(int x, int y) {
+	public Sprite(int x, int y, String packageName) {
 		assert (x >= 0);
 		assert (y >= 0);
+
+		_packageName = packageName;
 
 		_id = EMPTY_ID;
 		_x = x;
@@ -71,7 +74,7 @@ public abstract class Sprite {
 
 	public abstract void draw(Graphics g);
 
-	protected void loadAnimations(String imageResourceRoot) throws IOException {
+	protected void loadAnimations(String imageResourceRoot, int delay) throws IOException {
 		File file = Resources.getResourceFile(imageResourceRoot);
 
 		for (final File statePackage : file.listFiles()) {
@@ -88,7 +91,7 @@ public abstract class Sprite {
 							images.add(ImageIO.read(image));
 						}
 
-						directedAnimation.put(currentDirection, new Animation(images, 40));
+						directedAnimation.put(currentDirection, new Animation(images, delay));
 					}
 				}
 
@@ -143,8 +146,7 @@ public abstract class Sprite {
 	public void setHealth(int health) {
 		if (health <= 0) {
 			_health = 0;
-		}
-		else {
+		} else {
 			_health = health;
 		}
 	}
@@ -159,13 +161,12 @@ public abstract class Sprite {
 
 	public boolean setState(String state) {
 		assertStates(state);
-		
+
 		if (_fsm.setState(state)) {
 			_fsm.executeState();
 			return true;
 		}
 
-		updateAnimation();
 		return false;
 	}
 
@@ -179,8 +180,6 @@ public abstract class Sprite {
 
 	public void setDirection(int direction) {
 		_direction = direction;
-
-		updateAnimation();
 	}
 
 	public Animation getCurrentAnimation() {
@@ -188,23 +187,16 @@ public abstract class Sprite {
 	}
 
 	public void setAnimation(String stateType, int direction) {
-		Map<Integer, Animation> map = _animations.get(stateType);
-		Animation mAnimation = map.get(_direction);
 		_currentAnimation = _animations.get(stateType).get(_direction);
 	}
 
-	public void updateAnimation() {
-		if (_currentAnimation != null && _currentAnimation.isStopped()) {
-			String returnState = _fsm.getCurrentState().getReturnState();
-			if (returnState != StateType.EMPTY) {
-				_currentAnimation.reset();
-				_fsm.setState(returnState);
-			}
-		}
+	public FiniteStateMachine<?> getFSM() {
+		return _fsm;
 	}
 
-	private void assertStates(String stateType) {		
-		assert (stateType.equals(StateType.IDLE) || stateType.equals(StateType.WALK) || stateType.equals(StateType.ATTACK)
-				|| stateType.equals(StateType.STEAL) || stateType.equals(StateType.EXHAUST) || stateType.equals(StateType.DEATH));
+	private void assertStates(String stateType) {
+		assert (stateType.equals(StateType.IDLE) || stateType.equals(StateType.WALK)
+				|| stateType.equals(StateType.ATTACK) || stateType.equals(StateType.STEAL)
+				|| stateType.equals(StateType.EXHAUST) || stateType.equals(StateType.DEATH));
 	}
 }

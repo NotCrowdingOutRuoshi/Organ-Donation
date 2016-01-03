@@ -59,7 +59,13 @@ public class TCPClient implements Runnable, ITCPClient {
 			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			
 			while(true){
-				String recv = br.readLine();
+//				String recv = br.readLine();
+				String[] rec = br.readLine().split(" ");
+				String recv = rec[0];
+				int winner = 0;
+				if(rec.length>1){
+					winner = Integer.valueOf(rec[1]);
+				}
 				switch(recv){
 					case Constants.GAME_STATE_MENU:
 						GameManager.getInstance().setGameStatus(recv);
@@ -74,6 +80,7 @@ public class TCPClient implements Runnable, ITCPClient {
 						GameManager.getInstance().setGameStatus(recv);
 						break;
 					case Constants.GAME_STATE_OVER:
+						GameManager.getInstance().setWinnerId(winner);
 						GameManager.getInstance().setGameStatus(recv);
 						break;
 					default:

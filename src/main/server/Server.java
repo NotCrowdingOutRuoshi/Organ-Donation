@@ -45,7 +45,10 @@ public class Server {
 				cdc.startGameLogicSchedule();
 				
 			}
+//			System.out.println(cdc.getGameState());
 		}
+//		System.out.println("--------------------------------------------");
+		tcpServer.BroadcastAllClient(Constants.GAME_STATE_OVER+" "+cdc.getWinnerId());
 	}
 
 	public static void main(String[] args) {

@@ -8,11 +8,12 @@ import DynamicObjectModule.Transitions.FiniteStateMachines.FiniteStateMachine;
 import DynamicObjectModule.Transitions.States.VirtualOrgan.*;
 
 public class VirtualOrgan extends Sprite {
+
 	protected String _name;
 	protected VirtualCharacter _owner;
 
-	public VirtualOrgan(String name, VirtualCharacter owner) {
-		super(0, 0);
+	public VirtualOrgan(String name, String packageName, VirtualCharacter owner) {
+		super(0, 0, packageName);
 
 		assert (name != null && !name.isEmpty());
 		assert (owner != null);
@@ -23,22 +24,13 @@ public class VirtualOrgan extends Sprite {
 		_health = _totalHealth;
 	}
 
-	@Override
-	public void draw(Graphics g) {
-
-	}
-
 	public VirtualCharacter getOwner() {
 		return _owner;
 	}
 	
 	@Override
-	public void setHealth(int health) {
-		super.setHealth(health);
-		
-		if (_health == 0) {
-			//setState(StateType.DEATH);
-		}
+	public void setY(int y) {
+		_y = y;
 	}
 
 	public void setOwner(VirtualCharacter owner) {
@@ -54,13 +46,7 @@ public class VirtualOrgan extends Sprite {
 		assert (name != null && !name.isEmpty());
 		_name = name;
 	}
-	
-	@Override
-	public int getDirection() {
-		assert (false);
-		return -1;
-	}
-	
+
 	@Override
 	public void setDirection(int direction) {
 		assert (false);
@@ -77,11 +63,6 @@ public class VirtualOrgan extends Sprite {
 	}
 
 	@Override
-	protected void loadAnimations() throws IOException {
-		//loadAnimations("Sprite/VirtualOrgan");
-	}
-
-	@Override
 	protected void initFiniteStateMachine() {
 		_fsm = new FiniteStateMachine<VirtualOrgan>(this);
 	}
@@ -95,5 +76,19 @@ public class VirtualOrgan extends Sprite {
 	protected void initStateEntityTranslationTable() {
 		_fsm.addStateTranslation(StateType.IDLE, new OrganIdleState(this));
 		_fsm.addStateTranslation(StateType.DEATH, new OrganDeathState(this));
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		if (_fsm.getCurrentState().getType() == StateType.DEATH) {
+			g.drawImage(_currentAnimation.getImage(), _x, _y, null);
+		}
+		
+		_fsm.executeState();
+	}
+
+	@Override
+	protected void loadAnimations() throws IOException {
+		loadAnimations("Sprite/VirtualOrgan/" + _packageName, 60);
 	}
 }

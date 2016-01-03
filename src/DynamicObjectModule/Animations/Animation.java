@@ -63,7 +63,7 @@ public class Animation {
 
 		stopped = true;
 	}
-	
+
 	public boolean isStopped() {
 		return stopped;
 	}
@@ -91,6 +91,14 @@ public class Animation {
 
 		frames.add(new Frame(frame, duration));
 		currentFrame = 0;
+	}
+
+	public int getCurrentFrameCount() {
+		return currentFrame;
+	}
+	
+	public boolean isAtFrameEnd() {
+		return currentFrame == frames.size() - 1;
 	}
 
 	public BufferedImage getImage() {

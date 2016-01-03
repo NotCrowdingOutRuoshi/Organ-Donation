@@ -1,8 +1,14 @@
 package DynamicObjectModule.Transitions.States.VirtualCharacter;
 
+import java.io.IOException;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import Common.StateType;
 import DynamicObjectModule.Entities.VirtualCharacter;
 import DynamicObjectModule.Transitions.States.StealState;
+import Utility.SoundPlayer.SoundPlayer;
 
 public class CharacterStealState extends StealState<VirtualCharacter> {
 
@@ -15,18 +21,12 @@ public class CharacterStealState extends StealState<VirtualCharacter> {
 	@Override
 	public void enter() {
 		super.enter();
+		try {
+			SoundPlayer.play("SoundEffects/steal.wav");
+			SoundPlayer.play("SoundEffects/swipe.wav");
+		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-
-	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void exit() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

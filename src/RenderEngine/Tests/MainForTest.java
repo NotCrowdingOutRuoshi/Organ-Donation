@@ -18,7 +18,7 @@ public class MainForTest {
 	public static void main(String[] args) throws IOException {
 		SceneDataModule sdm = new SceneDataModule(ImageIO.read(Resources.getResourceStream("Scene/Scene.jpg")));
 		DynamicObjectModule dom = new DynamicObjectModule();
-		VirtualCharacter v = new VirtualCharacter(0, 0, 0, Constants.ACTIONCODE_EAST, 0);
+		VirtualCharacter v = new VirtualCharacter(0, 10, 60, Constants.ACTIONCODE_EAST, 0);
 		dom.addSprite(v);
 
 		RenderEngine renderEngine = new RenderEngine(dom, sdm);
@@ -26,8 +26,6 @@ public class MainForTest {
 		panel.addKeyListener(new HeyMyListener(v));
 		panel.setFocusable(true);
 		panel.requestFocusInWindow();
-		
-		v.setState(StateType.DEATH);
 
 		JFrame frame = new JFrame("Organ Donation");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
