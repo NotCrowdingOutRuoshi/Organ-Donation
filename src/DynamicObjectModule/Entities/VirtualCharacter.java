@@ -55,6 +55,17 @@ public class VirtualCharacter extends Sprite {
 
 	@Override
 	public void draw(Graphics g) {
+		drawInformation(g);
+		drawHPMP(g);
+		drawOrgans(g);
+		_fsm.executeState();
+	}
+	
+	private void drawInformation(Graphics g) {
+		g.drawString("ID: " + Integer.toString(_id), _x, _y - 30);
+	}
+	
+	private void drawHPMP(Graphics g) {
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setStroke(new BasicStroke(3.0f));
 		g.setColor(Color.red);
@@ -69,12 +80,12 @@ public class VirtualCharacter extends Sprite {
 		g.setColor(Color.green);
 		g.drawLine(_x, _y-10, _x+(int) (Constants.IMAGE_WIDTH*((double)getEnergy()/500)), _y-10);
 		g.drawImage(_currentAnimation.getImage(), _x, _y, null);
-		
+	}
+	
+	private void drawOrgans(Graphics g) {
 		for (VirtualOrgan organ : _organs) {
 			organ.draw(g);
 		}
-		
-		_fsm.executeState();
 	}
 
 	@Override

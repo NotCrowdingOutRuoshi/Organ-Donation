@@ -17,7 +17,7 @@ public class MainForTest {
 	public static void main(String[] args) throws IOException {
 		SceneDataModule sdm = new SceneDataModule(ImageIO.read(Resources.getResourceStream("Scene/Scene.jpg")));
 		DynamicObjectModule dom = new DynamicObjectModule();
-		VirtualCharacter v = new VirtualCharacter(0, 0, 0, Constants.ACTIONCODE_EAST, 0);
+		VirtualCharacter v = new VirtualCharacter(0, 10, 60, Constants.ACTIONCODE_EAST, 0);
 		dom.addSprite(v);
 
 		RenderEngine renderEngine = new RenderEngine(dom, sdm);
