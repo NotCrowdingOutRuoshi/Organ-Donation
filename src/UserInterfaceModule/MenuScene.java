@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Common.Constants;
+import Utility.Audio.AudioManager;
 
 public class MenuScene extends JPanel {
 
@@ -21,6 +22,13 @@ public class MenuScene extends JPanel {
 		this.setLayout(null);
 		
 		JButton btn = new JButton("¹CÀ¸¶}©l");
+		
+		
+		AudioManager.getInstance().addBackGroundMusic("Music/GameMenu.wav");
+		AudioManager.getInstance().setLoop();
+		AudioManager.getInstance().play();
+		
+		
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				

@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import DynamicObjectModule.DynamicObjectModule;
 import DynamicObjectModule.Entities.Sprite;
 import DynamicObjectModule.Entities.VirtualCharacter;
+import Utility.Audio.AudioManager;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -24,6 +25,9 @@ public class WaitScene extends JPanel implements Runnable{
 		this.setLayout(null);
 		this.dom = dom;
 		/* Temporary comment out*/
+		AudioManager.getInstance().addBackGroundMusic("Music/WaitScene.wav");
+		AudioManager.getInstance().setLoop();
+		AudioManager.getInstance().play();
 		JLabel lblWait = new JLabel("Waiting");
 		lblWait.setBounds((this.getWidth()-100)/2, 20, 100, 30);
 		lblWait.setFont(new Font("Serif", Font.PLAIN, 30));

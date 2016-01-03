@@ -13,6 +13,7 @@ import DynamicObjectModule.Entities.Sprite;
 import RenderEngine.RenderEngine;
 import Resources.Resources;
 import SceneDataModule.SceneDataModule;
+import Utility.Audio.AudioManager;
 
 public class GameScene extends JPanel implements KeyListener {
 	private Controller controller;
@@ -36,6 +37,11 @@ public class GameScene extends JPanel implements KeyListener {
 		gamePanel = renderEngine.getPanel();
 		gamePanel.setSize(1450,850);
 		add(gamePanel);
+		
+		AudioManager.getInstance().addBackGroundMusic("Music/GameScene.wav");
+		AudioManager.getInstance().setLoop();
+		AudioManager.getInstance().play();
+		
 		
 		renderEngine.startRendering();
 //		renderEngine.stopRendering();
