@@ -1,6 +1,8 @@
 package DynamicObjectModule.Updaters;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import DynamicObjectModule.Entities.VirtualCharacter;
 import DynamicObjectModule.Entities.VirtualOrgan;
@@ -8,6 +10,19 @@ import Libraries.JSON.JSONArray;
 import Libraries.JSON.JSONObject;
 
 public class VirtualCharacterUpdater extends SpriteUpdater<VirtualCharacter> {
+
+	private static final Map<String, String> _organNameMap;
+
+	static {
+		_organNameMap = new HashMap<String, String>();
+		_organNameMap.put("heart", "Heart");
+		_organNameMap.put("liver", "Liver");
+		_organNameMap.put("lung", "Lung");
+		_organNameMap.put("pancreas", "Pancreas");
+		_organNameMap.put("kidney", "Kidney");
+		_organNameMap.put("small intestine", "SmallIntestine");
+		_organNameMap.put("large intestine", "LargeIntestine");
+	};
 
 	public VirtualCharacterUpdater(VirtualCharacter sprite) {
 		super(sprite);
@@ -27,23 +42,19 @@ public class VirtualCharacterUpdater extends SpriteUpdater<VirtualCharacter> {
 	}
 
 	private void updateOrgans(JSONArray data) {
-		ArrayList<VirtualOrgan> updatedOrgans = new ArrayList<VirtualOrgan>();
-		
 		for (Object organ : data) {
 			JSONObject newOrganData = new JSONObject(organ.toString());
-			updatedOrgans.add(createOrgan(newOrganData));
+			updateOrgan(newOrganData);
 		}
-		
-		_sprite.updateOrganList(updatedOrgans);
 	}
-	
-	private VirtualOrgan createOrgan(JSONObject data) {
+
+	private void updateOrgan(JSONObject data) {
 		organAssertValidation(data);
-		
-		VirtualOrgan organ = new VirtualOrgan(data.get("name").toString(), _sprite); 
+
+		String organName = data.get("name").toString();
+
+		VirtualOrgan organ = _sprite.findOrgan(organName);
 		organ.setHealth(Integer.parseInt(data.get("HP").toString()));
-		
-		return organ;
 	}
 
 	private void characterAssertValidation(JSONObject character) {
@@ -59,5 +70,6 @@ public class VirtualCharacterUpdater extends SpriteUpdater<VirtualCharacter> {
 	private void organAssertValidation(JSONObject organ) {
 		assert organ.has("name");
 		assert organ.has("HP");
+		assert _organNameMap.containsKey(organ.get("name").toString());
 	}
 }

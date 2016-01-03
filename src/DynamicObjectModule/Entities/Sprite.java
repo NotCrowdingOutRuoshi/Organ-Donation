@@ -30,6 +30,7 @@ public abstract class Sprite {
 	protected int _totalHealth;
 	protected int _health;
 	protected int _direction;
+	protected String _packageName;
 
 	// Animations.
 	protected Map<String, Map<Integer, Animation>> _animations;
@@ -40,10 +41,12 @@ public abstract class Sprite {
 	// Finite state machine.
 	protected FiniteStateMachine<?> _fsm;
 
-	public Sprite(int x, int y) {
+	public Sprite(int x, int y, String packageName) {
 		assert (x >= 0);
 		assert (y >= 0);
 
+		_packageName = packageName;
+		
 		_id = EMPTY_ID;
 		_x = x;
 		_y = y;
@@ -71,7 +74,7 @@ public abstract class Sprite {
 
 	public abstract void draw(Graphics g);
 
-	protected void loadAnimations(String imageResourceRoot) throws IOException {
+	protected void loadAnimations(String imageResourceRoot, int delay) throws IOException {
 		File file = Resources.getResourceFile(imageResourceRoot);
 
 		for (final File statePackage : file.listFiles()) {
@@ -88,7 +91,7 @@ public abstract class Sprite {
 							images.add(ImageIO.read(image));
 						}
 
-						directedAnimation.put(currentDirection, new Animation(images, 40));
+						directedAnimation.put(currentDirection, new Animation(images, delay));
 					}
 				}
 
@@ -188,8 +191,6 @@ public abstract class Sprite {
 	}
 
 	public void setAnimation(String stateType, int direction) {
-		Map<Integer, Animation> map = _animations.get(stateType);
-		Animation mAnimation = map.get(_direction);
 		_currentAnimation = _animations.get(stateType).get(_direction);
 	}
 

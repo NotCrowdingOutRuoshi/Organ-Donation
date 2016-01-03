@@ -10,7 +10,6 @@ import java.io.IOException;
 import Common.Constants;
 import Common.StateType;
 import DynamicObjectModule.Transitions.FiniteStateMachines.FiniteStateMachine;
-import DynamicObjectModule.Transitions.States.State;
 import DynamicObjectModule.Transitions.States.VirtualCharacter.*;
 
 public class VirtualCharacter extends Sprite {
@@ -21,7 +20,7 @@ public class VirtualCharacter extends Sprite {
 	protected ArrayList<VirtualOrgan> _organs;
 
 	public VirtualCharacter(int id, int x, int y, int direction, int speed) {
-		super(x, y);
+		super(x, y, null);
 
 		assert (id >= 0);
 		assert (speed >= 0);
@@ -33,14 +32,9 @@ public class VirtualCharacter extends Sprite {
 		initOrgans();
 
 		_organTotalHealth = 0;
+		
 		for (VirtualOrgan organ : _organs) {
 			_organTotalHealth += organ.getTotalHealth();
-		}
-
-		try {
-			loadAnimations("Sprite/VirtualCharacter");
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -64,16 +58,23 @@ public class VirtualCharacter extends Sprite {
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setStroke(new BasicStroke(3.0f));
 		g.setColor(Color.red);
+		
 		if(getEnergy()>500){
 			g.drawLine(_x, _y-20, _x+Constants.IMAGE_WIDTH, _y-20);
 		}
 		else{
 			g.drawLine(_x, _y-20, _x+(int) (Constants.IMAGE_WIDTH*((double)getHealth()/500)), _y-20);
 		}
-		System.out.println(getEnergy());
+		
 		g.setColor(Color.green);
 		g.drawLine(_x, _y-10, _x+(int) (Constants.IMAGE_WIDTH*((double)getEnergy()/500)), _y-10);
 		g.drawImage(_currentAnimation.getImage(), _x, _y, null);
+		
+		for (VirtualOrgan organ : _organs) {
+			organ.draw(g);
+			organ.updateAnimation();
+		}
+		
 		_currentAnimation.update();
 	}
 
@@ -97,7 +98,7 @@ public class VirtualCharacter extends Sprite {
 
 	@Override
 	protected void loadAnimations() throws IOException {
-		loadAnimations("Sprite/VirtualCharacter");
+		loadAnimations("Sprite/VirtualCharacter", 40);
 	}
 
 	@Override
@@ -177,7 +178,7 @@ public class VirtualCharacter extends Sprite {
 
 	public VirtualOrgan findOrgan(String name) {
 		for (VirtualOrgan virtualOrgan : _organs) {
-			if (virtualOrgan.getName() == name) {
+			if (virtualOrgan.getName().equals(name)) {
 				return virtualOrgan;
 			}
 		}
@@ -185,19 +186,13 @@ public class VirtualCharacter extends Sprite {
 		return null;
 	}
 
-	public void updateOrganList(ArrayList<VirtualOrgan> organs) {
-		assert (organs != null);
-
-		_organs = organs;
-	}
-
 	private void initOrgans() {
-		// _organs.add(new VirtualOrgan("heart", this));
-		// _organs.add(new VirtualOrgan("liver", this));
-		// _organs.add(new VirtualOrgan("lung", this));
-		// _organs.add(new VirtualOrgan("pancreas", this));
-		// _organs.add(new VirtualOrgan("kidney", this));
-		// _organs.add(new VirtualOrgan("small intestine", this));
-		// _organs.add(new VirtualOrgan("large intestine", this));
+		 _organs.add(new VirtualOrgan("heart", "Heart", this));
+		 _organs.add(new VirtualOrgan("liver", "Liver", this));
+		 _organs.add(new VirtualOrgan("lung", "Lung", this));
+		 _organs.add(new VirtualOrgan("pancreas", "Pancreas", this));
+		 _organs.add(new VirtualOrgan("kidney", "Kidney", this));
+		 _organs.add(new VirtualOrgan("small intestine", "SmallIntestine", this));
+		 _organs.add(new VirtualOrgan("large intestine", "LargeIntestine", this));
 	}
 }
