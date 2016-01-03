@@ -18,10 +18,4 @@ public class CharacterIdleState extends IdleState<VirtualCharacter> {
 		_entity.getCurrentAnimation().loop();
 	}
 
-	@Override
-	public void exit() {
-		// TODO Auto-generated method stub
-
-	}
-
 }
