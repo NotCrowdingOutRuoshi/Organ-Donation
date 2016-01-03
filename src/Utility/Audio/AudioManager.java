@@ -17,7 +17,8 @@ public class AudioManager {
 	
 	public void addBackGroundMusic(String s) {
 		if(_currentAudio != null) {
-			_currentAudio.stop();			
+			_currentAudio.close();	
+			
 		} 
 		AudioPlayer audioPlayer = new AudioPlayer(s);
 		_currentAudio = audioPlayer;
@@ -32,6 +33,6 @@ public class AudioManager {
 	}
 	
 	public void stop() {
-		_currentAudio.stop();
+		_currentAudio.close();
 	}
 }

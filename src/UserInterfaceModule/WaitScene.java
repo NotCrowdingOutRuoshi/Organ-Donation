@@ -29,6 +29,7 @@ public class WaitScene extends JPanel implements Runnable {
 		this.setLayout(null);
 		this.dom = dom;
 		/* Temporary comment out */
+		AudioManager.getInstance().stop();
 		AudioManager.getInstance().addBackGroundMusic("Music/WaitScene.wav");
 		AudioManager.getInstance().setLoop();
 		AudioManager.getInstance().play();
