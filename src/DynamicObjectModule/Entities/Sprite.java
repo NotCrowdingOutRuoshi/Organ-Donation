@@ -46,7 +46,7 @@ public abstract class Sprite {
 		assert (y >= 0);
 
 		_packageName = packageName;
-		
+
 		_id = EMPTY_ID;
 		_x = x;
 		_y = y;
@@ -146,8 +146,7 @@ public abstract class Sprite {
 	public void setHealth(int health) {
 		if (health <= 0) {
 			_health = 0;
-		}
-		else {
+		} else {
 			_health = health;
 		}
 	}
@@ -162,13 +161,12 @@ public abstract class Sprite {
 
 	public boolean setState(String state) {
 		assertStates(state);
-		
+
 		if (_fsm.setState(state)) {
 			_fsm.executeState();
 			return true;
 		}
 
-		updateAnimation();
 		return false;
 	}
 
@@ -182,8 +180,6 @@ public abstract class Sprite {
 
 	public void setDirection(int direction) {
 		_direction = direction;
-
-		updateAnimation();
 	}
 
 	public Animation getCurrentAnimation() {
@@ -193,19 +189,14 @@ public abstract class Sprite {
 	public void setAnimation(String stateType, int direction) {
 		_currentAnimation = _animations.get(stateType).get(_direction);
 	}
-
-	public void updateAnimation() {
-		if (_currentAnimation != null && _currentAnimation.isStopped()) {
-			String returnState = _fsm.getCurrentState().getReturnState();
-			if (returnState != StateType.EMPTY) {
-				_currentAnimation.reset();
-				_fsm.setState(returnState);
-			}
-		}
+	
+	public FiniteStateMachine<?> getFSM() {
+		return _fsm;
 	}
 
-	private void assertStates(String stateType) {		
-		assert (stateType.equals(StateType.IDLE) || stateType.equals(StateType.WALK) || stateType.equals(StateType.ATTACK)
-				|| stateType.equals(StateType.STEAL) || stateType.equals(StateType.EXHAUST) || stateType.equals(StateType.DEATH));
+	private void assertStates(String stateType) {
+		assert (stateType.equals(StateType.IDLE) || stateType.equals(StateType.WALK)
+				|| stateType.equals(StateType.ATTACK) || stateType.equals(StateType.STEAL)
+				|| stateType.equals(StateType.EXHAUST) || stateType.equals(StateType.DEATH));
 	}
 }
