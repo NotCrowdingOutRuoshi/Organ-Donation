@@ -81,6 +81,7 @@ public class VirtualCharacter extends Sprite {
 	}
 	
 	private void drawInformation(Graphics g) {
+		g.setColor(Color.black);
 		g.drawString("ID: " + Integer.toString(_id), _x, _y - 30);
 	}
 	
