@@ -91,7 +91,7 @@ public class VirtualCharacter extends Sprite {
 			g2.setStroke(new BasicStroke(3.0f));
 			g.setColor(Color.red);
 			
-			if(getEnergy()>500){
+			if(getHealth()>500){
 				g.drawLine(_x, _y-20, _x+Constants.IMAGE_WIDTH, _y-20);
 			}
 			else{
