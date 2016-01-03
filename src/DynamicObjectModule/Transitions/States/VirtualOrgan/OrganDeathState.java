@@ -7,10 +7,13 @@ import DynamicObjectModule.Transitions.FiniteStateMachines.FiniteStateMachine;
 import DynamicObjectModule.Transitions.States.DeathState;
 
 public class OrganDeathState extends DeathState<VirtualOrgan> {
+	private int _counter;
+	private static final int _INITIAL_COUNTER = 3;
 
 	public OrganDeathState(VirtualOrgan sprite) {
 		super(sprite);
 		_returnState = StateType.EMPTY;
+		_counter = _INITIAL_COUNTER;
 	}
 	
 	@Override
@@ -25,7 +28,12 @@ public class OrganDeathState extends DeathState<VirtualOrgan> {
 	@Override
 	public void execute() {
 		super.execute();
-		_entity.setY(_entity.getY() - 1);
+		_counter -= 1;
+		
+		if (_counter == 0) {
+			_entity.setY(_entity.getY() - 1);
+			_counter = _INITIAL_COUNTER;
+		}
 	}
 
 	@Override

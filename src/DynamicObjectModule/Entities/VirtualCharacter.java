@@ -62,6 +62,7 @@ public class VirtualCharacter extends Sprite {
 		drawCurrentPlayerHint(g);
 		drawInformation(g);
 		drawHPMP(g);
+		g.drawImage(_currentAnimation.getImage(), _x, _y, null);
 		drawOrgans(g);
 		_fsm.executeState();
 	}
@@ -84,20 +85,21 @@ public class VirtualCharacter extends Sprite {
 	}
 	
 	private void drawHPMP(Graphics g) {
-		Graphics2D g2 = (Graphics2D)g;
-		g2.setStroke(new BasicStroke(3.0f));
-		g.setColor(Color.red);
-		
-		if(getEnergy()>500){
-			g.drawLine(_x, _y-20, _x+Constants.IMAGE_WIDTH, _y-20);
+		if (!_fsm.getCurrentState().getType().equals(StateType.DEATH)) {
+			Graphics2D g2 = (Graphics2D)g;
+			g2.setStroke(new BasicStroke(3.0f));
+			g.setColor(Color.red);
+			
+			if(getEnergy()>500){
+				g.drawLine(_x, _y-20, _x+Constants.IMAGE_WIDTH, _y-20);
+			}
+			else{
+				g.drawLine(_x, _y-20, _x+(int) (Constants.IMAGE_WIDTH*((double)getHealth()/500)), _y-20);
+			}
+			
+			g.setColor(Color.green);
+			g.drawLine(_x, _y-10, _x+(int) (Constants.IMAGE_WIDTH*((double)getEnergy()/500)), _y-10);
 		}
-		else{
-			g.drawLine(_x, _y-20, _x+(int) (Constants.IMAGE_WIDTH*((double)getHealth()/500)), _y-20);
-		}
-		
-		g.setColor(Color.green);
-		g.drawLine(_x, _y-10, _x+(int) (Constants.IMAGE_WIDTH*((double)getEnergy()/500)), _y-10);
-		g.drawImage(_currentAnimation.getImage(), _x, _y, null);
 	}
 	
 	private void drawOrgans(Graphics g) {
