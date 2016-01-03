@@ -31,6 +31,7 @@ public class GameScene extends JPanel implements KeyListener {
 		
 		this.dom = dom;
 		this.player = dom.findSprite(GameManager.getInstance().getClientId());
+		AudioManager.getInstance().stop();
 		AudioManager.getInstance().addBackGroundMusic("Music/GameScene.wav");
 		AudioManager.getInstance().setLoop();
 		AudioManager.getInstance().play();
