@@ -32,7 +32,7 @@ public class GameScene extends JPanel implements KeyListener {
 		this.dom = dom;
 		this.player = dom.findSprite(GameManager.getInstance().getClientId());
 		
-		SceneDataModule sceneDataModule = new SceneDataModule(ImageIO.read(Resources.getResourceStream("Scene/Scene.jpg")));
+		SceneDataModule sceneDataModule = new SceneDataModule(ImageIO.read(Resources.getResourceStream("Scene/Scene.png")));
 		RenderEngine renderEngine = new RenderEngine(dom, sceneDataModule);
 		gamePanel = renderEngine.getPanel();
 		gamePanel.setSize(1450,850);
