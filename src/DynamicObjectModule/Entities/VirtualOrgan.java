@@ -3,9 +3,11 @@ package DynamicObjectModule.Entities;
 import java.awt.Graphics;
 import java.io.IOException;
 
+import Common.Constants;
 import Common.StateType;
 import DynamicObjectModule.Transitions.FiniteStateMachines.FiniteStateMachine;
 import DynamicObjectModule.Transitions.States.VirtualOrgan.*;
+import UserInterfaceModule.GameManager;
 
 public class VirtualOrgan extends Sprite {
 
@@ -81,7 +83,10 @@ public class VirtualOrgan extends Sprite {
 	@Override
 	public void draw(Graphics g) {
 		if (_fsm.getCurrentState().getType() == StateType.DEATH) {
-			g.drawImage(_currentAnimation.getImage(), _x, _y, null);
+			int mainCharacterId = GameManager.getInstance().getClientId();
+			Sprite mainCharacter = GameManager.getInstance().getDOM().findSprite(mainCharacterId);
+			
+			g.drawImage(_currentAnimation.getImage(), _x-mainCharacter.getX()+(Constants.WINDOW_WIDTH/2), _y-mainCharacter.getY()+(Constants.WINDOW_HEIGHT/2), null);
 		}
 		
 		_fsm.executeState();
