@@ -91,7 +91,16 @@ public class VirtualCharacter extends Sprite {
 	
 	private void drawInformation(Graphics g) {
 		g.setColor(Color.black);
-		g.drawString("ID: " + Integer.toString(_id), Constants.WINDOW_WIDTH / 2, Constants.WINDOW_HEIGHT / 2 - 30);
+		
+		if (_id == GameManager.getInstance().getClientId()) {
+			g.drawString("ID: " + Integer.toString(_id), Constants.WINDOW_WIDTH / 2, Constants.WINDOW_HEIGHT / 2 - 30);
+		}
+		else {
+			int mainCharacterId = GameManager.getInstance().getClientId();
+			Sprite mainCharacter = GameManager.getInstance().getDOM().findSprite(mainCharacterId);
+			
+			g.drawString("ID: " + Integer.toString(_id), _x-mainCharacter.getX()+(Constants.WINDOW_WIDTH/2), _y-mainCharacter.getY()+(Constants.WINDOW_HEIGHT/2) - 30);
+		}
 	}
 	
 	private void drawHPMP(Graphics g) {
@@ -100,15 +109,46 @@ public class VirtualCharacter extends Sprite {
 			g2.setStroke(new BasicStroke(3.0f));
 			g.setColor(Color.red);
 			
-			if(getHealth()>500){
-				g.drawLine(Constants.WINDOW_WIDTH / 2, Constants.WINDOW_HEIGHT / 2 -20, Constants.WINDOW_WIDTH / 2 + Constants.IMAGE_WIDTH, Constants.WINDOW_HEIGHT / 2-20);
-			}
-			else{
-				g.drawLine(Constants.WINDOW_WIDTH / 2, Constants.WINDOW_HEIGHT / 2 -20, Constants.WINDOW_WIDTH / 2+(int) (Constants.IMAGE_WIDTH*((double)getHealth()/500)), Constants.WINDOW_HEIGHT / 2-20);
+			if (_id == GameManager.getInstance().getClientId()) {
+				if(getHealth()>500){
+					g.drawLine(Constants.WINDOW_WIDTH / 2, Constants.WINDOW_HEIGHT / 2 -20, Constants.WINDOW_WIDTH / 2+(int) + Constants.IMAGE_WIDTH, Constants.WINDOW_HEIGHT / 2-20);
+				}
+				else{
+					g.drawLine(Constants.WINDOW_WIDTH / 2, Constants.WINDOW_HEIGHT / 2 -20, Constants.WINDOW_WIDTH / 2+(int) (Constants.IMAGE_WIDTH*((double)getHealth()/500)), Constants.WINDOW_HEIGHT / 2-20);
+				}				
+			} else {
+				int mainCharacterId = GameManager.getInstance().getClientId();
+				Sprite mainCharacter = GameManager.getInstance().getDOM().findSprite(mainCharacterId); 
+				int relativeX = _x-mainCharacter.getX()+(Constants.WINDOW_WIDTH/2);
+				int relativeY = _y-mainCharacter.getY()+(Constants.WINDOW_HEIGHT/2);
+				if(getHealth()>500){
+					g.drawLine(relativeX, relativeY -20, relativeX + (int)Constants.IMAGE_WIDTH, relativeY-20);
+				}
+				else{
+					g.drawLine(relativeX, relativeY -20, relativeX+(int) (Constants.IMAGE_WIDTH*((double)getHealth()/500)), relativeY-20);
+				}
 			}
 			
 			g.setColor(Color.green);
-			g.drawLine(Constants.WINDOW_WIDTH / 2, Constants.WINDOW_HEIGHT / 2 - 10, Constants.WINDOW_WIDTH / 2+(int) (Constants.IMAGE_WIDTH*((double)getEnergy()/500)), Constants.WINDOW_HEIGHT / 2-10);
+			if (_id == GameManager.getInstance().getClientId()) {
+				if(getEnergy()>500){
+					g.drawLine(Constants.WINDOW_WIDTH / 2, Constants.WINDOW_HEIGHT / 2 -10, Constants.WINDOW_WIDTH / 2+(int) + Constants.IMAGE_WIDTH, Constants.WINDOW_HEIGHT / 2-10);
+				}
+				else{
+					g.drawLine(Constants.WINDOW_WIDTH / 2, Constants.WINDOW_HEIGHT / 2 -10, Constants.WINDOW_WIDTH / 2+(int) (Constants.IMAGE_WIDTH*((double)getEnergy()/500)), Constants.WINDOW_HEIGHT / 2-10);
+				}				
+			} else {
+				int mainCharacterId = GameManager.getInstance().getClientId();
+				Sprite mainCharacter = GameManager.getInstance().getDOM().findSprite(mainCharacterId); 
+				int relativeX = _x-mainCharacter.getX()+(Constants.WINDOW_WIDTH/2);
+				int relativeY = _y-mainCharacter.getY()+(Constants.WINDOW_HEIGHT/2);
+				if(getEnergy()>500){
+					g.drawLine(relativeX, relativeY -10, relativeX + (int)Constants.IMAGE_WIDTH, relativeY-10);
+				}
+				else{
+					g.drawLine(relativeX, relativeY -10, relativeX+(int) (Constants.IMAGE_WIDTH*((double)getEnergy()/500)), relativeY-10);
+				}
+			}
 		}
 	}
 	
