@@ -72,6 +72,7 @@ public class VirtualOrgan extends Sprite {
 	@Override
 	protected void initTransitionTable() {
 		_fsm.addTransition(StateType.IDLE, StateType.DEATH);
+		_fsm.addTransition(StateType.DEATH, StateType.IDLE);
 	}
 
 	@Override
