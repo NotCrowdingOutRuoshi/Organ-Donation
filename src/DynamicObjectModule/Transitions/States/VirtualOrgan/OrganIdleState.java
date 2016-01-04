@@ -22,6 +22,11 @@ public class OrganIdleState extends IdleState<VirtualOrgan> {
 		if (_entity.getHealth() == 0) {
 			_entity.setState(StateType.DEATH);
 		}
+		else {
+			if (_entity.getState() == StateType.DEATH && _entity.getHealth() > 0) {
+				_entity.setState(StateType.IDLE);
+			}
+		}
 	}
 
 	@Override
