@@ -1,11 +1,13 @@
 package UserInterfaceModule;
 import javax.swing.JPanel;
 
+import Common.Constants;
 import Resources.Resources;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.font.FontRenderContext;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -18,13 +20,19 @@ public class GameOverScene extends JPanel {
 	 * Create the panel.
 	 */
 	public GameOverScene() {
-		this.setSize(1450, 850);
+		this.setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		this.setLayout(null);
-		JLabel lblGameOver = new JLabel("GAMEOVER ! Winner is Player "+GameManager.getInstance().getWinnerId());
-		lblGameOver.setBounds((this.getWidth()-800)/2, 300, 800, 100);
-		lblGameOver.setFont(new Font("Serif", Font.PLAIN, 50));
+		JLabel lblGameOver = new JLabel("GAMEOVER ! ");
+		lblGameOver.setBounds((this.getWidth()-300)/2, 100, 500, 100);
+		lblGameOver.setFont(new Font("Serif", Font.PLAIN, 36));
 		lblGameOver.setForeground(Color.white);
 		add(lblGameOver);
+		
+		JLabel lblWinnerInfo = new JLabel("Winner is Player "+GameManager.getInstance().getWinnerId());
+		lblWinnerInfo.setBounds((this.getWidth()-250)/2, 200, 500, 100);
+		lblWinnerInfo.setFont(new Font("Serif", Font.PLAIN, 24));
+		lblWinnerInfo.setForeground(Color.WHITE);
+		add(lblWinnerInfo);
 	}
 	public void paintComponent(Graphics g){
 		 
