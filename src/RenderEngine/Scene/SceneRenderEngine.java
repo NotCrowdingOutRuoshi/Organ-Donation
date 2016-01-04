@@ -28,7 +28,7 @@ public class SceneRenderEngine {
 		
 		g.clearRect(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		g.setColor(Color.BLACK);
-		g.drawRect(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
+		g.fillRect(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		g.drawImage(background, 250 - player.getX(), 250 - player.getY(), null);
 	}
 
