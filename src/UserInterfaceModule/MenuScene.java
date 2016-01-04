@@ -25,7 +25,7 @@ public class MenuScene extends JPanel {
 		this.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.setLayout(null);
 
-		JButton btn = new JButton("¹CÀ¸¶}©l");
+		JButton btn = new JButton("éŠæˆ²é–‹å§‹");
 
 		AudioManager.getInstance().addBackGroundMusic("Music/GameMenu.wav");
 		AudioManager.getInstance().setLoop();
@@ -39,15 +39,15 @@ public class MenuScene extends JPanel {
 		});
 		btn.setBounds((this.getWidth() - 200) / 2, 100, 200, 60);
 
-		JButton btn2 = new JButton("¹CÀ¸»¡©ú");
+		JButton btn2 = new JButton("éŠæˆ²èªªæ˜");
 		btn2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "·m¾¹©x", "¹CÀ¸»¡©ú", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "æ¶å™¨å®˜", "éŠæˆ²èªªæ˜", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		btn2.setBounds((this.getWidth() - 200) / 2, 200, 200, 60);
 
-		JButton btn3 = new JButton("Â÷¶}");
+		JButton btn3 = new JButton("é›¢é–‹");
 		btn3.setBounds((this.getWidth() - 200) / 2, 300, 200, 60);
 
 		add(btn);
