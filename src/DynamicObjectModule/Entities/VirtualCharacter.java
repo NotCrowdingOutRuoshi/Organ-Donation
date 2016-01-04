@@ -67,7 +67,9 @@ public class VirtualCharacter extends Sprite {
 			g.drawImage(_currentAnimation.getImage(), Constants.WINDOW_WIDTH / 2, Constants.WINDOW_HEIGHT / 2, null);
 		}
 		else {
-			g.drawImage(_currentAnimation.getImage(), _x, _y, null);
+			int mainCharacterId = GameManager.getInstance().getClientId();
+			Sprite mainCharacter = GameManager.getInstance().getDOM().findSprite(mainCharacterId);
+			g.drawImage(_currentAnimation.getImage(), _x-mainCharacter.getX()+(Constants.WINDOW_WIDTH/2), _y-mainCharacter.getY()+(Constants.WINDOW_HEIGHT/2), null);
 		}
 		
 		drawOrgans(g);
