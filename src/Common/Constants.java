@@ -23,7 +23,7 @@ public class Constants {
 	public static final int MAX_X = 1300;
 	public static final int MAX_Y = 680;
 	public static final int MIN_X = 0;
-	public static final int MIN_Y = 560;
+	public static final int MIN_Y = 300;
 	
 	public static final int IMAGE_WIDTH = 100;
 	public static final int IMAGE_HEIGHT = 100;
