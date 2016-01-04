@@ -1,5 +1,6 @@
 package RenderEngine;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
@@ -28,6 +29,7 @@ public class RenderEngine implements IRenderEngine {
 				render(g);
 			}
 		};
+		_canvas.setBackground(Color.BLACK);
 		_canvas.setDoubleBuffered(true);
 		_isRendering = false;
 		_renderThread = new Thread(new RenderThread());

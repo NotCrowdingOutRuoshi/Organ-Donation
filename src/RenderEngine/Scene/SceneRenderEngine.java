@@ -3,7 +3,11 @@ package RenderEngine.Scene;
 import java.awt.Graphics;
 import java.awt.Image;
 
+import Common.Constants;
+import DynamicObjectModule.DynamicObjectModule;
+import DynamicObjectModule.Entities.Sprite;
 import SceneDataModule.SceneDataModule;
+import UserInterfaceModule.GameManager;
 
 public class SceneRenderEngine {
 	private SceneDataModule _dataModule;
@@ -16,7 +20,16 @@ public class SceneRenderEngine {
 
 	public void render(Graphics g) {
 		Image background = _dataModule.getImage();
-		g.drawImage(background, 0, 0, null);
+		int playerId = GameManager.getInstance().getClientId();
+		DynamicObjectModule dom = GameManager.getInstance().getDOM();
+		
+		Sprite player = dom.findSprite(playerId);
+		
+		int x = player.getX();
+		int y = player.getY();
+		
+		g.clearRect(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
+		g.drawImage(background, 250 - player.getX(), 250 - player.getY(), null);
 	}
 
 }
