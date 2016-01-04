@@ -15,7 +15,7 @@ public class CharacterExhaustState extends ExhaustState<VirtualCharacter> {
 	@Override
 	public void enter() {
 		super.enter();
-		_entity.getCurrentAnimation().loop(7);
+		_entity.getCurrentAnimation().loop(12);
 	}
 
 }
