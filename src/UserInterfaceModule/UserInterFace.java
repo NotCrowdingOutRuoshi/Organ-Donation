@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Common.Constants;
 import DynamicObjectModule.DynamicObjectModule;
 
 import java.awt.event.ActionListener;
@@ -41,7 +42,7 @@ public class UserInterFace extends JFrame {
 	 */
 	public UserInterFace() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1420, 830);
+		setBounds(100, 100, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		contentPane = new JPanel();
 		contentPane.setLayout(null);
 		setContentPane(contentPane);

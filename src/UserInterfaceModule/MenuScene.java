@@ -11,6 +11,9 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+
 import Common.Constants;
 import Resources.Resources;
 import Utility.Audio.AudioManager;
@@ -21,7 +24,7 @@ public class MenuScene extends JPanel {
 	 * Create the panel.
 	 */
 	public MenuScene() {
-		this.setSize(1450, 850);
+		this.setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		this.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.setLayout(null);
 

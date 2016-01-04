@@ -27,4 +27,10 @@ public class Constants {
 	
 	public static final int IMAGE_WIDTH = 100;
 	public static final int IMAGE_HEIGHT = 100;
+	
+	public static final int WINDOW_WIDTH = 500;
+	public static final int WINDOW_HEIGHT = 500;
+	
+	public static final int WORLD_WIDTH = 1420;
+	public static final int WORLD_HEIGHT = 830;
 }

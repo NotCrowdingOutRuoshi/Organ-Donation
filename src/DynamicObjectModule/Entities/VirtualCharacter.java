@@ -62,7 +62,14 @@ public class VirtualCharacter extends Sprite {
 		drawCurrentPlayerHint(g);
 		drawInformation(g);
 		drawHPMP(g);
-		g.drawImage(_currentAnimation.getImage(), _x, _y, null);
+		
+		if (_id == GameManager.getInstance().getClientId()) {
+			g.drawImage(_currentAnimation.getImage(), Constants.WINDOW_WIDTH / 2, Constants.WINDOW_HEIGHT / 2, null);
+		}
+		else {
+			g.drawImage(_currentAnimation.getImage(), _x, _y, null);
+		}
+		
 		drawOrgans(g);
 		_fsm.executeState();
 	}
@@ -70,9 +77,9 @@ public class VirtualCharacter extends Sprite {
 	private void drawCurrentPlayerHint(Graphics g) {
 		if (_id == GameManager.getInstance().getClientId()) {
 			g.setColor(Color.black);
-			int middle = _x + Constants.IMAGE_WIDTH / 2;
+			int middle = Constants.WINDOW_WIDTH / 2 + Constants.IMAGE_WIDTH / 2;
 			int[] xPoints = {middle - 10, middle + 10, middle};
-			int[] yPoints = {_y - 60, _y - 60, _y - 40};
+			int[] yPoints = {Constants.WINDOW_HEIGHT / 2 - 60, Constants.WINDOW_HEIGHT / 2 - 60, Constants.WINDOW_HEIGHT / 2 - 40};
 			int numberOfPoints = 3;
 			
 			g.drawPolygon(xPoints, yPoints, numberOfPoints);
@@ -82,7 +89,7 @@ public class VirtualCharacter extends Sprite {
 	
 	private void drawInformation(Graphics g) {
 		g.setColor(Color.black);
-		g.drawString("ID: " + Integer.toString(_id), _x, _y - 30);
+		g.drawString("ID: " + Integer.toString(_id), Constants.WINDOW_WIDTH / 2, Constants.WINDOW_HEIGHT / 2 - 30);
 	}
 	
 	private void drawHPMP(Graphics g) {
@@ -92,14 +99,14 @@ public class VirtualCharacter extends Sprite {
 			g.setColor(Color.red);
 			
 			if(getHealth()>500){
-				g.drawLine(_x, _y-20, _x+Constants.IMAGE_WIDTH, _y-20);
+				g.drawLine(Constants.WINDOW_WIDTH / 2, Constants.WINDOW_HEIGHT / 2 -20, Constants.WINDOW_WIDTH / 2 + Constants.IMAGE_WIDTH, Constants.WINDOW_HEIGHT / 2-20);
 			}
 			else{
-				g.drawLine(_x, _y-20, _x+(int) (Constants.IMAGE_WIDTH*((double)getHealth()/500)), _y-20);
+				g.drawLine(Constants.WINDOW_WIDTH / 2, Constants.WINDOW_HEIGHT / 2 -20, Constants.WINDOW_WIDTH / 2+(int) (Constants.IMAGE_WIDTH*((double)getHealth()/500)), Constants.WINDOW_HEIGHT / 2-20);
 			}
 			
 			g.setColor(Color.green);
-			g.drawLine(_x, _y-10, _x+(int) (Constants.IMAGE_WIDTH*((double)getEnergy()/500)), _y-10);
+			g.drawLine(Constants.WINDOW_WIDTH / 2, Constants.WINDOW_HEIGHT / 2 - 10, Constants.WINDOW_WIDTH / 2+(int) (Constants.IMAGE_WIDTH*((double)getEnergy()/500)), Constants.WINDOW_HEIGHT / 2-10);
 		}
 	}
 	
