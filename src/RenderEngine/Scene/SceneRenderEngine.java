@@ -1,5 +1,6 @@
 package RenderEngine.Scene;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -25,10 +26,9 @@ public class SceneRenderEngine {
 		
 		Sprite player = dom.findSprite(playerId);
 		
-		int x = player.getX();
-		int y = player.getY();
-		
 		g.clearRect(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
+		g.setColor(Color.BLACK);
+		g.drawRect(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		g.drawImage(background, 250 - player.getX(), 250 - player.getY(), null);
 	}
 
