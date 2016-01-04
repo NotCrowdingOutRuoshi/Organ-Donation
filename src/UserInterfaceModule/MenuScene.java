@@ -36,8 +36,8 @@ public class MenuScene extends JPanel {
 
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// GameManager.getInstance().setGameStatus(Constants.GAME_STATE_WAIT);
-				GameManager.getInstance().setGameStatus(Constants.GAME_STATE_OVER);
+				GameManager.getInstance().setGameStatus(Constants.GAME_STATE_WAIT);
+				// GameManager.getInstance().setGameStatus(Constants.GAME_STATE_OVER);
 			}
 		});
 		btn.setBounds((this.getWidth() - 200) / 2, 100, 200, 60);
